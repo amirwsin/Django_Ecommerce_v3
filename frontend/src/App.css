@@ -1,0 +1,535 @@
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+
+:root {
+    --primary: #c8ddd8;
+    --primary-light: #cee0dc;
+    --primary-dark: #b4c7c2;
+    --secondary: #e5cc8e;
+    --secondary-light: #e8d199;
+    --secondary-dark: #ceb880;
+    --background-light: whitesmoke;
+    --background-main: #fdfdfd;
+    --background-dark: #272727;
+    --box-shadow-color: grey;
+    --text: #272727;
+    --font-family-default: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+[data-theme="dark"] {
+    --box-shadow-color: lightgrey;
+    --background-light: #1b1b1b;
+    --background-main: #272727;
+    --background-dark: #fdfdfd;
+    --text: #fdfdfd;
+}
+
+* {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    box-sizing: inherit;
+    min-height: 100%;
+    background-color: var(--background-light);
+    color: var(--text);
+}
+
+#root {
+    display: grid;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background-color: var(--background-main);
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: var(--background-dark);
+}
+
+.logo-text {
+    font-size: 32px !important;
+    font-family: 'Satisfy', cursive !important;
+    color: var(--background-dark);
+    text-decoration: none;
+}
+
+.navbar-link {
+    display: inline-block;
+    font-size: 1.4rem;
+    position: relative;
+    text-decoration: none;
+    color: var(--background-dark);
+    font-weight: 500;
+    font-family: var(--font-family-default);
+    letter-spacing: -1px;
+    z-index: 2;
+}
+
+.navbar-link::after {
+    position: absolute;
+    content: " ";
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    border-radius: 25px;
+    background-color: var(--secondary);
+    transform: scale(0);
+    transition: all 0.4s ease-in-out;
+}
+
+.navbar-link:hover::after {
+    transform: scale(1);
+}
+
+.category-trigger {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.category-menu .MuiCollapse-wrapperInner {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    right: 0;
+    color: var(--text);
+    background-color: var(--background-main);
+    z-index: 3;
+    padding: 3rem;
+    box-shadow: 0 2px 8px var(--box-shadow-color);
+}
+
+.category-item-link {
+    display: inline-block;
+    font-size: 1.2rem;
+    position: relative;
+    width: 100%;
+    text-decoration: none !important;
+    color: var(--background-dark);
+    font-weight: 500;
+    font-family: var(--font-family-default);
+    letter-spacing: -1px;
+    text-align: center !important;
+}
+
+.category-item-image {
+    position: relative;
+    display: block;
+    height: 84px;
+    width: 84px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+}
+
+.MuiDrawer-paperAnchorLeft {
+    width: 65%;
+}
+
+.sidebar-menu {
+    position: relative;
+    width: 100%;
+}
+
+#myBtn {
+    position: fixed;
+    right: 2%;
+    bottom: 3%;
+}
+
+.hero-section {
+    position: relative;
+    display: block;
+    width: 100%;
+    background-color: var(--primary);
+    box-shadow: 0 2px 4px var(--box-shadow-color);
+    color: #272727;
+}
+
+.hero-section-title {
+    letter-spacing: -1px !important;
+    font-weight: 600 !important;
+    word-spacing: -1px;
+    margin: 0 !important;
+}
+
+.hero-section-p {
+    text-align: justify;
+    letter-spacing: -1px !important;
+    justify-self: center;
+    font-weight: 400 !important;
+    color: var(--text);
+
+}
+
+.hero-section-icon {
+    position: relative;
+    display: inline-block;
+    padding: 5px;
+    border-radius: 7px;
+    transition: background-color 0.5s ease-in-out;
+    cursor: pointer;
+}
+
+.hero-section-icon:hover {
+    background-color: var(--primary-dark);
+}
+
+.hero-section-image {
+    position: relative;
+    display: block;
+    width: 90%;
+    object-fit: cover;
+    object-position: center;
+    right: -15rem;
+    top: -7rem;
+    z-index: 0;
+}
+
+.product-box {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    width: 100%;
+    padding: 2rem;
+    justify-content: center;
+}
+
+.product-card {
+    position: relative;
+}
+
+.product-card-title {
+    text-decoration: none;
+    color: var(--background-dark);
+}
+
+.product-card-image {
+    transition: all 0.5s ease-in-out;
+}
+
+.product-card:hover .product-card-image {
+    transform: scale(1.1);
+}
+
+.product-card-discount {
+    position: absolute;
+    top: 5px;
+    left: -35px;
+    width: 100px;
+    text-align: center;
+    font-weight: 600 !important;
+    font-size: 1.15rem !important;
+    transform: rotate(-45deg);
+    background-color: var(--secondary);
+    padding: 5px;
+    z-index: 1;
+}
+
+.footer {
+    display: block;
+    position: relative;
+    width: 100%;
+    background-color: var(--background-main);
+    box-shadow: -2px 0 8px var(--box-shadow-color);
+    padding: 2rem 0 0 0;
+    clear: both;
+    color: var(--text);
+}
+
+.footer-list {
+    list-style: none;
+    margin: 2rem;
+}
+
+.footer-list-header {
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
+}
+
+.footer-list-item {
+    font-size: 1.15rem !important;
+    font-weight: 400 !important;
+    cursor: pointer;
+    transition: all 0.4s ease-in-out;
+    color: var(--text);
+}
+
+.footer-list-item:hover {
+    list-style: "►";
+}
+
+.footer-list-social-icon {
+    position: relative;
+    display: inline-block;
+    padding: 5px;
+    border-radius: 7px;
+    transition: background-color 0.5s ease-in-out;
+    cursor: pointer;
+    color: var(--text);
+}
+
+.footer-list-social-icon:hover {
+    background-color: var(--primary-dark);
+    color: var(--background-light);
+}
+
+.form-wrapper {
+    display: grid;
+    position: relative;
+    width: inherit;
+    height: inherit;
+    gap: 1rem;
+    padding: 2rem;
+    margin: 5rem;
+    border-radius: 7px;
+    box-shadow: 2px 2px 8px var(--box-shadow-color);
+}
+
+
+.product-filter-wrapper {
+    display: grid;
+    position: sticky;
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--background-main);
+    box-shadow: 0 0 4px var(--box-shadow-color);
+    border-radius: 7px;
+}
+
+
+.swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-button-prev, .swiper-button-next {
+    color: var(--primary) !important;
+}
+
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+
+    /* Center slide text vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.swiper {
+    width: 100%;
+    height: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    direction: ltr;
+}
+
+.swiper-slide {
+    background-size: cover;
+    background-position: center;
+}
+
+.mySwiper2 {
+    height: 80%;
+    width: 100%;
+}
+
+.mySwiper {
+    height: 100%;
+    box-sizing: border-box;
+    padding: 10px 0;
+}
+
+.mySwiper .swiper-wrapper {
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.mySwiper .swiper-slide {
+    width: 100% !important;
+    height: 20%;
+    filter: grayscale(100%);
+}
+
+.mySwiper .swiper-slide-thumb-active {
+    filter: grayscale(0%);
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.shoppingCart-product-image {
+    position: relative;
+    display: block;
+    width: 100%;
+    min-height: 150px;
+    max-height: 200px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 5px;
+}
+
+.checkout-list {
+    list-style: none;
+    text-decoration: none;
+}
+
+.checkout-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--box-shadow-color);
+}
+
+.checkout-list-item:last-child {
+    border-bottom: none;
+}
+
+.panel-box {
+    background-color: var(--background-main);
+    box-shadow: 2px 2px 8px var(--box-shadow-color);
+    padding: 2rem;
+    border-radius: 7px;
+}
+
+.address-card {
+    position: relative;
+    border-radius: 7px;
+    transition: all 0.3s linear;
+}
+
+.address-card-details {
+    position: relative;
+    display: grid;
+    width: 100%;
+    align-items: center;
+}
+
+.address-card-footer {
+    position: relative;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.address-card-add {
+    display: grid;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    border: 1px dashed var(--box-shadow-color);
+    border-radius: 7px;
+    padding: 1rem;
+    gap: 5px;
+    color: var(--box-shadow-color);
+    cursor: pointer;
+    transition: all 0.3s linear;
+}
+
+.address-card:hover, .address-card-add:hover {
+    box-shadow: 0 2px 5px var(--box-shadow-color);
+}
+.custom-divider{
+    text-align: center;
+    margin: 1rem 0;
+}
+.custom-divider-text {;
+    position: relative;
+    z-index: 2;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .45);
+    background-color: var(--background-main);
+    padding: 0 1rem;
+}
+
+.custom-divider::after {
+    content: " ";
+    position: relative;
+    display: block;
+    width: 90%;
+    height: 5px;
+    top: -15px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background: rgb(200, 221, 216);
+    background: radial-gradient(circle, var(--background-dark) 30%, var(--background-main));
+    border-radius: 100px;
+    z-index: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --box-shadow-color: lightgrey;
+        --background-light: #1b1b1b;
+        --background-main: #272727;
+        --background-dark: #fdfdfd;
+        --text: #fdfdfd;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .hero-section-image {
+        right: 0;
+        top: 0;
+        left: 0;
+        margin: auto;
+        width: 120%;
+    }
+
+    .hero-section {
+        height: 100vh;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .hero-section-image {
+        right: 0;
+        top: 0;
+        left: 0;
+        margin: auto;
+        width: 60%;
+    }
+
+}
+
+@media only screen and (max-width: 600px) {
+    .hero-section-image {
+        right: 0;
+        top: 0;
+        left: 0;
+        margin: auto;
+    }
+
+    .form-wrapper {
+        margin: 1.5rem 0.5rem;
+    }
+}

@@ -1,0 +1,295 @@
+openapi: 3.0.3
+info:
+  title: Django Ecommerce v2
+  version: 1.0.0
+  description: a django ecommerce project whit Rest FrameWork and React
+paths:
+  /api/home/:
+    get:
+      operationId: api_home_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAllProductList'
+          description: ''
+    post:
+      operationId: api_home_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AllProduct'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AllProduct'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AllProduct'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllProduct'
+          description: ''
+  /api/home/{id}/:
+    get:
+      operationId: api_home_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllProduct'
+          description: ''
+    put:
+      operationId: api_home_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AllProduct'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AllProduct'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AllProduct'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllProduct'
+          description: ''
+    patch:
+      operationId: api_home_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAllProduct'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAllProduct'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAllProduct'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllProduct'
+          description: ''
+    delete:
+      operationId: api_home_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+components:
+  schemas:
+    AllProduct:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        web_id:
+          type: string
+          title: Product website ID
+          description: 'format : required , unique'
+          maxLength: 50
+        slug:
+          type: string
+          title: Product safe url
+          description: 'format : required , letters, numbers , underscore or hyphens'
+          maxLength: 255
+          pattern: ^[-a-zA-Z0-9_]+$
+        name:
+          type: string
+          title: Product name
+          description: 'format : required , max-255'
+          maxLength: 255
+        description:
+          type: string
+          title: Product description
+          description: 'format : required'
+        is_active:
+          type: boolean
+          title: Product visibility
+          description: 'format : true=product visible'
+        create_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Date product created
+          description: 'format : y-m-d H:M:S'
+        update_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Date product last updated
+          description: 'format : y-m-d H:M:S'
+        category:
+          type: array
+          items:
+            type: integer
+      required:
+      - category
+      - create_at
+      - description
+      - id
+      - name
+      - slug
+      - update_at
+      - web_id
+    PaginatedAllProductList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AllProduct'
+    PatchedAllProduct:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        web_id:
+          type: string
+          title: Product website ID
+          description: 'format : required , unique'
+          maxLength: 50
+        slug:
+          type: string
+          title: Product safe url
+          description: 'format : required , letters, numbers , underscore or hyphens'
+          maxLength: 255
+          pattern: ^[-a-zA-Z0-9_]+$
+        name:
+          type: string
+          title: Product name
+          description: 'format : required , max-255'
+          maxLength: 255
+        description:
+          type: string
+          title: Product description
+          description: 'format : required'
+        is_active:
+          type: boolean
+          title: Product visibility
+          description: 'format : true=product visible'
+        create_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Date product created
+          description: 'format : y-m-d H:M:S'
+        update_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Date product last updated
+          description: 'format : y-m-d H:M:S'
+        category:
+          type: array
+          items:
+            type: integer
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
