@@ -5,7 +5,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import {Link} from "react-router-dom";
-import {DarkMode, LightMode, MoreVert, ShoppingCartOutlined} from "@mui/icons-material";
+import {MoreVert, ShoppingCartOutlined} from "@mui/icons-material";
 import {
     Avatar, Badge,
     Collapse,
@@ -14,13 +14,12 @@ import {
     IconButton,
     Tooltip
 } from "@mui/material";
-import {useContext, useState} from "react";
+import {useState} from "react";
 import CategoryMenuList from "./CategoryMenuList";
 import SideBarMenu from "./SideBarMenu";
 import {useSelector} from "react-redux";
 import {useQuery} from "@tanstack/react-query";
 import {BasicCategoriesApi} from "../features/api/CategoriesApi";
-import {ColorModeContext} from "../theme";
 
 
 const Navbar = () => {
@@ -29,8 +28,6 @@ const Navbar = () => {
     const [sideBar, setSideBar] = useState(false)
     const {user, isAuthenticated} = useSelector(state => state.authReducer)
     const {qty} = useSelector(state => state.cartReducer)
-    const [themeColor, setThemeColor] = useState(true)
-    const colorMode = useContext(ColorModeContext)
 
     const handleSideBar = () => {
         setSideBar(prevState => !prevState)
@@ -45,42 +42,40 @@ const Navbar = () => {
         queryFn: BasicCategoriesApi
     })
 
-    const handleThemeColor = () => {
-        colorMode.toggleColorMode()
-        setThemeColor(prevState => !prevState)
-        document.documentElement.setAttribute('data-theme', themeColor ? 'dark' : 'light');
-    }
-
 
     return (
-        <Box sx={{flexGrow: 1, zIndex: 2, height: "60px"}} component={"header"}>
-            <AppBar position="sticky" sx={{backgroundColor: "background.main"}}>
-                <Toolbar sx={{paddingX: {xs: 2, sm: 5, md: 10, lg: 30}, justifyContent: "space-between"}}>
+        <Box sx={{flexGrow: 1, zIndex: 2, height: "60px"}} component={"div"}>
+            <AppBar position="sticky" sx={{backgroundColor: "background.main", boxShadow: "none"}}>
+                <Toolbar sx={{paddingX: {xs: 2, sm: 5, md: 10, lg: 5}, gap: 10, justifyContent: "space-between"}}>
                     <IconButton onClick={handleSideBar} size={"large"} sx={{display: {xs: "block", md: "none"}}}>
                         <MoreVert/>
                     </IconButton>
-                    <Typography className={"logo-text"} component={Link} to={"/"} sx={{flexGrow: {xs: 0, md: 1}}}>
-                        Logo
-                    </Typography>
-                    <Box sx={{display: {xs: "none", sm: "none", md: "flex"}, flexGrow: 1, gap: 3}} component={"nav"}>
+                    <Box sx={{flexGrow: {xs: 0, md: 1}, display: "flex", gap: 2, alignItems: "center"}}>
+                        <Typography className={"logo-text"} component={Link} to={"/"}>
+                            Flower Shop
+                        </Typography>
+                        <small className={"logo-mini-text"}>
+                            special
+                        </small>
+                        <small className={"logo-mini-text"}>
+                            Wrapped
+                        </small>
+                        <small className={"logo-mini-text"}>
+                            online
+                        </small>
+                    </Box>
+                    <Box sx={{display: {xs: "none", sm: "none", md: "flex"}, gap: 3}} component={"nav"}>
                         <Link to={"/"} className={"navbar-link"}>
                             Home
                         </Link>
                         <Link to={"/products"} className={"navbar-link"}>
-                            Products
+                            specials
                         </Link>
                         <span className={"navbar-link category-trigger"} onClick={handleCategoryTriggerClick}>
                             Categories
                         </span>
-                        <Link to={"/"} className={"navbar-link"}>
-                            Term
-                        </Link>
                     </Box>
                     <Box sx={{display: "flex", flexGrow: 0, gap: 2}}>
-                        <IconButton onClick={handleThemeColor}>
-                            {themeColor ? <LightMode sx={{fontSize: "1.85rem"}}/> :
-                                <DarkMode sx={{fontSize: "1.85rem"}}/>}
-                        </IconButton>
                         <Tooltip arrow title="Shopping Cart">
                             <IconButton component={Link} to={"/cart"} color={"background.main"}
                                         aria-label={"shopping cart"}>
@@ -97,8 +92,8 @@ const Navbar = () => {
                                     </IconButton>
                                 </Tooltip>
                             </> :
-                            <Button component={Link} to={"/login"} color="black" sx={{color: "white"}}
-                                    variant={"contained"}>Login</Button>}
+                            <Button component={Link} to={"/login"} color="primary"
+                                    variant={"text"}>Login</Button>}
 
                     </Box>
                 </Toolbar>

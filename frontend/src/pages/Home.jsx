@@ -13,7 +13,7 @@ const Home = () => {
     })
 
     return (
-        <Box component={"main"} sx={{marginY: 2.4, zIndex: 1}}>
+        <Box component={"main"} >
             <HeroSection/>
             <Container sx={{paddingY: 5}}>
                 <ProductBox data={productsQuery.data} isLoading={productsQuery.isLoading}/>

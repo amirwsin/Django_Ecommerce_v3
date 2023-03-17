@@ -2,8 +2,8 @@ import axios from "axios";
 import axiosBasicInstance from "./axiosBasic";
 
 const baseUrl = 'http://127.0.0.1:8000';
-const client_id = "fPvVX45n5HUW7UIkmXXk256Qkda2JFdVNVXP8heS"
-const client_secret = "vXMqpYk3svZ1g5Z98a2R9CblH3oqVBV5XGpFrB5Gl6PBfQ95ubC5ZW1hA13ThuKoTG5w6rzeVcGNTGLb2I8WNz9hO96q7zffyR7w8rAQsjQnoVK0vGcG7dfgP2bAxskt"
+const client_id = "djn3mVQrJMTH4ypYWxWIYsp2peRtNR1hYiIANifI"
+const client_secret = "lzv2CzvMrJlRf8CRudJTn6kFtU7k2DxTtEcbRBiQho9nNDpAg6aftvCX44EprHxbjRLn4pYX8kVLyuohvhLAdU6VjnBTFt0xtrT9yOWnFVmZThrTUqiJxqDAv9JF2mI3"
 
 
 const axiosInstance = axios.create({

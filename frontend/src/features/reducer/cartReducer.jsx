@@ -101,7 +101,12 @@ export const cartReducer = (state = initialState, action) => {
                 return {...state}
             }
         case LOAD_LOCAL:
-            return payload
+            if (payload) {
+                return payload
+            }
+            else
+                return initialState
+
         case LOAD_CART:
             let newQty = 0;
             let newPrice = 0;
@@ -120,7 +125,7 @@ export const cartReducer = (state = initialState, action) => {
                         return attribute.id === varItem
                     })
                     let attributeName = result[0].product_attribute?.name
-                    variant[attributeName] =result[0].attribute_value
+                    variant[attributeName] = result[0].attribute_value
                 })
                 newPrice += parseFloat(inventory.sale_price) * item.qty
                 prepProduct = {"product": product, "inventory": inventory, "qty": item.qty, "variant": variant}
@@ -128,9 +133,9 @@ export const cartReducer = (state = initialState, action) => {
             })
 
             readyData = {
-                ...state, qty: newQty, price: newPrice,products: products
+                ...state, qty: newQty, price: newPrice, products: products
             }
-            localStorage.setItem("shoppingCart",JSON.stringify(readyData))
+            localStorage.setItem("shoppingCart", JSON.stringify(readyData))
             return readyData
         default:
             return state

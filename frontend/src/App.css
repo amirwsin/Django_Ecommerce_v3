@@ -1,18 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Satisfy&display=swap');
 
 :root {
-    --primary: #c8ddd8;
-    --primary-light: #cee0dc;
-    --primary-dark: #b4c7c2;
-    --secondary: #e5cc8e;
-    --secondary-light: #e8d199;
-    --secondary-dark: #ceb880;
-    --background-light: whitesmoke;
-    --background-main: #fdfdfd;
-    --background-dark: #272727;
+    --primary: #B8ADA7;
+    --primary-light: #b8ada7;
+    --primary-dark: #a69c96;
+    --secondary: #d0ab88;
+    --secondary-light: #d0ab88;
+    --secondary-dark: #bb9a7a;
+    --background-light: #E8EFEC;
+    --background-main: #FAFCFE;
+    --background-dark: #222e2d;
     --box-shadow-color: grey;
-    --text: #272727;
+    --text: #3a3b3e;
     --font-family-default: "Roboto", "Helvetica", "Arial", sans-serif;
+    --mix-background-color: var(--background-light), var(--background-main), var(--primary);
 }
 
 [data-theme="dark"] {
@@ -32,7 +33,7 @@ body {
     margin: 0;
     box-sizing: inherit;
     min-height: 100%;
-    background-color: var(--background-light);
+    background-image: linear-gradient(90deg, var(--mix-background-color));
     color: var(--text);
 }
 
@@ -57,13 +58,31 @@ body {
 .logo-text {
     font-size: 32px !important;
     font-family: 'Satisfy', cursive !important;
-    color: var(--background-dark);
+    color: var(--primary);
     text-decoration: none;
+}
+
+.logo-mini-text {
+    position: relative;
+    color: var(--secondary);
+    margin: 0 0.7rem
+}
+
+.logo-mini-text::before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -15px;
+    margin: auto;
+    height: 2px;
+    width: 10px;
+    background-color: var(--secondary);
 }
 
 .navbar-link {
     display: inline-block;
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     position: relative;
     text-decoration: none;
     color: var(--background-dark);
@@ -148,27 +167,30 @@ body {
 
 .hero-section {
     position: relative;
-    display: block;
+    display: flex;
     width: 100%;
-    background-color: var(--primary);
-    box-shadow: 0 2px 4px var(--box-shadow-color);
+    height: 95vh;
+    background-image: url("assets/flower_boquet_5.webp");
+    background-size: cover;
+    background-repeat: no-repeat;
+    box-shadow: 4px 4px 6px var(--box-shadow-color);
     color: #272727;
+    overflow: hidden;
 }
 
+
+
 .hero-section-title {
-    letter-spacing: -1px !important;
-    font-weight: 600 !important;
-    word-spacing: -1px;
+    font-family: "Caveat" !important;
+    font-weight: 400 !important;
     margin: 0 !important;
+    flex-grow: 1;
 }
 
 .hero-section-p {
-    text-align: justify;
-    letter-spacing: -1px !important;
-    justify-self: center;
     font-weight: 400 !important;
+    font-family: var(--font-family-default);
     color: var(--text);
-
 }
 
 .hero-section-icon {
@@ -181,18 +203,7 @@ body {
 }
 
 .hero-section-icon:hover {
-    background-color: var(--primary-dark);
-}
-
-.hero-section-image {
-    position: relative;
-    display: block;
-    width: 90%;
-    object-fit: cover;
-    object-position: center;
-    right: -15rem;
-    top: -7rem;
-    z-index: 0;
+    background-color: var(--background-main);
 }
 
 .product-box {
@@ -458,10 +469,12 @@ body {
 .address-card:hover, .address-card-add:hover {
     box-shadow: 0 2px 5px var(--box-shadow-color);
 }
-.custom-divider{
+
+.custom-divider {
     text-align: center;
     margin: 1rem 0;
 }
+
 .custom-divider-text {;
     position: relative;
     z-index: 2;

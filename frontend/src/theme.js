@@ -10,28 +10,28 @@ export const themeSettings = (mode) => {
             ...(mode === 'light'
                 ? {
                     primary: {
-                        main: '#c8ddd8'
+                        main: '#B8ADA7'
                     },
                     secondary: {
-                        main: '#e5cc8e'
+                        main: '#d0ab88'
                     },
                     background: {
-                        light: 'whitesmoke',
-                        main: '#fdfdfd',
+                        light: '#E8EFEC',
+                        main: '#FAFCFE',
                     },
                     text: {
-                        main: '#272727',
+                        main: '#3a3b3e',
                     },
                     black: {
-                        main: '#272727',
+                        main: '#222e2d',
                     }
                 }
                 : {
                     primary: {
-                        main: '#c8ddd8'
+                        main: '#B8ADA7'
                     },
                     secondary: {
-                        main: '#e5cc8e'
+                        main: '#d0ab88'
                     },
                     background: {
                         light: '#1b1b1b',
