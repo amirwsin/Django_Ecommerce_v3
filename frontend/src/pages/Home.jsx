@@ -3,6 +3,7 @@ import {Box, Container} from "@mui/material";
 import ProductBox from "../components/ProductBox";
 import {useQuery} from "@tanstack/react-query";
 import {BasicProductApi} from "../features/api/ProductsApi";
+import SEO from "../SEO";
 
 
 const Home = () => {
@@ -13,7 +14,10 @@ const Home = () => {
     })
 
     return (
-        <Box component={"main"} >
+        <Box component={"main"}>
+            <SEO type={"Landing Page"} title={"Flower Shop | Home"}
+                 description={"buy the most special and extinguished flower bouquet in europe"} name={"Flower Shop"}
+                 author={"flower shop"} publish={"flower shop"}/>
             <HeroSection/>
             <Container sx={{paddingY: 5}}>
                 <ProductBox data={productsQuery.data} isLoading={productsQuery.isLoading}/>

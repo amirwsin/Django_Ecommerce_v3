@@ -8,7 +8,7 @@ const client_secret = "lzv2CzvMrJlRf8CRudJTn6kFtU7k2DxTtEcbRBiQho9nNDpAg6aftvCX4
 
 const axiosInstance = axios.create({
     baseURL: baseUrl,
-    timeout: 5000,
+    timeout: 30000,
     headers: {
         Authorization: localStorage.getItem('access_token')
             ? 'Bearer ' + localStorage.getItem('access_token')

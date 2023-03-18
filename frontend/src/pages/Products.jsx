@@ -5,6 +5,7 @@ import {useQuery} from "@tanstack/react-query";
 import {BasicProductApi, ProductByCategoryApi} from "../features/api/ProductsApi";
 import {useParams, useSearchParams} from "react-router-dom";
 import {useEffect, useState} from "react";
+import SEO from "../SEO";
 
 
 const Products = () => {
@@ -24,7 +25,11 @@ const Products = () => {
 
 
     return (
-        <Container maxWidth={false} sx={{marginY: 5,minHeight:"60vh"}}>
+        <Container maxWidth={false} sx={{marginY: 5, minHeight: "60vh"}}>
+            <SEO type={"text/html"} title={`Flower Shop | Products ${category}`}
+                 keywords={`flower , flower shop , buy online flower , ${category}`}
+                 description={`list of product of flower shop , ${category}`} name={"Flower Shop"}
+                 author={"flower shop"} publish={"flower shop"}/>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={4} xl={2}>
                     <ProductsFilterBox params={categoryField} setParam={setCategoryField}/>
