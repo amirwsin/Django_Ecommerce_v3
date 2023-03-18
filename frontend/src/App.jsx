@@ -30,6 +30,7 @@ import Content from "./components/dashboard/Content";
 import AdminUsers from "./pages/dashboard/AdminUsers";
 import CheckOut from "./pages/CheckOut";
 import AdminProducts from "./pages/dashboard/AdminProducts";
+import AdminProductDetail from "./pages/dashboard/AdminProductDetail";
 
 let token, user;
 
@@ -106,6 +107,7 @@ function App() {
                                     <Route path={"/admin/dashboard"} element={<AdminDashboard/>}/>
                                     <Route path={"/admin/users"} element={<AdminUsers/>}/>
                                     <Route path={"/admin/products"} element={<AdminProducts/>}/>
+                                    <Route path={"/admin/products/:id/:type?/"} element={<AdminProductDetail/>}/>
                                 </Route>
                             </Routes>
                         </BrowserRouter>

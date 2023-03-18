@@ -73,6 +73,7 @@ class BasicProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = "__all__"
+        depth = 2
 
     def get_inventory(self, obj):
         inventory = ProductInventory.objects.get(product=obj)

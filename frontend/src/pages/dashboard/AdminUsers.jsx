@@ -64,9 +64,10 @@ const AdminUsers = () => {
 
     return (
         <Container maxWidth={"xll"} sx={{paddingY: 2}}>
-            <Box className={"card"} maxHeight={600} sx={{
+            <Box className={"card"} sx={{
                 padding: 0,
                 margin: 0,
+                minHeight:"600px",
                 "& .MuiDataGrid-root": {
                     border: "none"
                 },
