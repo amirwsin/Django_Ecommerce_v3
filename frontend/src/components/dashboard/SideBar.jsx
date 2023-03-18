@@ -36,14 +36,16 @@ const SideBar = () => {
                                 </Typography>
                             </li>
                         </Link>
-                        <li className={"sidebar-wrapper-inner-list-item"} onClick={handleClick}>
-                            <Tooltip title={"Inventory"} arrow>
-                                <Inventory/>
-                            </Tooltip>
-                            <Typography variant={"h6"}>
-                                Inventory
-                            </Typography>
-                        </li>
+                        <Link to={"/admin/products"} className={"sidebar-link"}>
+                            <li className={"sidebar-wrapper-inner-list-item"} onClick={handleClick}>
+                                <Tooltip title={"Products"} arrow>
+                                    <Inventory/>
+                                </Tooltip>
+                                <Typography variant={"h6"}>
+                                    Products
+                                </Typography>
+                            </li>
+                        </Link>
                         <li className={"sidebar-wrapper-inner-list-item"} onClick={handleClick}>
                             <Tooltip title={"Categories"} arrow>
                                 <Category/>
