@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from inventory.models import Product, Category,Brand,ProductType,ProductAttribute,Media,ProductAttributeValue,Stock,ProductInventory
+from inventory.models import Product, Category, Brand, ProductType, ProductAttribute, Media, ProductAttributeValue, \
+    Stock, ProductInventory
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -35,9 +36,11 @@ class ProductProductAttributeSerializer(serializers.ModelSerializer):
 
 
 class MediaSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(required=False)
+
     class Meta:
         model = Media
-        exclude = ["product_inventory", "create_at", "update_at"]
+        exclude = ["create_at", "update_at"]
 
 
 class ProductAttributeValueSerializer(serializers.ModelSerializer):
@@ -60,7 +63,7 @@ class ProductInventorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductInventory
-        exclude = ["retail_price", "store_price", "create_at", "update_at", "product"]
+        exclude = ["create_at", "update_at", "product"]
         depth = 2
 
     def get_media(self, obj):

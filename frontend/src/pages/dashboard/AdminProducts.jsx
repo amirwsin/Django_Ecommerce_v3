@@ -30,7 +30,7 @@ const AdminProducts = () => {
         {field: "name", headerName: "NAME", flex: 1},
         {
             field: "category", headerName: "CATEGORY", flex: 1, renderCell: ({row: {category}}) => {
-                return category[0].name
+                return category.name
             }
         },
         {
@@ -48,8 +48,19 @@ const AdminProducts = () => {
         {field: "update_at", headerName: "DATE UPDATE", flex: 1},
         {
             field: " ", headerName: "ACTION", flex: 1, renderCell: (param) => {
-                return <IconButton onClickCapture={() => setSelectProduct(param.row)}><Visibility
-                    color={"action"}/></IconButton>
+                return (<>
+                        <Tooltip title={"brief view"} arrow>
+                            <IconButton onClickCapture={() => setSelectProduct(param.row)}>
+                                <Visibility color={"action"}/>
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip arrow title={"Edit Product"}>
+                            <IconButton color={"info"} component={Link} to={`${param.row.id}/`}>
+                                <Edit fontSize={"medium"}/>
+                            </IconButton>
+                        </Tooltip>
+                    </>
+                )
             }
         },
     ]
@@ -69,7 +80,7 @@ const AdminProducts = () => {
             <Box className={"card"} sx={{
                 padding: 0,
                 margin: 0,
-                minHeight:"600px",
+                minHeight: "600px",
                 "& .MuiDataGrid-root": {
                     border: "none"
                 },
@@ -94,7 +105,7 @@ const AdminProducts = () => {
 
 export const Detail = ({data, setSelectProduct}) => {
     return (
-        <Box className={"card"} sx={{padding: 2,height:"fit-content"}} minHeight={320}>
+        <Box className={"card"} sx={{padding: 2, height: "fit-content"}} minHeight={320}>
             <Grid container spacing={1}>
                 <Grid item xs={12} md={3} lg={2}>
                     {data.inventory.media.map(item => {
@@ -145,7 +156,7 @@ export const Detail = ({data, setSelectProduct}) => {
                         <Divider orientation={"vertical"} flexItem/>
                         <Box sx={{display: "flex", flexDirection: "row", flexWrap: "wrap", gap: 3}}>
                             <Typography>
-                                Category : <br/>{data.category[0].name}
+                                Category : <br/>{data.category.name}
                             </Typography>
                             <Divider orientation={"vertical"} flexItem/>
                             <Typography>
@@ -162,6 +173,18 @@ export const Detail = ({data, setSelectProduct}) => {
                             <Divider orientation={"vertical"} flexItem/>
                             <Typography>
                                 Weight(kg) : <br/>{data.inventory.weight}kg
+                            </Typography>
+                            <Divider orientation={"vertical"} flexItem/>
+                            <Typography>
+                                Retail Price : <br/>${data.inventory.retail_price}
+                            </Typography>
+                            <Divider orientation={"vertical"} flexItem/>
+                            <Typography>
+                                Store Price : <br/>${data.inventory.store_price}
+                            </Typography>
+                            <Divider orientation={"vertical"} flexItem/>
+                            <Typography>
+                                Sale Price : <br/>${data.inventory.sale_price}
                             </Typography>
                         </Box>
                     </Box>

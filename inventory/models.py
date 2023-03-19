@@ -86,7 +86,7 @@ class Product(models.Model):
         verbose_name=_("product description"),
         help_text=_("format : required"),
     )
-    category = TreeManyToManyField(Category)
+    category = TreeForeignKey(Category,on_delete=models.SET_NULL,null=True,blank=True)
     is_active = models.BooleanField(
         unique=False,
         null=False,
@@ -106,6 +106,9 @@ class Product(models.Model):
         verbose_name=_("date product last updated"),
         help_text=_("format : y-m-d H:M:S")
     )
+
+    class Meta:
+        ordering = ['-id']
 
     def __str__(self):
         return self.name

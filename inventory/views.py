@@ -31,6 +31,7 @@ class BasicCategoriesView(generics.ListAPIView):
     serializer_class = BasicCategoriesSerializer
 
 
+
 class BasicBrandsView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
     queryset = Brand.objects.all()

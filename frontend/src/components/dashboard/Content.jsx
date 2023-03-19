@@ -42,7 +42,7 @@ const Content = ({children}) => {
                     </Box>
                     <Box sx={{display: {xs: "none", sm: "block"}}}>
                         <IconButton onClick={handleThemeColor}>
-                            {themeColor ? <LightMode sx={{fontSize: "1.85rem"}}/> :
+                            {!themeColor ? <LightMode sx={{fontSize: "1.85rem"}}/> :
                                 <DarkMode sx={{fontSize: "1.85rem"}}/>}
                         </IconButton>
                         <IconButton>
