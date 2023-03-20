@@ -2,9 +2,9 @@ from rest_framework.response import Response
 from rest_framework import status, permissions, generics, viewsets, pagination
 from django.contrib.auth.models import User
 from .serializers import UserSerializer, ProductsSerializer, MediaSerializer, CategorySerializer, ProductTypeSerializer, \
-    BrandsSerializer, ProductAttributeValuesSerializer, ProductAttributeValueSerializer, ProductInventoryEditSerializer
+    BrandsSerializer, ProductAttributeValuesSerializer, ProductAttributeValueSerializer, ProductInventoryEditSerializer,StockSerializer
 from inventory.models import Product, Category, Media, ProductType, Brand, ProductAttributeValues, ProductInventory, \
-    ProductAttributeValue
+    ProductAttributeValue,Stock
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 
 
@@ -133,3 +133,9 @@ class ProductAttributeValuesView(viewsets.ModelViewSet):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class StockView(viewsets.ModelViewSet):
+    queryset = Stock.objects.order_by("-id")
+    serializer_class = StockSerializer
+    permission_classes = [permissions.IsAuthenticated]

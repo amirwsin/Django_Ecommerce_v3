@@ -1,4 +1,4 @@
-import {Avatar, AvatarGroup, Box, Container, Divider, Grid, IconButton, Tooltip, Typography} from "@mui/material";
+import {Avatar, AvatarGroup, Box, Chip, Container, Divider, Grid, IconButton, Tooltip, Typography} from "@mui/material";
 import {DataGrid, GridToolbar} from "@mui/x-data-grid";
 import {
     CheckBox,
@@ -9,8 +9,8 @@ import {
     TaskAlt,
     Visibility
 } from "@mui/icons-material";
-import {useQuery} from "@tanstack/react-query";
-import {GetAllProducts} from "../../features/api/cmsApi";
+import {useMutation, useQuery} from "@tanstack/react-query";
+import {GetAllProducts, ProductDelete} from "../../features/api/cmsApi";
 import {Link} from "react-router-dom";
 import {useState} from "react";
 
@@ -26,29 +26,52 @@ const AdminProducts = () => {
 
 
     const columns = [
+        {field: "id", headerName: "ID", align: "left", headerAlign: "left"},
         {field: "web_id", headerName: "WEB ID", align: "left", headerAlign: "left"},
-        {field: "name", headerName: "NAME", flex: 1},
+        {field: "name", headerName: "NAME", flex: 2},
         {
             field: "category", headerName: "CATEGORY", flex: 1, renderCell: ({row: {category}}) => {
                 return category.name
             }
         },
         {
+            field: "price", headerName: "Price", headerAlign: "left",
+            align: "left", flex: 1, renderCell: ({row: {inventory}}) => {
+                return `$${inventory?.sale_price}`
+            }
+        },
+        {
             field: "is_active",
-            headerName: "ACTIVE",
+            headerName: "VISIBlE",
             headerAlign: "center",
             align: "center",
+            flex: 1,
             renderCell: ({row: {is_active}}) => {
                 return (
-                    is_active ? <CheckBox color={"success"}/> : <IndeterminateCheckBox color={"error"}/>
+                    is_active ? <Chip variant={"filled"} color={"success"} label={"VISIBlE"}/> :
+                        <Chip variant={"outlined"} color={"error"} label={"INVISIBLE"}/>
                 )
             },
         },
-        {field: "create_at", headerName: "DATE CREATE", flex: 1},
-        {field: "update_at", headerName: "DATE UPDATE", flex: 1},
         {
-            field: " ", headerName: "ACTION", flex: 1, renderCell: (param) => {
-                return (<>
+            field: "create_at", headerName: "DATE CREATE", flex: 2, renderCell: ({row: {create_at}}) => {
+                let date = new Date(create_at)
+                return `${date.toLocaleString('default', {weekday: "long"})}, ${date.toLocaleString('default', {
+                    month: "long",
+                })} ${date.getDay()}, ${date.getFullYear()}`
+            }
+        },
+        {
+            field: "update_at", headerName: "DATE UPDATE", flex: 2, renderCell: ({row: {update_at}}) => {
+                let date = new Date(update_at)
+                return `${date.toLocaleString('default', {weekday: "long"})}, ${date.toLocaleString('default', {
+                    month: "long",
+                })} ${date.getDay()}, ${date.getFullYear()}`
+            }
+        },
+        {
+            field: " ", headerName: "ACTION", flex: 2, renderCell: (param) => {
+                return (<Box>
                         <Tooltip title={"brief view"} arrow>
                             <IconButton onClickCapture={() => setSelectProduct(param.row)}>
                                 <Visibility color={"action"}/>
@@ -59,7 +82,12 @@ const AdminProducts = () => {
                                 <Edit fontSize={"medium"}/>
                             </IconButton>
                         </Tooltip>
-                    </>
+                        <Tooltip arrow title={"Delete Product"}>
+                            <IconButton color={"error"} onClick={() => handleDelete(param.row.id)}>
+                                <Delete fontSize={"medium"}/>
+                            </IconButton>
+                        </Tooltip>
+                    </Box>
                 )
             }
         },
@@ -72,21 +100,37 @@ const AdminProducts = () => {
         create_at: Date.now(),
         update_at: Date.now(),
     }]
+    const productDeleteMutation = useMutation({
+        mutationFn: (data) => ProductDelete(data)
+    })
+
+    const handleDelete = (id) => {
+        productDeleteMutation.mutate(id)
+    }
 
 
     return (
-        <Container maxWidth={"xll"} sx={{paddingY: 2, display: "flex", flexDirection: "column", gap: 2}}>
+        <Container maxWidth={"xll"} sx={{
+            paddingY: 2,
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            overflow: "scroll"
+        }}>
             {selectProduct && <Detail data={selectProduct} setSelectProduct={setSelectProduct}/>}
             <Box className={"card"} sx={{
                 padding: 0,
-                margin: 0,
+                marginX: 0,
+                marginY: 2,
                 minHeight: "600px",
                 "& .MuiDataGrid-root": {
                     border: "none"
                 },
-                "& .MuiDataGrid-columnHeaders": {
+                "& .MuiDataGrid-columnHeader": {
                     backgroundColor: "action.main",
-
+                },
+                "& .MuiDataGrid-columnHeader:last-child": {
+                    minWidth: {xs: "150px !important"}
                 },
                 "& .MuiDataGrid-footerContainer": {
                     backgroundColor: "action.main"
@@ -94,10 +138,13 @@ const AdminProducts = () => {
                 "& .MuiButtonBase-root": {
                     color: "text.main"
                 },
+                "& .MuiDataGrid-cell:last-child": {
+                    minWidth: {xs: "10rem !important",md:"17rem !important"}
+                }
             }}>
                 <DataGrid paginationMode="server" checkboxSelection
                           rows={productsQuery.data ? productsQuery.data.results : mockData} columns={columns}
-                          components={{Toolbar: GridToolbar}}/>
+                          components={{Toolbar: GridToolbar}} loading={productsQuery.isLoading}/>
             </Box>
         </Container>
     )
@@ -105,7 +152,7 @@ const AdminProducts = () => {
 
 export const Detail = ({data, setSelectProduct}) => {
     return (
-        <Box className={"card"} sx={{padding: 2, height: "fit-content"}} minHeight={320}>
+        <Box className={"card"} sx={{padding: 2}}>
             <Grid container spacing={1}>
                 <Grid item xs={12} md={3} lg={2}>
                     {data.inventory.media.map(item => {
@@ -137,9 +184,10 @@ export const Detail = ({data, setSelectProduct}) => {
                         </Box>
                     </Box>
                     <hr/>
-                    <Typography component={"p"} variant={"body1"}>
-                        {data.description.length > 250 ? data.description.substring(0, 250) + "..." : data.description}
-                    </Typography>
+                    <div dangerouslySetInnerHTML={{
+                        __html: data?.description ? data.description.substring(0, 250) + "..." :
+                            "Loading . . . "
+                    }}/>
                     <hr/>
                     <Box sx={{display: "flex", flexDirection: "row", flexWrap: "wrap", gap: 2}}>
                         <Box>
@@ -155,35 +203,35 @@ export const Detail = ({data, setSelectProduct}) => {
                         </Box>
                         <Divider orientation={"vertical"} flexItem/>
                         <Box sx={{display: "flex", flexDirection: "row", flexWrap: "wrap", gap: 3}}>
-                            <Typography>
+                            <Typography variant={"subtitle1"} component={"p"}>
                                 Category : <br/>{data.category.name}
                             </Typography>
                             <Divider orientation={"vertical"} flexItem/>
-                            <Typography>
+                            <Typography variant={"subtitle1"} component={"p"}>
                                 Brand : <br/>{data.inventory.brand.name}
                             </Typography>
                             <Divider orientation={"vertical"} flexItem/>
-                            <Typography>
+                            <Typography variant={"subtitle1"} component={"p"}>
                                 Type : <br/>{data.inventory.product_type.name}
                             </Typography>
                             <Divider orientation={"vertical"} flexItem/>
-                            <Typography>
+                            <Typography variant={"subtitle1"} component={"p"}>
                                 Stock / Sold : <br/>{data.inventory.stock.units} / {data.inventory.stock.units_sold}
                             </Typography>
                             <Divider orientation={"vertical"} flexItem/>
-                            <Typography>
+                            <Typography variant={"subtitle1"} component={"p"}>
                                 Weight(kg) : <br/>{data.inventory.weight}kg
                             </Typography>
                             <Divider orientation={"vertical"} flexItem/>
-                            <Typography>
+                            <Typography variant={"subtitle1"} component={"p"}>
                                 Retail Price : <br/>${data.inventory.retail_price}
                             </Typography>
                             <Divider orientation={"vertical"} flexItem/>
-                            <Typography>
+                            <Typography variant={"subtitle1"} component={"p"}>
                                 Store Price : <br/>${data.inventory.store_price}
                             </Typography>
                             <Divider orientation={"vertical"} flexItem/>
-                            <Typography>
+                            <Typography variant={"subtitle1"} component={"p"}>
                                 Sale Price : <br/>${data.inventory.sale_price}
                             </Typography>
                         </Box>

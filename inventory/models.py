@@ -86,7 +86,7 @@ class Product(models.Model):
         verbose_name=_("product description"),
         help_text=_("format : required"),
     )
-    category = TreeForeignKey(Category,on_delete=models.SET_NULL,null=True,blank=True)
+    category = TreeForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
     is_active = models.BooleanField(
         unique=False,
         null=False,
@@ -360,6 +360,7 @@ class Stock(models.Model):
     )
     last_checked = models.DateTimeField(
         unique=False,
+        auto_now=True,
         null=True,
         blank=True,
         verbose_name=_("inventory stock check date"),

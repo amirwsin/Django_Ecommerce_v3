@@ -32,16 +32,22 @@ export const ProductCreateEdit = async (data) => {
     })
 }
 
+export const ProductDelete = async (id) => {
+    return await axiosInstance.delete(`/api/cms/products/${id}/`).then((res) => {
+        return res.data
+    }).catch((err) => {
+        console.log(err)
+    })
+
+}
+
 export const ProductInventoryEdit = async (data) => {
-    console.log(data)
     return await axiosInstance.put(`/api/cms/product_inventory/${data.id}/`, data).then((res) => {
         return res.data
     }).catch((err) => {
         console.log(err)
     })
 }
-
-
 
 
 export const CreateMedia = async (data) => {
@@ -131,4 +137,13 @@ export const GetProductAttributeValueById = async (id) => {
         console.log(err)
     })
 }
+
+export const StockEdit = async (data) => {
+    return await axiosInstance.patch(`/api/cms/stock/${data.id}/`, data).then((res) => {
+        return res.data
+    }).catch((err) => {
+        console.log(err)
+    })
+}
+
 

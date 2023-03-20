@@ -9,6 +9,7 @@ import ProductMain from "../../components/dashboard/ProductMain";
 import ProductMediaCard from "../../components/dashboard/ProductMediaCard";
 import ProductMediaCardAdd from "../../components/dashboard/ProductMediaCardAdd";
 import ProductInventory from "../../components/dashboard/ProductInventory";
+import ProductStock from "../../components/dashboard/ProductStock";
 
 const AdminProductDetail = () => {
     const {id} = useParams()
@@ -30,7 +31,8 @@ const AdminProductDetail = () => {
                 <Typography variant={"h3"}>Media Section</Typography>
                 <Typography variant={"caption"}>maximum media : 5</Typography>
                 <hr/>
-                {!productQuery.isLoading && <ProductMedia data={productQuery.data?.inventory?.media} id={productQuery.data?.inventory?.id}/>}
+                {!productQuery.isLoading &&
+                <ProductMedia data={productQuery.data?.inventory?.media} id={productQuery.data?.inventory?.id}/>}
             </Box>
             <Box className={"card"}>
                 <Typography variant={"h3"}>Main Section</Typography>
@@ -40,7 +42,12 @@ const AdminProductDetail = () => {
             <Box className={"card"}>
                 <Typography variant={"h3"}>Inventory Section</Typography>
                 <hr/>
-                {!productQuery.isLoading && <ProductInventory data={productQuery.data}/> }
+                {!productQuery.isLoading && <ProductInventory data={productQuery.data}/>}
+            </Box>
+            <Box className={"card"}>
+                <Typography variant={"h3"}>Units/Stock Section</Typography>
+                <hr/>
+                {!productQuery.isLoading && <ProductStock data={productQuery.data}/>}
             </Box>
         </Container>
     )
