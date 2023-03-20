@@ -25,13 +25,24 @@ export const GetProductById = async (id) => {
 }
 
 export const ProductCreateEdit = async (data) => {
-    console.log(data)
-    return await axiosInstance.patch(`/api/cms/products/${data.id}/`,data).then((res) => {
+    return await axiosInstance.patch(`/api/cms/products/${data.id}/`, data).then((res) => {
         return res.data
     }).catch((err) => {
         console.log(err)
     })
 }
+
+export const ProductInventoryEdit = async (data) => {
+    console.log(data)
+    return await axiosInstance.put(`/api/cms/product_inventory/${data.id}/`, data).then((res) => {
+        return res.data
+    }).catch((err) => {
+        console.log(err)
+    })
+}
+
+
+
 
 export const CreateMedia = async (data) => {
     let prepData = new FormData()
@@ -81,6 +92,40 @@ export const DeleteMedia = async (id) => {
 
 export const GetAllCategories = async () => {
     return await axiosInstance.get(`/api/cms/categories/`).then((res) => {
+        return res.data
+    }).catch((err) => {
+        console.log(err)
+    })
+}
+
+export const GetAllProductTypes = async () => {
+    return await axiosInstance.get(`/api/cms/product_types/`).then((res) => {
+        return res.data
+    }).catch((err) => {
+        console.log(err)
+    })
+}
+
+
+export const GetAllBrands = async () => {
+    return await axiosInstance.get(`/api/cms/brands/`).then((res) => {
+        return res.data
+    }).catch((err) => {
+        console.log(err)
+    })
+}
+
+
+export const GetAllProductAttributeValue = async () => {
+    return await axiosInstance.get(`/api/cms/product_attribute_value/`).then((res) => {
+        return res.data
+    }).catch((err) => {
+        console.log(err)
+    })
+}
+
+export const GetProductAttributeValueById = async (id) => {
+    return await axiosInstance.get(`/api/cms/product_attribute_value/${id}/`).then((res) => {
         return res.data
     }).catch((err) => {
         console.log(err)

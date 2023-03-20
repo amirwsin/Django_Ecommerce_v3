@@ -24,7 +24,7 @@ const ProductMain = ({data}) => {
         slug: data?.slug,
         name: data?.name,
         description: data?.description,
-        category: data?.category.name,
+        category: data?.category ? data?.category?.name : "",
         is_active: data?.is_active,
     })
 
@@ -44,24 +44,27 @@ const ProductMain = ({data}) => {
     const handleSubmit = (e) => {
         e.preventDefault()
         productMutation.mutate()
-        console.log(form)
     }
 
     return (
         <form onSubmit={handleSubmit}>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} paddingY={5}>
                 <Grid item xs={12} lg={6}>
-                    <TextField type={"text"} required variant={"outlined"} label={"WEB ID"} name={"web_id"}
+                    <TextField type={"text"} required variant={"outlined"} label={"WEB ID"} inputProps={{maxLength: 50}}
+                               helperText={"format : required , unique , max-50"} name={"web_id"}
                                fullWidth={true}
                                onChange={handleChange} value={form.web_id}/>
                 </Grid>
                 <Grid item xs={12} lg={6}>
-                    <TextField type={"text"} required variant={"outlined"} label={"Product Name"} name={"name"}
+                    <TextField type={"text"} required variant={"outlined"} inputProps={{maxLength: 255}}
+                               label={"Product Name"} helperText={"format : required , max-255"} name={"name"}
                                fullWidth={true}
                                onChange={handleChange} value={form.name}/>
                 </Grid>
                 <Grid item xs={12} lg={6}>
-                    <TextField type={"text"} required variant={"outlined"} label={"safe url"} name={"slug"}
+                    <TextField type={"text"} required variant={"outlined"}
+                               helperText={"format : required , letters, numbers , underscore or hyphens"}
+                               label={"safe url"} name={"slug"}
                                fullWidth={true}
                                onChange={handleChange} value={form.slug}/>
                 </Grid>
@@ -77,6 +80,7 @@ const ProductMain = ({data}) => {
                             required
                             onChange={handleChange}
                         >
+                           <MenuItem value>------------</MenuItem>
                             {!categoryQuery.isLoading && categoryQuery.data.results.map(item =>
                                 <MenuItem key={item.id} value={item.name}>{item.name}</MenuItem>
                             )}
@@ -109,7 +113,7 @@ const ProductMain = ({data}) => {
                                                  ...form,
                                                  is_active: !form.is_active
                                              })}/>}
-                            label="Active"/>
+                            label="Product Visibility"/>
                     </FormGroup>
                 </Grid>
                 <Grid item xs={12} md={12}>

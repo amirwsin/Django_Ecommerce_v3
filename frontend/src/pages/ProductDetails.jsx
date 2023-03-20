@@ -14,16 +14,16 @@ const ProductDetails = () => {
     let {slug} = useParams()
 
     const ProductQuery = useQuery({
-        queryKey: ["product", "slug"],
+        queryKey: ["product", slug],
         queryFn: () => ProductBySlug(slug),
     })
 
 
     return (
         <Container sx={{marginY: 5, minHeight: "60vh"}} maxWidth={"xl"}>
-            <SEO type={"text/html"} title={`Flower Shop | ${ProductQuery.data.name}`}
-                 keywords={`flower , flower shop , buy online flower , ${ProductQuery.data.name} , ${ProductQuery.data.category}`}
-                 description={ProductQuery.data.description} name={"Flower Shop"}
+            <SEO type={"text/html"} title={`Flower Shop | ${ProductQuery.data?.name}`}
+                 keywords={`flower , flower shop , buy online flower , ${ProductQuery.data?.name} , ${ProductQuery.data?.category}`}
+                 description={ProductQuery.data?.description} name={"Flower Shop"}
                  author={"flower shop"} publish={"flower shop"}/>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={4} lg={5}>
