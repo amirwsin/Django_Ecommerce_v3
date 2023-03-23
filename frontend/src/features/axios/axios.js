@@ -46,7 +46,7 @@ axiosInstance.interceptors.response.use((response) => {
                     localStorage.setItem('access_token', res.data.access_token)
                     localStorage.setItem('refresh_token', res.data.refresh_token)
                     axiosInstance.defaults.headers['Authorization'] =
-                        'JWT ' + rres.data.access_token;
+                        'JWT ' + res.data.access_token;
                     originalRequest.headers['Authorization'] =
                         'JWT ' + res.data.access_token;
                     window.location.reload()
@@ -63,6 +63,7 @@ axiosInstance.interceptors.response.use((response) => {
             }
         }
         console.log(error)
+        return error
     })
 
 

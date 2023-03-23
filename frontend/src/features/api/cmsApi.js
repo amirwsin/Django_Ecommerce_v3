@@ -4,7 +4,7 @@ export const GetAllUsers = async (page) => {
     return await axiosInstance.get(`/api/cms/users/`,).then((res) => {
         return res.data
     }).catch((err) => {
-        console.log(err)
+         return err
     })
 }
 
@@ -12,7 +12,7 @@ export const GetAllProducts = async (page) => {
     return await axiosInstance.get(`/api/cms/products/`,).then((res) => {
         return res.data
     }).catch((err) => {
-        console.log(err)
+         return err
     })
 }
 
@@ -20,15 +20,25 @@ export const GetProductById = async (id) => {
     return await axiosInstance.get(`/api/cms/products/${id}/`).then((res) => {
         return res.data
     }).catch((err) => {
-        console.log(err)
+         return err
     })
 }
 
-export const ProductCreateEdit = async (data) => {
-    return await axiosInstance.patch(`/api/cms/products/${data.id}/`, data).then((res) => {
-        return res.data
+
+export const ProductCreate = async (data) => {
+    return await axiosInstance.post(`/api/cms/products/`, data).then((res) => {
+        return res
     }).catch((err) => {
-        console.log(err)
+         return err
+    })
+}
+
+
+export const ProductEditById = async (data) => {
+    return await axiosInstance.patch(`/api/cms/products/${data.id}/`, data).then((res) => {
+        return res
+    }).catch((err) => {
+         return err
     })
 }
 
@@ -36,16 +46,16 @@ export const ProductDelete = async (id) => {
     return await axiosInstance.delete(`/api/cms/products/${id}/`).then((res) => {
         return res.data
     }).catch((err) => {
-        console.log(err)
+         return err
     })
 
 }
 
 export const ProductInventoryEdit = async (data) => {
     return await axiosInstance.put(`/api/cms/product_inventory/${data.id}/`, data).then((res) => {
-        return res.data
+        return res
     }).catch((err) => {
-        console.log(err)
+         return err
     })
 }
 
@@ -64,7 +74,7 @@ export const CreateMedia = async (data) => {
     },).then((res) => {
         return res.data
     }).catch((err) => {
-        console.log(err)
+         return err
     })
 }
 
@@ -84,14 +94,14 @@ export const UpdateMedia = async (data) => {
     }).then((res) => {
         return res.data
     }).catch((err) => {
-        console.log(err)
+         return err
     })
 }
 export const DeleteMedia = async (id) => {
     return await axiosInstance.delete(`/api/cms/media/${id}/`).then((res) => {
         return res.data
     }).catch((err) => {
-        console.log(err)
+         return err
     })
 
 }
@@ -100,7 +110,7 @@ export const GetAllCategories = async () => {
     return await axiosInstance.get(`/api/cms/categories/`).then((res) => {
         return res.data
     }).catch((err) => {
-        console.log(err)
+         return err
     })
 }
 
@@ -108,7 +118,7 @@ export const GetAllProductTypes = async () => {
     return await axiosInstance.get(`/api/cms/product_types/`).then((res) => {
         return res.data
     }).catch((err) => {
-        console.log(err)
+         return err
     })
 }
 
@@ -117,7 +127,7 @@ export const GetAllBrands = async () => {
     return await axiosInstance.get(`/api/cms/brands/`).then((res) => {
         return res.data
     }).catch((err) => {
-        console.log(err)
+         return err
     })
 }
 
@@ -126,7 +136,7 @@ export const GetAllProductAttributeValue = async () => {
     return await axiosInstance.get(`/api/cms/product_attribute_value/`).then((res) => {
         return res.data
     }).catch((err) => {
-        console.log(err)
+         return err
     })
 }
 
@@ -134,15 +144,15 @@ export const GetProductAttributeValueById = async (id) => {
     return await axiosInstance.get(`/api/cms/product_attribute_value/${id}/`).then((res) => {
         return res.data
     }).catch((err) => {
-        console.log(err)
+         return err
     })
 }
 
 export const StockEdit = async (data) => {
     return await axiosInstance.patch(`/api/cms/stock/${data.id}/`, data).then((res) => {
-        return res.data
+        return res
     }).catch((err) => {
-        console.log(err)
+         return err
     })
 }
 

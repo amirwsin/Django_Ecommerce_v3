@@ -1,10 +1,13 @@
+import json
+
 from rest_framework.response import Response
 from rest_framework import status, permissions, generics, viewsets, pagination
 from django.contrib.auth.models import User
 from .serializers import UserSerializer, ProductsSerializer, MediaSerializer, CategorySerializer, ProductTypeSerializer, \
-    BrandsSerializer, ProductAttributeValuesSerializer, ProductAttributeValueSerializer, ProductInventoryEditSerializer,StockSerializer
+    BrandsSerializer, ProductAttributeValuesSerializer, ProductAttributeValueSerializer, ProductInventoryEditSerializer, \
+    StockSerializer
 from inventory.models import Product, Category, Media, ProductType, Brand, ProductAttributeValues, ProductInventory, \
-    ProductAttributeValue,Stock
+    ProductAttributeValue, Stock
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 
 
@@ -67,6 +70,30 @@ class ProductsView(viewsets.ModelViewSet):
             return Response(status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def create(self, request, *args, **kwargs):
+        data = request.data
+        category = Category.objects.filter(name=data["category"])
+        inventoryData = data["inventory"]
+        attributes = inventoryData["attribute_values"]
+        if data:
+            serializer = self.serializer_class(data=data, context={"request": request})
+            if serializer.is_valid():
+                if category:
+                    serializer.validated_data["category"] = category.first()
+                result = serializer.save()
+                inventoryData["product"] = result.id
+                inventorySerializer = ProductInventoryEditSerializer(data=inventoryData, context={"request": request})
+                if inventorySerializer.is_valid():
+                    invResult = inventorySerializer.save()
+                    for item in attributes:
+                        ProductAttributeValues.objects.create(productinventory_id=invResult.id,
+                                                              attributevalues_id=item)
+                    return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class MediaView(viewsets.ModelViewSet):

@@ -10,7 +10,9 @@ const SideBar = () => {
         }
         e.currentTarget.classList.toggle("active")
     }
+
     return (
+
         <Box id={"sidebar"} className={"sidebar"} sx={{backgroundColor: "background.main"}}>
             <Box className={"sidebar-wrapper"}>
                 <Box className={"sidebar-wrapper-inner"}>

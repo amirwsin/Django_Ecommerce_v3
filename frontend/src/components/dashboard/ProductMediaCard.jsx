@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import {AddPhotoAlternate, Delete, Restore, SaveAlt} from "@mui/icons-material";
 import {useParams} from "react-router-dom";
+import toast from "react-hot-toast";
 
 const ProductMediaCard = ({data}) => {
     const [media, setMedia] = useState({
@@ -59,35 +60,50 @@ const ProductMediaCard = ({data}) => {
 
 
     const mediaMutation = useMutation({
-        mutationFn: () => UpdateMedia(media),
-        onSuccess: (newData) => {
-            setShowSave(false)
-            queryClient.setQueryData(["products", {id}], (old_data) => {
-                let prevData = old_data.inventory.media.filter((media) => {
-                    return media.id === newData.id
+        mutationFn: (data) => UpdateMedia(data),
+        onSuccess: (data, variables) => {
+            if (data?.response?.status === 400 || data?.response?.status === 404) {
+                toast.error(`something went wrong : ${Object.values(data.response.data)}`, {duration: 10000})
+            } else {
+                toast.success("image saved", {duration: 5000})
+                CheckData()
+                queryClient.setQueryData(["products", parseInt(id)], (old_data) => {
+                    old_data.inventory.media.map(item => {
+                        return item.id === variables.id ? item = variables : item
+                    })
                 })
-                prevData[0].image = newData.image
-                prevData[0].alt_text = newData.alt_text
-                prevData[0].is_feature = newData.is_feature
-
-                console.log(newData)
-                console.log(prevData)
-
-            })
+            }
         }
     })
 
     const mediaDeleteMutation = useMutation({
-        mutationFn: () => DeleteMedia(media.id),
+        mutationFn: (id) => DeleteMedia(id),
+        onSuccess: (data, index) => {
+            if (data?.response?.status === 400 || data?.response?.status === 404) {
+                toast.error(`something went wrong : ${Object.values(data.response.data)}`, {duration: 10000})
+            } else {
+                CheckData()
+                toast.success("image deleted", {duration: 5000})
+                queryClient.setQueryData(["products", parseInt(id)], (old_data) => {
+                    let readyData = {...old_data}
+                    old_data = JSON.parse(readyData.inventory.media.map((item, key) => {
+                        if (item.id === index) {
+                            readyData.inventory.media.splice(key, 1)
+                        }
+                    }))
+                    return old_data
+                })
+            }
+        }
     })
 
     const handleDelete = () => {
-        mediaDeleteMutation.mutate()
+        mediaDeleteMutation.mutate(media.id)
     }
 
     const handleSave = (e) => {
         e.preventDefault()
-        mediaMutation.mutate()
+        mediaMutation.mutate(media)
     }
     return (
         <Card sx={{maxWidth: 350}} variant={"elevation"}>
@@ -101,7 +117,7 @@ const ProductMediaCard = ({data}) => {
                             alignSelf: "start",
                         }
                     }}>
-                        <input onChange={handleImageChange} required value={data.image.name} hidden type={"file"}
+                        <input onChange={handleImageChange} value={data.image.name} hidden type={"file"}
                                accept={"image/*"}
                                id={"image-file"}
                                name={"image-file"}/>

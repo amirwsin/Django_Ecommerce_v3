@@ -18,6 +18,7 @@ import {
     GetProductAttributeValueById,
     ProductInventoryEdit
 } from "../../features/api/cmsApi";
+import toast from "react-hot-toast";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -30,24 +31,24 @@ const MenuProps = {
     },
 };
 
-const ProductInventory = ({data}) => {
+const ProductInventory = ({data, handleNext, setFormData, formData}) => {
     const [form, setForm] = useState({
-        id: data?.inventory?.id,
-        sku: data?.inventory?.sku,
-        upc: data?.inventory?.upc,
-        product_type: data?.inventory?.product_type.id,
-        brand: data?.inventory?.brand.id,
-        retail_price: data?.inventory?.retail_price,
-        store_price: data?.inventory?.store_price,
-        sale_price: data?.inventory?.sale_price,
-        weight: data?.inventory?.weight,
-        attribute_values: data?.inventory?.attribute_values.map(item => {
+        id: data?.inventory?.id ? data?.inventory?.id : null,
+        sku: data?.inventory?.sku ? data?.inventory?.sku : "",
+        upc: data?.inventory?.upc ? data?.inventory?.upc : "",
+        product_type: data?.inventory?.product_type.id ? data?.inventory?.product_type.id : "",
+        brand: data?.inventory?.brand.id ? data?.inventory?.brand.id : "",
+        retail_price: data?.inventory?.retail_price ? data?.inventory?.retail_price : 0,
+        store_price: data?.inventory?.store_price ? data?.inventory?.store_price : 0,
+        sale_price: data?.inventory?.sale_price ? data?.inventory?.sale_price : 0,
+        weight: data?.inventory?.weight ? data?.inventory?.weight : 0,
+        attribute_values: data?.inventory?.attribute_values ? data?.inventory?.attribute_values.map(item => {
             return item.id
-        }),
+        }) : "",
     })
-    const [attributeList, setAttributeList] = useState(data?.inventory?.attribute_values.map(attr => {
+    const [attributeList, setAttributeList] = useState(data?.inventory?.attribute_values ? data?.inventory?.attribute_values.map(attr => {
         return attr
-    }))
+    }) : null)
 
 
     const
@@ -62,7 +63,14 @@ const ProductInventory = ({data}) => {
     })
 
     const ProductInventoryMutation = useMutation({
-        mutationFn: (data) => ProductInventoryEdit(data)
+        mutationFn: (data) => ProductInventoryEdit(data),
+        onSuccess: (data) => {
+            if (data?.response?.status === 400 || data?.response?.status === 401 || data?.response?.status === 402 || data?.response?.status === 403 || data?.response?.status === 404) {
+                toast.error(`something went wrong : ${Object.values(data.response.data)}`, {duration: 10000})
+            } else {
+                toast.success("changes saved", {duration: 5000})
+            }
+        }
     })
 
     const handleChange = (e) => {
@@ -89,16 +97,24 @@ const ProductInventory = ({data}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        ProductInventoryMutation.mutate(form)
+        if (data && data.inventory.id) {
+            ProductInventoryMutation.mutate(form)
+        } else {
+            setFormData({...formData, inventory: form})
+            handleNext(2)
+        }
+
     }
 
     useEffect(() => {
-        let result = GetProductAttributeValueById(data?.inventory?.product_type.id)
-        result.then((res) => {
-            setAttributeList(res.map(attr => {
-                return attr
-            }))
-        })
+        if (data?.inventory?.product_type?.id) {
+            let result = GetProductAttributeValueById(data?.inventory?.product_type.id)
+            result.then((res) => {
+                setAttributeList(res.map(attr => {
+                    return attr
+                }))
+            })
+        }
         return () => {
             setAttributeList(null)
         }
@@ -214,7 +230,7 @@ const ProductInventory = ({data}) => {
                                 MenuProps={MenuProps}
                         >
                             {attributeList?.map((attr) => <MenuItem key={attr.id}
-                                                                   value={attr.id}>{attr.attribute_value}</MenuItem>)}
+                                                                    value={attr.id}>{attr.attribute_value}</MenuItem>)}
 
                         </Select>
                         <FormHelperText>Example : type cloth have color attribute or size and each attribute have values

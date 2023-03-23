@@ -10,10 +10,10 @@ import {
     TextField,
     Tooltip
 } from "@mui/material";
-import {AddPhotoAlternate, Delete, Restore, SaveAlt} from "@mui/icons-material";
+import {AddPhotoAlternate, Restore, SaveAlt} from "@mui/icons-material";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {CreateMedia, UpdateMedia} from "../../features/api/cmsApi";
-import {useParams} from "react-router-dom";
+import toast from "react-hot-toast";
 
 const ProductMediaCardAdd = ({id, productId}) => {
 
@@ -48,6 +48,7 @@ const ProductMediaCardAdd = ({id, productId}) => {
     }
     const handleRestore = () => {
         setMedia({image: null, alt_text: "", is_feature: false, product_inventory: id})
+        setPreviewImage("https://www.touchtaiwan.com/images/default.jpg")
     }
 
     useEffect(() => {
@@ -58,10 +59,15 @@ const ProductMediaCardAdd = ({id, productId}) => {
 
     const mediaMutation = useMutation({
         mutationFn: () => CreateMedia(media),
-        onSuccess: (newData) => {
-            setShowSave(false)
+        onSuccess: (data) => {
             handleRestore()
-            queryClient.setQueryData(["products", id], newData)
+            toast.success("image saved")
+            return queryClient.setQueryData(["products", parseInt(productId)], (old_data) => {
+                let readyData = {...old_data}
+                old_data.inventory.media.push(data)
+                readyData = {...readyData, inventory: old_data.inventory}
+                return readyData
+            })
         }
     })
 
@@ -69,6 +75,7 @@ const ProductMediaCardAdd = ({id, productId}) => {
         e.preventDefault()
         mediaMutation.mutate()
     }
+
 
     return (
         <Card>

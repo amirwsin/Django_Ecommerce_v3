@@ -1,4 +1,16 @@
-import {Avatar, AvatarGroup, Box, Chip, Container, Divider, Grid, IconButton, Tooltip, Typography} from "@mui/material";
+import {
+    Avatar,
+    AvatarGroup,
+    Box,
+    Button,
+    Chip,
+    Container,
+    Divider,
+    Grid,
+    IconButton,
+    Tooltip,
+    Typography
+} from "@mui/material";
 import {DataGrid, GridToolbar} from "@mui/x-data-grid";
 import {
     CheckBox,
@@ -139,9 +151,12 @@ const AdminProducts = () => {
                     color: "text.main"
                 },
                 "& .MuiDataGrid-cell:last-child": {
-                    minWidth: {xs: "10rem !important",md:"17rem !important"}
+                    minWidth: {xs: "10rem !important", md: "17rem !important"}
                 }
             }}>
+                <Button component={Link} to={"create/"} variant={"contained"} color={"black"}
+                        sx={{color: "var(--background-main) !important", marginY: 2, marginX: 1}}>Add New
+                    Product</Button>
                 <DataGrid paginationMode="server" checkboxSelection
                           rows={productsQuery.data ? productsQuery.data.results : mockData} columns={columns}
                           components={{Toolbar: GridToolbar}} loading={productsQuery.isLoading}/>

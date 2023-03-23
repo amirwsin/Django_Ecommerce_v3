@@ -10,12 +10,14 @@ import ProductMediaCard from "../../components/dashboard/ProductMediaCard";
 import ProductMediaCardAdd from "../../components/dashboard/ProductMediaCardAdd";
 import ProductInventory from "../../components/dashboard/ProductInventory";
 import ProductStock from "../../components/dashboard/ProductStock";
+import {Toaster} from "react-hot-toast";
+import React from "react";
 
 const AdminProductDetail = () => {
     const {id} = useParams()
 
     const productQuery = useQuery({
-        queryKey: ["products", id],
+        queryKey: ["products", parseInt(id)],
         queryFn: () => GetProductById(id)
     })
 
@@ -27,12 +29,13 @@ const AdminProductDetail = () => {
             gap: 2,
             overflow: "scroll"
         }}>
+            <Toaster position="top-right" reverseOrder={false}/>
             <Box className={"card"}>
                 <Typography variant={"h3"}>Media Section</Typography>
                 <Typography variant={"caption"}>maximum media : 5</Typography>
                 <hr/>
                 {!productQuery.isLoading &&
-                <ProductMedia data={productQuery.data?.inventory?.media} id={productQuery.data?.inventory?.id}/>}
+                <ProductMedia data={productQuery.data?.inventory?.media} id={productQuery.data}/>}
             </Box>
             <Box className={"card"}>
                 <Typography variant={"h3"}>Main Section</Typography>
@@ -57,7 +60,7 @@ export const ProductMedia = ({data, id}) => {
     return (
         <Box sx={{display: "flex", flexDirection: "row", flexWrap: "wrap", gap: 2}}>
             {data?.map(media => <ProductMediaCard key={media.id} data={media}/>)}
-            {data?.length < 5 && <ProductMediaCardAdd id={id} productId={id}/>}
+            {data?.length < 5 && <ProductMediaCardAdd id={id?.inventory?.id} productId={id.id}/>}
         </Box>
     )
 }

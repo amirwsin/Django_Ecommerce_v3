@@ -1,4 +1,4 @@
-import {AppBar, Badge, Box, IconButton, Switch, TextField, Toolbar} from "@mui/material";
+import {AppBar, Badge, Box, IconButton, Toolbar} from "@mui/material";
 import {AccountCircle, DarkMode, LightMode, MoreVert, Notifications, Search, Settings} from "@mui/icons-material";
 import {ColorModeContext} from "../../theme";
 import {useContext, useState} from "react";

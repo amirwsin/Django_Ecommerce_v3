@@ -10,22 +10,23 @@ import {
     Switch,
     TextField
 } from "@mui/material";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {CKEditor} from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {useMutation, useQuery} from "@tanstack/react-query";
-import {GetAllCategories, ProductCreateEdit} from "../../features/api/cmsApi";
+import {GetAllCategories, ProductCreate, ProductEditById} from "../../features/api/cmsApi";
+import toast from "react-hot-toast";
 
 
-const ProductMain = ({data}) => {
+const ProductMain = ({data, setFormData, handleNext}) => {
     const [form, setForm] = useState({
-        id: data?.id,
-        web_id: data?.web_id,
-        slug: data?.slug,
-        name: data?.name,
-        description: data?.description,
+        id: data?.id ? data?.id : null,
+        web_id: data?.web_id ? data?.web_id : "",
+        slug: data?.slug ? data?.slug : "",
+        name: data?.name ? data?.name : "",
+        description: data?.description ? data?.description : "",
         category: data?.category ? data?.category?.name : "",
-        is_active: data?.is_active,
+        is_active: data?.is_active ? data?.is_active : true,
     })
 
     const handleChange = (e) => {
@@ -37,13 +38,28 @@ const ProductMain = ({data}) => {
         queryFn: () => GetAllCategories(),
     })
 
-    const productMutation = useMutation({
-        mutationFn: () => ProductCreateEdit(form)
+    const productEditMutation = useMutation({
+        mutationFn: (data) => ProductEditById(data),
+        onSuccess: (data) => {
+            if (data?.response?.status === 400 || data?.response?.status === 404) {
+                toast.error(`something went wrong : ${Object.values(data.response.data)}`, {duration: 10000})
+            } else {
+                toast.success("changes saved", {duration: 5000})
+            }
+        },
+        onError: error => {
+            toast.error(`something went wrong : ${Object.values(error.response.data)}`, {duration: 10000})
+        }
     })
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        productMutation.mutate()
+        if (data && data.id) {
+            productEditMutation.mutate(form)
+        } else {
+            setFormData(form)
+            handleNext(1)
+        }
     }
 
     return (
@@ -80,7 +96,7 @@ const ProductMain = ({data}) => {
                             required
                             onChange={handleChange}
                         >
-                           <MenuItem value>------------</MenuItem>
+                            <MenuItem value>------------</MenuItem>
                             {!categoryQuery.isLoading && categoryQuery.data.results.map(item =>
                                 <MenuItem key={item.id} value={item.name}>{item.name}</MenuItem>
                             )}
