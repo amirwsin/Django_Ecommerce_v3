@@ -205,7 +205,7 @@ const EssentialsAttributes = () => {
                         <TextField type={"text"} margin={"normal"} required variant={"outlined"} label={"Name"}
                                    inputProps={{maxLength: 255}}
                                    fullWidth={true}
-                                   helperText={"format : required , unique , max-255"} name={"name"}
+                                   helperText={"format : required , unique , max-255, example : color , size...etc"} name={"name"}
                                    onChange={(e) => handleChange(e)} value={form.name}/>
                         <TextField type={"text"} margin={"normal"} multiline minRows={3} required variant={"outlined"}
                                    label={"Description"}
@@ -218,7 +218,7 @@ const EssentialsAttributes = () => {
                                                                  variant={"outlined"} label={"value"}
                                                                  inputProps={{maxLength: 255}}
                                                                  fullWidth={true}
-                                                                 helperText={"format : text or numbers , max-255, leave empty for delete"}
+                                                                 helperText={"format : text or numbers , max-255, leave empty for delete , example : red , lg...etc "}
                                                                  name={"attribute_value"}
                                                                  id={`value-${item.id}`}
                                                                  onChange={(e) => handleChange(e, i)}
