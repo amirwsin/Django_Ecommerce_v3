@@ -7,7 +7,7 @@ from rest_framework import status, permissions, pagination, generics
 
 class BasicProductView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
-    queryset = Product.objects.all().prefetch_related()
+    queryset = Product.objects.filter(is_active=True).prefetch_related()
     serializer_class = BasicProductSerializer
 
     def get_queryset(self):
@@ -19,7 +19,7 @@ class BasicProductView(generics.ListAPIView):
 
 
 class BasicProductBySlugView(generics.RetrieveAPIView):
-    queryset = Product.objects.prefetch_related()
+    queryset = Product.objects.filter(is_active=True).prefetch_related()
     serializer_class = BasicProductSerializer
     permission_classes = [permissions.AllowAny]
     lookup_field = "slug"
@@ -29,7 +29,6 @@ class BasicCategoriesView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
     queryset = Category.objects.all()
     serializer_class = BasicCategoriesSerializer
-
 
 
 class BasicBrandsView(generics.ListAPIView):

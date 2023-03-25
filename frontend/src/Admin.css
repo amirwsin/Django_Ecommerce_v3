@@ -140,6 +140,25 @@
 
 }
 
+.upload-area {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 3px dashed var(--secondary);
+    border-radius: 5px;
+    height: 360px;
+    padding: 1rem;
+    width: 100%;
+}
+.upload-area span{
+    position: absolute;
+    display: block;
+    justify-self: center;
+    align-self: center;
+}
+
 
 @media only screen and (max-width: 1200px) {
 

@@ -1,6 +1,4 @@
 import {
-    Avatar,
-    AvatarGroup,
     Box,
     Button,
     Chip,
@@ -13,19 +11,27 @@ import {
 } from "@mui/material";
 import {DataGrid, GridToolbar} from "@mui/x-data-grid";
 import {
-    CheckBox,
     Delete,
     DisabledByDefault,
     Edit,
-    IndeterminateCheckBox,
     TaskAlt,
     Visibility
 } from "@mui/icons-material";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {GetAllProducts, ProductDelete} from "../../features/api/cmsApi";
 import {Link} from "react-router-dom";
-import {useState} from "react";
+import React, {useState} from "react";
+import toast, {Toaster} from "react-hot-toast";
 
+
+const mockData = [{
+    id: 1,
+    name: "cream_124",
+    category: "cream",
+    is_active: true,
+    create_at: Date.now(),
+    update_at: Date.now(),
+}]
 
 const AdminProducts = () => {
 
@@ -36,6 +42,24 @@ const AdminProducts = () => {
         queryFn: () => GetAllProducts()
     })
 
+
+    const productDeleteMutation = useMutation({
+        mutationFn: (data) => ProductDelete(data),
+        onSuccess: (data) => {
+            if (data?.response?.status === 400 || data?.response?.status === 404) {
+                toast.error(`something went wrong : ${Object.values(data.response.data)}`, {duration: 10000})
+            } else {
+                toast.success("product deleted", {duration: 5000})
+            }
+        },
+        onError: error => {
+            toast.error(`something went wrong : ${Object.values(error.response.data)}`, {duration: 10000})
+        }
+    })
+
+    const handleDelete = (id) => {
+        productDeleteMutation.mutate(id)
+    }
 
     const columns = [
         {field: "id", headerName: "ID", align: "left", headerAlign: "left"},
@@ -104,21 +128,6 @@ const AdminProducts = () => {
             }
         },
     ]
-    const mockData = [{
-        id: 1,
-        name: "cream_124",
-        category: "cream",
-        is_active: true,
-        create_at: Date.now(),
-        update_at: Date.now(),
-    }]
-    const productDeleteMutation = useMutation({
-        mutationFn: (data) => ProductDelete(data)
-    })
-
-    const handleDelete = (id) => {
-        productDeleteMutation.mutate(id)
-    }
 
 
     return (
@@ -154,12 +163,13 @@ const AdminProducts = () => {
                     minWidth: {xs: "10rem !important", md: "17rem !important"}
                 }
             }}>
+                <Toaster position="top-right" reverseOrder={false}/>
                 <Button component={Link} to={"create/"} variant={"contained"} color={"black"}
                         sx={{color: "var(--background-main) !important", marginY: 2, marginX: 1}}>Add New
                     Product</Button>
                 <DataGrid paginationMode="server" checkboxSelection
                           rows={productsQuery.data ? productsQuery.data.results : mockData} columns={columns}
-                          components={{Toolbar: GridToolbar}} loading={productsQuery.isLoading}/>
+                          components={{Toolbar: GridToolbar}} loading={productsQuery.isLoading} disableSelectionOnClick autoPageSize/>
             </Box>
         </Container>
     )

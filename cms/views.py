@@ -5,16 +5,16 @@ from rest_framework import status, permissions, generics, viewsets, pagination
 from django.contrib.auth.models import User
 from .serializers import UserSerializer, ProductsSerializer, MediaSerializer, CategorySerializer, ProductTypeSerializer, \
     BrandsSerializer, ProductAttributeValuesSerializer, ProductAttributeValueSerializer, ProductInventoryEditSerializer, \
-    StockSerializer
+    StockSerializer, ProductTypeAttributeSerializer, ProductAttributeSerializer
 from inventory.models import Product, Category, Media, ProductType, Brand, ProductAttributeValues, ProductInventory, \
-    ProductAttributeValue, Stock
+    ProductAttributeValue, Stock, ProductTypeAttribute, ProductAttribute
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 
 
 # Create your views here.
 
 class UsersView(viewsets.ModelViewSet):
-    queryset = User.objects.all()
+    queryset = User.objects.order_by("-id")
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -104,11 +104,11 @@ class MediaView(viewsets.ModelViewSet):
 
 
 class CategoriesView(viewsets.ModelViewSet):
-    queryset = Category.objects.filter(level__gt=0)
+    queryset = Category.objects.filter(level=0)
     serializer_class = CategorySerializer
     permission_classes = [permissions.IsAuthenticated]
     pagination_class = pagination.PageNumberPagination
-    page = 100
+    pagination.PageNumberPagination.page_size = 1000
 
 
 class ProductTypesView(viewsets.ModelViewSet):
@@ -116,7 +116,38 @@ class ProductTypesView(viewsets.ModelViewSet):
     serializer_class = ProductTypeSerializer
     permission_classes = [permissions.IsAuthenticated]
     pagination_class = pagination.PageNumberPagination
-    page = 100
+    pagination.PageNumberPagination.page_size = 1000
+
+    def create(self, request, *args, **kwargs):
+        data = request.data
+        attributes = data["product_type_attribute"]
+        attributesList = ProductAttribute.objects.filter(pk__in=attributes)
+        if attributesList:
+            serializer = self.serializer_class(data=data, context={"request": request})
+            if serializer.is_valid():
+                result = serializer.save()
+                result.product_type_attribute.set(attributesList)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response("attributes required", status=status.HTTP_400_BAD_REQUEST)
+
+    def partial_update(self, request, *args, **kwargs):
+        data = request.data
+        attributes = data["product_type_attribute"]
+        obj = self.queryset.filter(pk=data["id"]).first()
+        attributesList = ProductAttribute.objects.filter(pk__in=attributes)
+        if attributesList:
+            if obj:
+                obj.name = data["name"]
+                obj.product_type_attribute.set(attributesList)
+                obj.save()
+                return Response(self.serializer_class(obj).data, status=status.HTTP_200_OK)
+            else:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response("attributes required", status=status.HTTP_400_BAD_REQUEST)
 
 
 class BrandsView(viewsets.ModelViewSet):
@@ -124,7 +155,15 @@ class BrandsView(viewsets.ModelViewSet):
     serializer_class = BrandsSerializer
     permission_classes = [permissions.IsAuthenticated]
     pagination_class = pagination.PageNumberPagination
-    page = 100
+    pagination.PageNumberPagination.page_size = 1000
+
+
+class ProductTypeAttributeView(viewsets.ModelViewSet):
+    queryset = ProductTypeAttribute.objects.all()
+    serializer_class = ProductTypeAttributeSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    pagination_class = pagination.PageNumberPagination
+    pagination.PageNumberPagination.page_size = 1000
 
 
 class ProductAttributeValueView(viewsets.ModelViewSet):
@@ -132,7 +171,7 @@ class ProductAttributeValueView(viewsets.ModelViewSet):
     serializer_class = ProductAttributeValueSerializer
     permission_classes = [permissions.IsAuthenticated]
     pagination_class = pagination.PageNumberPagination
-    page = 100
+    pagination.PageNumberPagination.page_size = 1000
     lookup_field = ("product_type")
 
     def retrieve(self, request, product_type=None, *args, **kwargs):
@@ -149,7 +188,7 @@ class ProductAttributeValuesView(viewsets.ModelViewSet):
     serializer_class = ProductAttributeValuesSerializer
     permission_classes = [permissions.IsAuthenticated]
     pagination_class = pagination.PageNumberPagination
-    page = 100
+    pagination.PageNumberPagination.page_size = 1000
     lookup_field = ("productinventory")
 
     def retrieve(self, request, productinventory=None, *args, **kwargs):
@@ -166,3 +205,57 @@ class StockView(viewsets.ModelViewSet):
     queryset = Stock.objects.order_by("-id")
     serializer_class = StockSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+
+class ProductAttributeView(viewsets.ModelViewSet):
+    queryset = ProductAttribute.objects.order_by("-id")
+    serializer_class = ProductAttributeSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def create(self, request, *args, **kwargs):
+        data = request.data
+        values = data["values"]
+        serializer = self.serializer_class(data=data, context={"request": request})
+        if serializer.is_valid():
+            result = serializer.save()
+            for value in values:
+                if value["id"]:
+                    if value["attribute_value"]:
+                        pass
+                    else:
+                        ProductAttributeValue.objects.get(pk=value["id"]).delete()
+                else:
+                    if value["attribute_value"]:
+                        ProductAttributeValue.objects.create(product_attribute=result,
+                                                             attribute_value=value["attribute_value"])
+                    else:
+                        pass
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def partial_update(self, request, *args, **kwargs):
+        data = request.data
+        obj = self.queryset.filter(pk=data["id"]).first()
+        values = data["values"]
+        if obj:
+            serializer = self.serializer_class(obj, data=data, context={"request": request})
+            if serializer.is_valid():
+                result = serializer.save()
+                for value in values:
+                    if value["id"]:
+                        if value["attribute_value"]:
+                            pass
+                        else:
+                            ProductAttributeValue.objects.get(pk=value["id"]).delete()
+                    else:
+                        if value["attribute_value"]:
+                            ProductAttributeValue.objects.create(product_attribute=result,
+                                                                 attribute_value=value["attribute_value"])
+                        else:
+                            pass
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)

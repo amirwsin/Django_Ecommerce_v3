@@ -51,8 +51,7 @@ const ProductInventory = ({data, handleNext, setFormData, formData}) => {
     }) : null)
 
 
-    const
-        productTypeQuery = useQuery({
+    const productTypeQuery = useQuery({
             queryKey: ["ProductTypes"],
             queryFn: () => GetAllProductTypes()
         })

@@ -32,7 +32,8 @@ import CheckOut from "./pages/CheckOut";
 import AdminProducts from "./pages/dashboard/AdminProducts";
 import AdminProductDetail from "./pages/dashboard/AdminProductDetail";
 import AdminProductCreate from "./pages/dashboard/AdminProductCreate";
-import Toaster from "react-hot-toast";
+import AdminEssentials from "./pages/dashboard/AdminEssentials"
+import NotFound from "./pages/NotFound";
 
 let token, user;
 
@@ -103,7 +104,7 @@ function App() {
                                     <Route path={"/cart"} element={<ShoppingCart/>
                                     }/>
                                     <Route path={"/cart/checkout"} element={<CheckOut/>}/>
-                                    <Route path={"*"} element={<h1>not found</h1>}/>
+                                    <Route path={"*"} element={<NotFound/>}/>
                                 </Route>
                                 <Route path={"/"} element={<AdminLayout/>}>
                                     <Route path={"/admin/dashboard"} element={<AdminDashboard/>}/>
@@ -111,6 +112,7 @@ function App() {
                                     <Route path={"/admin/products"} element={<AdminProducts/>}/>
                                     <Route path={"/admin/products/:id/"} element={<AdminProductDetail/>}/>
                                     <Route path={"/admin/products/create/"} element={<AdminProductCreate/>}/>
+                                    <Route path={"/admin/essentials/"} element={<AdminEssentials/>}/>
                                 </Route>
                             </Routes>
                         </BrowserRouter>

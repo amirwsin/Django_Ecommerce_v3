@@ -107,7 +107,7 @@ const AdminUsers = () => {
             }}>
                 <DataGrid paginationMode="server" checkboxSelection
                           rows={userQuery.data ? userQuery.data.results : mockData} columns={columns}
-                          components={{Toolbar: GridToolbar}} loading={userQuery.isLoading}/>
+                          components={{Toolbar: GridToolbar}} loading={userQuery.isLoading} disableSelectionOnClick autoPageSize/>
             </Box>
         </Container>
     )

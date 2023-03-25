@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from inventory.models import Product, Category, Brand, ProductType, ProductAttribute, Media, ProductAttributeValue, \
-    Stock, ProductInventory, ProductAttributeValues
+    Stock, ProductInventory, ProductAttributeValues, ProductTypeAttribute
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -29,12 +29,6 @@ class ProductTypeSerializer(serializers.ModelSerializer):
         depth = 2
 
 
-class ProductProductAttributeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ProductAttribute
-        fields = "__all__"
-
-
 class MediaSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(required=False)
 
@@ -56,10 +50,29 @@ class ProductAttributeValueSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class ProductAttributeSerializer(serializers.ModelSerializer):
+    values = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ProductAttribute
+        fields = "__all__"
+
+    def get_values(self, obj):
+        values = ProductAttributeValue.objects.filter(product_attribute=obj)
+        return ProductAttributeValueSerializer(values, many=True, context=self.context).data
+
+
 class StockSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stock
         fields = "__all__"
+
+
+class ProductTypeAttributeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductTypeAttribute
+        fields = "__all__"
+        depth = 2
 
 
 class ProductInventorySerializer(serializers.ModelSerializer):

@@ -23,10 +23,10 @@ export default function SEO({title, description, name, type, robots, keywords, c
             <meta name="twitter:title" content={title}/>
             <meta name="twitter:description" content={description}/>
             { /* End Twitter tags */}
-            { /* robots tags */}
+            { /* etc tags */}
             <meta name="robots" content={robots ? robots : "index, follow"}/>
-            { /* End robots tags */}
             <link rel="canonical" href={canonical ? canonical : location}/>
+            { /* End etc tags */}
         </Helmet>
     )
 }
