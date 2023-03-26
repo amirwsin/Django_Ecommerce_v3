@@ -16,6 +16,7 @@ import {
 import {AddPhotoAlternate, Delete, Restore, SaveAlt} from "@mui/icons-material";
 import {useParams} from "react-router-dom";
 import toast from "react-hot-toast";
+import {ERROR_LIST} from "../../ResponseStatus";
 
 const ProductMediaCard = ({data}) => {
     const [media, setMedia] = useState({
@@ -62,7 +63,7 @@ const ProductMediaCard = ({data}) => {
     const mediaMutation = useMutation({
         mutationFn: (data) => UpdateMedia(data),
         onSuccess: (data, variables) => {
-            if (data?.response?.status === 400 || data?.response?.status === 404) {
+            if (ERROR_LIST.includes(data?.response?.status)) {
                 toast.error(`something went wrong : ${Object.values(data.response.data)}`, {duration: 10000})
             } else {
                 toast.success("image saved", {duration: 5000})
@@ -79,7 +80,7 @@ const ProductMediaCard = ({data}) => {
     const mediaDeleteMutation = useMutation({
         mutationFn: (id) => DeleteMedia(id),
         onSuccess: (data, index) => {
-            if (data?.response?.status === 400 || data?.response?.status === 404) {
+            if (ERROR_LIST.includes(data?.response?.status)) {
                 toast.error(`something went wrong : ${Object.values(data.response.data)}`, {duration: 10000})
             } else {
                 CheckData()

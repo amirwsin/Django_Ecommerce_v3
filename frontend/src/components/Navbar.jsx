@@ -5,7 +5,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import {Link} from "react-router-dom";
-import {MoreVert, ShoppingCartOutlined} from "@mui/icons-material";
+import {AdminPanelSettings, Dashboard, MoreVert, ShoppingCartOutlined} from "@mui/icons-material";
 import {
     Avatar, Badge,
     Collapse,
@@ -91,6 +91,13 @@ const Navbar = () => {
                                         <Avatar/>
                                     </IconButton>
                                 </Tooltip>
+                                {JSON.parse(user).is_staff | JSON.parse(user).is_superuser &&
+                                <Tooltip arrow title="AdminDashboard">
+                                    <IconButton component={Link} to={"/admin/dashboard"} sx={{p: 0}}>
+                                        <AdminPanelSettings fontSize={"large"}/>
+                                    </IconButton>
+                                </Tooltip>
+                                }
                             </> :
                             <Button component={Link} to={"/login"} color="primary"
                                     variant={"text"}>Login</Button>}

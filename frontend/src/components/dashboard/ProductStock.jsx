@@ -3,6 +3,7 @@ import {useState} from "react";
 import {useMutation} from "@tanstack/react-query";
 import {StockEdit} from "../../features/api/cmsApi";
 import toast from "react-hot-toast";
+import {ERROR_LIST} from "../../ResponseStatus";
 
 const ProductStock = ({data, handleNext, setFormData, formData}) => {
     const [form, setForm] = useState({
@@ -19,7 +20,7 @@ const ProductStock = ({data, handleNext, setFormData, formData}) => {
     const stockMutation = useMutation({
         mutationFn: (data) => StockEdit(data),
         onSuccess: (data) => {
-            if (data?.response?.status === 400 || data?.response?.status === 401 || data?.response?.status === 402 || data?.response?.status === 403 || data?.response?.status === 404) {
+            if (ERROR_LIST.includes(data?.response?.status)) {
                 toast.error(`something went wrong : ${Object.values(data.response.data)}`, {duration: 10000})
             } else {
                 toast.success("changes saved", {duration: 5000})

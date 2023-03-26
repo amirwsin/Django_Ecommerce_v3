@@ -14,6 +14,7 @@ import {AddPhotoAlternate, Restore, SaveAlt} from "@mui/icons-material";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {CreateMedia, UpdateMedia} from "../../features/api/cmsApi";
 import toast from "react-hot-toast";
+import {ERROR_LIST} from "../../ResponseStatus";
 
 const ProductMediaCardAdd = ({id, productId}) => {
 
@@ -60,14 +61,18 @@ const ProductMediaCardAdd = ({id, productId}) => {
     const mediaMutation = useMutation({
         mutationFn: () => CreateMedia(media),
         onSuccess: (data) => {
-            handleRestore()
-            toast.success("image saved")
-            return queryClient.setQueryData(["products", parseInt(productId)], (old_data) => {
-                let readyData = {...old_data}
-                old_data.inventory.media.push(data)
-                readyData = {...readyData, inventory: old_data.inventory}
-                return readyData
-            })
+            if (ERROR_LIST.includes(data?.response?.status)) {
+                toast.error(`something went wrong : ${Object.values(data.response.data)}`, {duration: 10000})
+            } else {
+                handleRestore()
+                toast.success("image saved")
+                return queryClient.setQueryData(["products", parseInt(productId)], (old_data) => {
+                    let readyData = {...old_data}
+                    old_data.inventory.media.push(data)
+                    readyData = {...readyData, inventory: old_data.inventory}
+                    return readyData
+                })
+            }
         }
     })
 

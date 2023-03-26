@@ -14,8 +14,9 @@ import {useState} from "react";
 import {CKEditor} from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {useMutation, useQuery} from "@tanstack/react-query";
-import {GetAllCategories, ProductCreate, ProductEditById} from "../../features/api/cmsApi";
+import {GetAllCategories, ProductEditById} from "../../features/api/cmsApi";
 import toast from "react-hot-toast";
+import {ERROR_LIST, SUCCESS_LIST} from "../../ResponseStatus";
 
 
 const ProductMain = ({data, setFormData, handleNext}) => {
@@ -41,7 +42,7 @@ const ProductMain = ({data, setFormData, handleNext}) => {
     const productEditMutation = useMutation({
         mutationFn: (data) => ProductEditById(data),
         onSuccess: (data) => {
-            if (data?.response?.status === 400 || data?.response?.status === 404) {
+            if (ERROR_LIST.includes(data?.response?.status)) {
                 toast.error(`something went wrong : ${Object.values(data.response.data)}`, {duration: 10000})
             } else {
                 toast.success("changes saved", {duration: 5000})

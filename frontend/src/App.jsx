@@ -107,12 +107,12 @@ function App() {
                                     <Route path={"*"} element={<NotFound/>}/>
                                 </Route>
                                 <Route path={"/"} element={<AdminLayout/>}>
-                                    <Route path={"/admin/dashboard"} element={<AdminDashboard/>}/>
-                                    <Route path={"/admin/users"} element={<AdminUsers/>}/>
-                                    <Route path={"/admin/products"} element={<AdminProducts/>}/>
-                                    <Route path={"/admin/products/:id/"} element={<AdminProductDetail/>}/>
-                                    <Route path={"/admin/products/create/"} element={<AdminProductCreate/>}/>
-                                    <Route path={"/admin/essentials/"} element={<AdminEssentials/>}/>
+                                    <Route path={"/admin/dashboard"} element={<RestrictPage path={"/login"} type={"isAdmin"}><AdminDashboard/></RestrictPage>}/>
+                                    <Route path={"/admin/users"} element={<RestrictPage path={"/login"} type={"isAdmin"}><AdminUsers/></RestrictPage>}/>
+                                    <Route path={"/admin/products"} element={<RestrictPage path={"/login"} type={"isAdmin"}><AdminProducts/></RestrictPage>}/>
+                                    <Route path={"/admin/products/:id/"} element={<RestrictPage path={"/login"} type={"isAdmin"}><AdminProductDetail/></RestrictPage>}/>
+                                    <Route path={"/admin/products/create/"} element={<RestrictPage path={"/login"} type={"isAdmin"}><AdminProductCreate/></RestrictPage>}/>
+                                    <Route path={"/admin/essentials/"} element={<RestrictPage path={"/login"} type={"isAdmin"}><AdminEssentials/></RestrictPage>}/>
                                 </Route>
                             </Routes>
                         </BrowserRouter>

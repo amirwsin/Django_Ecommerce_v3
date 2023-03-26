@@ -19,6 +19,7 @@ import {
     ProductInventoryEdit
 } from "../../features/api/cmsApi";
 import toast from "react-hot-toast";
+import {ERROR_LIST} from "../../ResponseStatus";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -64,7 +65,7 @@ const ProductInventory = ({data, handleNext, setFormData, formData}) => {
     const ProductInventoryMutation = useMutation({
         mutationFn: (data) => ProductInventoryEdit(data),
         onSuccess: (data) => {
-            if (data?.response?.status === 400 || data?.response?.status === 401 || data?.response?.status === 402 || data?.response?.status === 403 || data?.response?.status === 404) {
+            if (ERROR_LIST.includes(data?.response?.status)) {
                 toast.error(`something went wrong : ${Object.values(data.response.data)}`, {duration: 10000})
             } else {
                 toast.success("changes saved", {duration: 5000})

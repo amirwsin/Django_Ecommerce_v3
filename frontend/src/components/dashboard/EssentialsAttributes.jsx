@@ -18,6 +18,7 @@ import {
     ProductAttributesEdit
 } from "../../features/api/cmsApi";
 import {Delete, Edit} from "@mui/icons-material";
+import {ERROR_LIST} from "../../ResponseStatus";
 
 const mockData = [{
     id: 1,
@@ -67,7 +68,7 @@ const EssentialsAttributes = () => {
     const productAttributesMutation = useMutation({
         mutationFn: (data) => type ? ProductAttributesEdit(data) : ProductAttributesCreate(data),
         onSuccess: (data) => {
-            if (data?.response?.status === 400 || data?.response?.status === 404) {
+            if (ERROR_LIST.includes(data?.response?.status)) {
                 toast.error(`something went wrong : ${Object.values(data.response.data)}`, {duration: 10000})
             } else {
                 toast.success(type ? "changes saved" : "productAttribute created", {duration: 5000})
@@ -95,7 +96,7 @@ const EssentialsAttributes = () => {
     const productAttributeDeleteMutation = useMutation({
         mutationFn: (data) => ProductAttributesDelete(data),
         onSuccess: (data, id) => {
-            if (data?.response?.status === 400 || data?.response?.status === 404) {
+            if (ERROR_LIST.includes(data?.response?.status)) {
                 toast.error(`something went wrong : ${Object.values(data.response.data)}`, {duration: 10000})
             } else {
                 toast.success("productAttribute deleted", {duration: 5000})

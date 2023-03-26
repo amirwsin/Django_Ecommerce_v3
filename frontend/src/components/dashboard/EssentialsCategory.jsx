@@ -19,6 +19,7 @@ import {
     CategoryEdit,
     GetAllCategories
 } from "../../features/api/cmsApi";
+import {ERROR_LIST} from "../../ResponseStatus";
 
 const mockData = [{
     id: 1,
@@ -68,7 +69,7 @@ const EssentialsCategory = () => {
     const categoryMutation = useMutation({
         mutationFn: (data) => type ? CategoryEdit(data) : CategoryCreate(data),
         onSuccess: (data) => {
-            if (data?.response?.status === 400 || data?.response?.status === 404) {
+            if (ERROR_LIST.includes(data?.response?.status)) {
                 toast.error(`something went wrong : ${Object.values(data.response.data)}`, {duration: 10000})
             } else {
                 toast.success(type ? "changes saved" : "category created", {duration: 5000})
@@ -96,7 +97,7 @@ const EssentialsCategory = () => {
     const categoryDeleteMutation = useMutation({
         mutationFn: (data) => CategoryDelete(data),
         onSuccess: (data, id) => {
-            if (data?.response?.status === 400 || data?.response?.status === 404) {
+            if (ERROR_LIST.includes(data?.response?.status)) {
                 toast.error(`something went wrong : ${Object.values(data.response.data)}`, {duration: 10000})
             } else {
                 toast.success("category deleted", {duration: 5000})
@@ -118,7 +119,6 @@ const EssentialsCategory = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(form)
         categoryMutation.mutate(form)
         handleClose()
     }

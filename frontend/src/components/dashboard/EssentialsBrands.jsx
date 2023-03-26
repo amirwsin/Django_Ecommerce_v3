@@ -15,6 +15,7 @@ import {BrandCreate, BrandDelete, BrandEdit, GetAllBrands} from "../../features/
 import {Delete, Edit} from "@mui/icons-material";
 import React, {useState} from "react";
 import toast, {Toaster} from "react-hot-toast";
+import {ERROR_LIST} from "../../ResponseStatus";
 
 
 const mockData = [{
@@ -51,7 +52,7 @@ const EssentialsBrands = () => {
     const brandMutation = useMutation({
         mutationFn: (data) => type ? BrandEdit(data) : BrandCreate(data),
         onSuccess: (data) => {
-            if (data?.response?.status === 400 || data?.response?.status === 404) {
+            if (ERROR_LIST.includes(data?.response?.status)) {
                 toast.error(`something went wrong : ${Object.values(data.response.data)}`, {duration: 10000})
             } else {
                 toast.success(type ? "changes saved" : "brand created", {duration: 5000})
@@ -79,7 +80,7 @@ const EssentialsBrands = () => {
     const brandDeleteMutation = useMutation({
         mutationFn: (data) => BrandDelete(data),
         onSuccess: (data, id) => {
-            if (data?.response?.status === 400 || data?.response?.status === 404) {
+            if (ERROR_LIST.includes(data?.response?.status)) {
                 toast.error(`something went wrong : ${Object.values(data.response.data)}`, {duration: 10000})
             } else {
                 toast.success("brand deleted", {duration: 5000})

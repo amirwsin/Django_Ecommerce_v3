@@ -16,13 +16,13 @@ from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 class UsersView(viewsets.ModelViewSet):
     queryset = User.objects.order_by("-id")
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
 
 
 class ProductInventoryView(viewsets.ModelViewSet):
     queryset = ProductInventory.objects.all()
     serializer_class = ProductInventoryEditSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
 
     def update(self, request, *args, **kwargs):
         data = request.data
@@ -54,7 +54,8 @@ class ProductInventoryView(viewsets.ModelViewSet):
 class ProductsView(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductsSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
+
 
     def partial_update(self, request, pk=None):
         data = request.data
@@ -100,13 +101,13 @@ class MediaView(viewsets.ModelViewSet):
     queryset = Media.objects.all()
     serializer_class = MediaSerializer
     parser_classes = [MultiPartParser, FormParser, JSONParser]
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
 
 
 class CategoriesView(viewsets.ModelViewSet):
     queryset = Category.objects.filter(level=0)
     serializer_class = CategorySerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
     pagination_class = pagination.PageNumberPagination
     pagination.PageNumberPagination.page_size = 1000
 
@@ -114,7 +115,7 @@ class CategoriesView(viewsets.ModelViewSet):
 class ProductTypesView(viewsets.ModelViewSet):
     queryset = ProductType.objects.all()
     serializer_class = ProductTypeSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
     pagination_class = pagination.PageNumberPagination
     pagination.PageNumberPagination.page_size = 1000
 
@@ -153,7 +154,7 @@ class ProductTypesView(viewsets.ModelViewSet):
 class BrandsView(viewsets.ModelViewSet):
     queryset = Brand.objects.all()
     serializer_class = BrandsSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
     pagination_class = pagination.PageNumberPagination
     pagination.PageNumberPagination.page_size = 1000
 
@@ -161,7 +162,7 @@ class BrandsView(viewsets.ModelViewSet):
 class ProductTypeAttributeView(viewsets.ModelViewSet):
     queryset = ProductTypeAttribute.objects.all()
     serializer_class = ProductTypeAttributeSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
     pagination_class = pagination.PageNumberPagination
     pagination.PageNumberPagination.page_size = 1000
 
@@ -169,7 +170,7 @@ class ProductTypeAttributeView(viewsets.ModelViewSet):
 class ProductAttributeValueView(viewsets.ModelViewSet):
     queryset = ProductAttributeValue.objects.order_by("-id")
     serializer_class = ProductAttributeValueSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
     pagination_class = pagination.PageNumberPagination
     pagination.PageNumberPagination.page_size = 1000
     lookup_field = ("product_type")
@@ -186,7 +187,7 @@ class ProductAttributeValueView(viewsets.ModelViewSet):
 class ProductAttributeValuesView(viewsets.ModelViewSet):
     queryset = ProductAttributeValues.objects.order_by("-id")
     serializer_class = ProductAttributeValuesSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
     pagination_class = pagination.PageNumberPagination
     pagination.PageNumberPagination.page_size = 1000
     lookup_field = ("productinventory")
@@ -204,13 +205,13 @@ class ProductAttributeValuesView(viewsets.ModelViewSet):
 class StockView(viewsets.ModelViewSet):
     queryset = Stock.objects.order_by("-id")
     serializer_class = StockSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
 
 
 class ProductAttributeView(viewsets.ModelViewSet):
     queryset = ProductAttribute.objects.order_by("-id")
     serializer_class = ProductAttributeSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
 
     def create(self, request, *args, **kwargs):
         data = request.data
