@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from inventory.models import Product, Category, Brand, ProductType, ProductAttribute, Media, ProductAttributeValue, \
     Stock, ProductInventory, ProductAttributeValues, ProductTypeAttribute
+from checkout.models import Delivery
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -113,3 +114,9 @@ class ProductsSerializer(serializers.ModelSerializer):
     def get_inventory(self, obj):
         inventory = ProductInventory.objects.get(product=obj)
         return ProductInventorySerializer(inventory, many=False, context=self.context).data
+
+
+class DeliverySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Delivery
+        fields = "__all__"

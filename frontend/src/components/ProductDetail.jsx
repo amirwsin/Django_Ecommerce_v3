@@ -1,15 +1,14 @@
 import {Box, Button, Chip, Divider, Skeleton, Typography} from "@mui/material";
 import ProductAttribute from "./ProductAttribute";
-import {useContext, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {AddShoppingCart, Favorite} from "@mui/icons-material";
 import {useDispatch, useSelector} from "react-redux";
 import {addToCart, onlineAddToCart} from "../features/actions/cartActions";
-import {AlertContext} from "../AlertContext";
 import "../ckeditor.css"
+import toast from "react-hot-toast";
 
 const ProductDetail = ({data, setSelection, isLoading}) => {
 
-    const {setAlertState} = useContext(AlertContext)
     const {user, isAuthenticated} = useSelector(state => state.authReducer)
     let productAttribute = []
     const [currentInventory, setCurrentInventory] = useState(data?.inventory && data?.inventory[0])
@@ -81,8 +80,9 @@ const ProductDetail = ({data, setSelection, isLoading}) => {
                 const readyUser = JSON.parse(user)
                 dispatch(onlineAddToCart(readyUser.id, preData))
             }
+            toast.success('product added to your basket',);
         } else {
-            setAlertState({"open": true, "msg": "Please Select Variants", "color": "error"})
+            toast('please select variants',);
         }
     }
 

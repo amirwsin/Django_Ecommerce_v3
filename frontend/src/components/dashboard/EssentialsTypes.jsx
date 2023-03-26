@@ -189,7 +189,6 @@ const EssentialsTypes = () => {
                 color: "text.main"
             },
         }}>
-            <Toaster position="top-right" reverseOrder={false}/>
             <Button variant={"contained"} color={"black"} onClick={() => {
                 handleClickOpen()
                 setType(false)

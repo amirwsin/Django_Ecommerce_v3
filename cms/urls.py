@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import UsersView, ProductsView, MediaView, CategoriesView, ProductTypesView, BrandsView, \
     ProductAttributeValuesView, ProductAttributeValueView, ProductInventoryView, StockView, ProductTypeAttributeView, \
-    ProductAttributeView
+    ProductAttributeView,DeliveryView
 from rest_framework.routers import SimpleRouter
 
 app_name = 'cmsApi'
@@ -18,5 +18,6 @@ router.register(r'brands', BrandsView)
 router.register(r'product_attribute_values', ProductAttributeValuesView)
 router.register(r'product_attribute_value', ProductAttributeValueView)
 router.register(r'stock', StockView)
+router.register(r'delivery', DeliveryView)
 
 urlpatterns = router.urls

@@ -29,7 +29,6 @@ const AdminProductDetail = () => {
             gap: 2,
             overflow: "scroll"
         }}>
-            <Toaster position="top-right" reverseOrder={false}/>
             <Box className={"card"}>
                 <Typography variant={"h3"}>Media Section</Typography>
                 <Typography variant={"caption"}>maximum media : 5</Typography>

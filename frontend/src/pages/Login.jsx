@@ -1,14 +1,13 @@
 import {Box, Button, Container, TextField, Typography} from "@mui/material";
 import {Link, useNavigate} from "react-router-dom";
-import {useContext, useState} from "react";
+import {useState} from "react";
 import {Visibility} from "@mui/icons-material";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {loadUser, login} from "../features/actions/authActions";
-import {AlertContext} from "../AlertContext";
+import toast from "react-hot-toast";
 
 const Login = () => {
 
-    const {setAlertState} = useContext(AlertContext)
 
     const [formData, setFormData] = useState({
         username: "",
@@ -31,34 +30,18 @@ const Login = () => {
                     const finalResult = dispatch(loadUser())
                     finalResult.then((res2) => {
                         if (res2) {
-                            setAlertState({
-                                "open": true,
-                                "msg": "Welcome Back To Your Shop",
-                                "color": "success"
-                            })
+                            toast.success("welcome back")
                             navigate("/")
                         } else {
-                            setAlertState({
-                                "open": true,
-                                "msg": "Something Went Wrong Please Try Again !!!",
-                                "color": "error"
-                            })
+                            toast.error("something went wrong please try again !!!")
                         }
                     })
                 } else {
-                    setAlertState({
-                        "open": true,
-                        "msg": "Username Or Password Is Incorrect.",
-                        "color": "error"
-                    })
+                    toast.error("username or password is incorrect.")
                 }
             })
         } else {
-            setAlertState({
-                "open": true,
-                "msg": "Your Password Most Be at least 8 Character",
-                "color": "error"
-            })
+            toast.error("your password most be at least 8 character")
         }
     }
 
@@ -67,7 +50,8 @@ const Login = () => {
     }
 
     return (
-        <Container maxWidth={"md"} sx={{display: "flex", justifyContent: "center", alignItems: "center",minHeight:"75vh"}}>
+        <Container maxWidth={"md"}
+                   sx={{display: "flex", justifyContent: "center", alignItems: "center", minHeight: "75vh"}}>
             <Box className={"form-wrapper"}>
                 <Typography variant={"h3"} component={"p"} sx={{textAlign: "center", fontWeight: "bold"}}>
                     Login

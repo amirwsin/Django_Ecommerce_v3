@@ -12,12 +12,10 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import {useDispatch} from "react-redux";
 import {loadUser} from "./features/actions/authActions";
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useEffect} from "react";
 import Dashboard from "./pages/panel/Dashboard";
 import Products from "./pages/Products";
 import ProductDetails from "./pages/ProductDetails";
-import {AlertContext} from "./AlertContext";
-import MySnackBar from "./components/MySnackBar";
 import {loadCart, loadLocal} from "./features/actions/cartActions";
 import ShoppingCart from "./pages/ShoppingCart";
 import RestrictPage from "./RestrictPage";
@@ -34,14 +32,13 @@ import AdminProductDetail from "./pages/dashboard/AdminProductDetail";
 import AdminProductCreate from "./pages/dashboard/AdminProductCreate";
 import AdminEssentials from "./pages/dashboard/AdminEssentials"
 import NotFound from "./pages/NotFound";
+import AdminDelivery from "./pages/dashboard/AdminDelivery";
 
 let token, user;
 
 
 function App() {
     const dispatch = useDispatch()
-    const [alertState, setAlertState] = useState({"open": false, "msg": "", "color": "info"})
-    const providerValue = useMemo(() => ({alertState, setAlertState}), [alertState, setAlertState])
     const [theme, colorMode] = useMode();
 
     useEffect(() => {
@@ -64,7 +61,6 @@ function App() {
         <HelmetProvider>
             <ColorModeContext.Provider value={colorMode}>
                 <ThemeProvider theme={theme}>
-                    <AlertContext.Provider value={providerValue}>
                         <BrowserRouter>
                             <Routes>
                                 <Route path={"/"} element={<MainLayout/>}>
@@ -113,10 +109,10 @@ function App() {
                                     <Route path={"/admin/products/:id/"} element={<RestrictPage path={"/login"} type={"isAdmin"}><AdminProductDetail/></RestrictPage>}/>
                                     <Route path={"/admin/products/create/"} element={<RestrictPage path={"/login"} type={"isAdmin"}><AdminProductCreate/></RestrictPage>}/>
                                     <Route path={"/admin/essentials/"} element={<RestrictPage path={"/login"} type={"isAdmin"}><AdminEssentials/></RestrictPage>}/>
+                                    <Route path={"/admin/delivery/"} element={<RestrictPage path={"/login"} type={"isAdmin"}><AdminDelivery/></RestrictPage>}/>
                                 </Route>
                             </Routes>
                         </BrowserRouter>
-                    </AlertContext.Provider>
                 </ThemeProvider>
             </ColorModeContext.Provider>
         </HelmetProvider>
@@ -142,7 +138,6 @@ function MainLayout() {
             <Navbar/>
             <Outlet/>
             <GoTopButton/>
-            <MySnackBar/>
             <Footer/>
         </>
     );

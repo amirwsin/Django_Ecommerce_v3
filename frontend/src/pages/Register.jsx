@@ -1,14 +1,12 @@
 import {Box, Button, Checkbox, Container, FormControlLabel, TextField, Typography} from "@mui/material";
-import {Link,useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {Visibility} from "@mui/icons-material";
-import {useContext, useState} from "react";
-import {AlertContext} from "../AlertContext";
+import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {register} from "../features/actions/authActions";
+import toast from "react-hot-toast";
 
 const Register = () => {
-
-    const {setAlertState} = useContext(AlertContext)
     const [formData, setFormData] = useState({
         username: "",
         email: "",
@@ -18,7 +16,7 @@ const Register = () => {
     const [checkBox, setCheckBox] = useState(false)
     const [visibility, setVisibility] = useState(false)
     const dispatch = useDispatch()
-  const navigate = useNavigate();
+    const navigate = useNavigate();
     const handleCheckBox = () => {
         setCheckBox(prevState => !prevState)
     }
@@ -40,29 +38,16 @@ const Register = () => {
                 const result = dispatch(register(formData))
                 result.then((res) => {
                     if (res) {
-                        setAlertState({
-                            "open": true,
-                            "msg": JSON.stringify(res),
-                            "color": "info"
-                        })
                         if (res == "Your Account Created Successfully") {
                             navigate("/login")
                         }
                     }
                 })
             } else {
-                setAlertState({
-                    "open": true,
-                    "msg": "Make Sure You Typed Exact Match Of Your Passwords",
-                    "color": "error"
-                })
+                toast.error("Make Sure You Typed Exact Match Of Your Passwords")
             }
         } else {
-            setAlertState({
-                "open": true,
-                "msg": "Your Password Most Be at least 8 Character",
-                "color": "error"
-            })
+            toast.error("your password most be at least 8 character")
         }
     }
 

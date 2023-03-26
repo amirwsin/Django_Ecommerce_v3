@@ -22,6 +22,7 @@ import {GetAllProducts, ProductDelete} from "../../features/api/cmsApi";
 import {Link} from "react-router-dom";
 import React, {useState} from "react";
 import toast, {Toaster} from "react-hot-toast";
+import {ERROR_LIST} from "../../ResponseStatus";
 
 
 const mockData = [{
@@ -46,10 +47,15 @@ const AdminProducts = () => {
     const productDeleteMutation = useMutation({
         mutationFn: (data) => ProductDelete(data),
         onSuccess: (data) => {
-            if (data?.response?.status === 400 || data?.response?.status === 404) {
+            if (ERROR_LIST.includes(data?.response?.status)) {
                 toast.error(`something went wrong : ${Object.values(data.response.data)}`, {duration: 10000})
             } else {
                 toast.success("product deleted", {duration: 5000})
+                queryClient.setQueryData(["products"], (old_data) => {
+                    let data = old_data.results.filter(item => item.id !== id)
+                    old_data.results = data
+                    return old_data
+                })
             }
         },
         onError: error => {
@@ -163,13 +169,13 @@ const AdminProducts = () => {
                     minWidth: {xs: "10rem !important", md: "17rem !important"}
                 }
             }}>
-                <Toaster position="top-right" reverseOrder={false}/>
                 <Button component={Link} to={"create/"} variant={"contained"} color={"black"}
                         sx={{color: "var(--background-main) !important", marginY: 2, marginX: 1}}>Add New
                     Product</Button>
                 <DataGrid paginationMode="server" checkboxSelection
                           rows={productsQuery.data ? productsQuery.data.results : mockData} columns={columns}
-                          components={{Toolbar: GridToolbar}} loading={productsQuery.isLoading} disableSelectionOnClick autoPageSize/>
+                          components={{Toolbar: GridToolbar}} loading={productsQuery.isLoading} disableSelectionOnClick
+                          autoPageSize/>
             </Box>
         </Container>
     )

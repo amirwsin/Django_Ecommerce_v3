@@ -181,7 +181,6 @@ const EssentialsCategory = () => {
                 color: "text.main"
             },
         }}>
-            <Toaster position="top-right" reverseOrder={false}/>
             <Button variant={"contained"} color={"black"} onClick={() => {
                 handleClickOpen()
                 setType(false)
@@ -233,10 +232,15 @@ const EssentialsCategory = () => {
                                    accept={"image/*"}
                                    id={"image-file"}
                                    name={"image-file"}/>
-                            {/*<AddPhotoAlternate fontSize={"large"} color={"action"}/>*/}
                             <CardMedia component={"img"} image={previewImage ? previewImage : form.image}
                                        alt={form.name}
-                                       sx={{position: "relative", height: "100%", width: "100%", border: "none"}}/>
+                                       sx={{
+                                           position: "relative",
+                                           height: "100%",
+                                           width: "100%",
+                                           border: "none",
+                                           objectFit: "fill"
+                                       }}/>
                         </Box>
                         <FormGroup>
                             <FormControlLabel
@@ -258,7 +262,8 @@ const EssentialsCategory = () => {
             <DataGrid
                 checkboxSelection
                 rows={categoriesQuery.data ? categoriesQuery.data.results : mockData} columns={columns}
-                components={{Toolbar: GridToolbar}} loading={categoriesQuery.isLoading} disableSelectionOnClick autoPageSize
+                components={{Toolbar: GridToolbar}} loading={categoriesQuery.isLoading} disableSelectionOnClick
+                autoPageSize
             />
         </Box>
     )

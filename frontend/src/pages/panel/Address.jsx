@@ -18,7 +18,7 @@ import {
 import {useSelector} from "react-redux";
 import {Add, Delete, Edit} from "@mui/icons-material";
 import {useContext, useState} from "react";
-import {AlertContext} from "../../AlertContext";
+import toast from "react-hot-toast";
 
 const Address = () => {
     const {user} = useSelector(state => state.authReducer)
@@ -53,7 +53,6 @@ const Address = () => {
 
 export const Form = ({user, data}) => {
     const queryClient = useQueryClient()
-    const {setAlertState} = useContext(AlertContext)
     const [formData, setFormData] = useState({
         id: data ? data.id : null,
         user: user.id,
@@ -78,21 +77,13 @@ export const Form = ({user, data}) => {
     const createAddressMutation = useMutation({
         mutationFn: () => data ? UpdateUserAddressApi(formData.id, formData) : CreateUserAddressApi(user.id, formData),
         onSuccess: () => {
-            setAlertState({
-                "open": true,
-                "msg": "New Address Added",
-                "color": "success"
-            })
+            toast.success("new address added")
             queryClient.setQueryData(["address"], (old_data) => {
                 return [...old_data, formData]
             })
         },
         onError: () => {
-            setAlertState({
-                "open": true,
-                "msg": "ops!!! something went wrong. Please Try later",
-                "color": "error"
-            })
+            toast.error("something went wrong. please try later")
         }
     })
 
@@ -177,11 +168,7 @@ export const AddressCard = ({data, setShowForm, setEditData}) => {
     const addressMutation = useMutation({
         mutationFn: () => ChangeUserAddressDefaultApi(data.id),
         onSuccess: (newData) => {
-            setAlertState({
-                "open": true,
-                "msg": "Your Default Address Changed",
-                "color": "success"
-            })
+            toast.success("changes saved")
             queryClient.setQueryData(['address'], (old_data) => {
                 let prevDefault = old_data.filter(item => {
                     return item.is_default === true
@@ -194,22 +181,14 @@ export const AddressCard = ({data, setShowForm, setEditData}) => {
             })
         },
         onError: () => {
-            setAlertState({
-                "open": true,
-                "msg": "ops!!! something went wrong. Please Try later",
-                "color": "error"
-            })
+            toast.error("something went wrong. please try later")
         }
     })
 
     const addressDeleteMutation = useMutation({
         mutationFn: () => DeleteUserAddressApi(data.id),
         onSuccess: () => {
-            setAlertState({
-                "open": true,
-                "msg": "Address Deleted",
-                "color": "success"
-            })
+            toast.success("address deleted")
             queryClient.setQueryData(['address'], (old_data) => {
                 let key;
                 old_data.filter((item, index) => {

@@ -1,5 +1,6 @@
 import axios from "axios";
 import axiosBasicInstance from "./axiosBasic";
+import toast from "react-hot-toast";
 
 const baseUrl = 'http://127.0.0.1:8000';
 const client_id = "djn3mVQrJMTH4ypYWxWIYsp2peRtNR1hYiIANifI"
@@ -24,9 +25,13 @@ axiosInstance.interceptors.response.use((response) => {
     async function (error) {
         const originalRequest = error.config;
         if (typeof error.response === 'undefined') {
-            console.log('A server/netowork error occurred. ' +
-                'Looks like CORS might be the problem. ' +
-                'Sorry about this - we will get it fixed shortly.');
+            // console.log('A server/netowork error occurred. ' +
+            //     'Looks like CORS might be the problem. ' +
+            //     'Sorry about this - we will get it fixed shortly.');
+            toast.error(`something went wrong : A server/netowork error occurred , please try later`, {
+                duration: 10000,
+                id: "network-error"
+            })
             return Promise.reject(error);
         }
         if (error.response.status === 401 && originalRequest.url === baseUrl + 'token/refresh/') {
@@ -55,7 +60,7 @@ axiosInstance.interceptors.response.use((response) => {
                     console.log(err)
                 });
             } else {
-                console.log('Refresh token not available');
+                // console.log('Refresh token not available');
                 localStorage.removeItem('refresh_token')
                 localStorage.removeItem('access_token')
                 localStorage.removeItem('user')

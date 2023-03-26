@@ -50,7 +50,6 @@ const AdminProductCreate = () => {
             gap: 2,
             overflow: "scroll"
         }}>
-            <Toaster position="top-right" reverseOrder={false}/>
             <Stepper activeStep={activeStep} alternativeLabel>
                 {steps.map((label, index) => {
                     return (

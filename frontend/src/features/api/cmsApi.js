@@ -262,3 +262,43 @@ export const StockEdit = async (data) => {
 }
 
 
+export const GetAllDelivery = async () => {
+    return await axiosInstance.get(`/api/cms/delivery/`).then((res) => {
+        return res.data
+    }).catch((err) => {
+        return err
+    })
+}
+
+
+export const DeliveryCreate = async (data) => {
+    return await axiosInstance.post(`/api/cms/delivery/`, data, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        }
+    }).then((res) => {
+        return res.data
+    }).catch((err) => {
+        return err
+    })
+}
+
+export const DeliveryEdit = async (data) => {
+    return await axiosInstance.patch(`/api/cms/delivery/${data.id}/`, data, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        }
+    }).then((res) => {
+        return res.data
+    }).catch((err) => {
+        return err
+    })
+}
+
+export const DeliveryDelete = async (id) => {
+    return await axiosInstance.delete(`/api/cms/delivery/${id}/`,).then((res) => {
+        return res.data
+    }).catch((err) => {
+        return err
+    })
+}

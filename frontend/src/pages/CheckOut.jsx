@@ -24,7 +24,7 @@ const CheckOut = () => {
             let defaultItem = data.filter(item => {
                 return item.is_default === true
             })
-            setAddressSelect(defaultItem[0].id)
+            setAddressSelect(defaultItem[0]?.id)
         }
     })
     const deliveryQuery = useQuery({
@@ -68,13 +68,13 @@ const CheckOut = () => {
                             gap: 3,
                             justifyContent: "center", marginY: 2,
                         }}>
-                            {addressQuery.data?.map(item => <CustomAddressCard addressSelect={addressSelect}
-                                                                               key={item.id}
-                                                                               setAddressSelect={setAddressSelect}
-                                                                               data={item}/>)}
-                            {addressQuery.data?.length === 0 || addressQuery.data === null &&
-                            <Typography component={Link} top={"/user/dashboard/address"}>You Dont Have Any Address
-                                Please Create one</Typography>}
+                            {addressQuery.data.length > 0 ? addressQuery.data?.map(item => <CustomAddressCard
+                                    addressSelect={addressSelect}
+                                    key={item.id}
+                                    setAddressSelect={setAddressSelect}
+                                    data={item}/>) :
+                                <Typography component={Link} to={"/user/dashboard/address"}>click to add an
+                                    address</Typography>}
                         </Box>
                         <CustomDivider text={"Delivery Method"}/>
                         <Box sx={{
@@ -106,7 +106,8 @@ const CheckOut = () => {
                                     sx={{color: "background.main"}} fullWidth={true} endIcon={<ShoppingCartCheckout/>}>
                                 Payment
                             </Button>
-                        </li>:<Button color={"black"} fullWidth={true}>Select Delivery Method & address to continue</Button>}
+                        </li> : <Button color={"black"} fullWidth={true}>Select Delivery Method & address to
+                            continue</Button>}
                     </CartCheckout>
                 </Grid>
             </Grid>

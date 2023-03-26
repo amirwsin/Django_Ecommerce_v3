@@ -5,10 +5,11 @@ from rest_framework import status, permissions, generics, viewsets, pagination
 from django.contrib.auth.models import User
 from .serializers import UserSerializer, ProductsSerializer, MediaSerializer, CategorySerializer, ProductTypeSerializer, \
     BrandsSerializer, ProductAttributeValuesSerializer, ProductAttributeValueSerializer, ProductInventoryEditSerializer, \
-    StockSerializer, ProductTypeAttributeSerializer, ProductAttributeSerializer
+    StockSerializer, ProductTypeAttributeSerializer, ProductAttributeSerializer, DeliverySerializer
 from inventory.models import Product, Category, Media, ProductType, Brand, ProductAttributeValues, ProductInventory, \
     ProductAttributeValue, Stock, ProductTypeAttribute, ProductAttribute
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
+from checkout.models import Delivery
 
 
 # Create your views here.
@@ -55,7 +56,6 @@ class ProductsView(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductsSerializer
     permission_classes = [permissions.IsAdminUser]
-
 
     def partial_update(self, request, pk=None):
         data = request.data
@@ -260,3 +260,9 @@ class ProductAttributeView(viewsets.ModelViewSet):
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class DeliveryView(viewsets.ModelViewSet):
+    queryset = Delivery.objects.order_by("-id")
+    serializer_class = DeliverySerializer
+    permission_classes = [permissions.IsAdminUser]
