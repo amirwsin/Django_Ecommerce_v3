@@ -3,26 +3,31 @@ from .models import ProductInventory, Category, Brand, Product
 from .serializers import BasicProductInventorySerializer, BasicCategoriesSerializer, BasicBrandsSerializer, \
     BasicProductSerializer
 from rest_framework import status, permissions, pagination, generics
+from django_filters import rest_framework as filters
+
+
+class ProductFilter(filters.FilterSet):
+    min_price = filters.NumberFilter(field_name="product__sale_price", lookup_expr='gte')
+    max_price = filters.NumberFilter(field_name="product__sale_price", lookup_expr='lte')
+
+    class Meta:
+        model = Product
+        fields = ['category__slug', 'is_recommend', 'is_special', ]
 
 
 class BasicProductView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
     queryset = Product.objects.filter(is_active=True).prefetch_related()
     serializer_class = BasicProductSerializer
-
-    def get_queryset(self):
-        category = self.request.query_params.get('category')
-        query = self.queryset.all()
-        if category:
-            query = query.filter(category__slug=category)
-        return query
+    filter_backends = [filters.DjangoFilterBackend]
+    filterset_class = ProductFilter
 
 
 class BasicProductBySlugView(generics.RetrieveAPIView):
     queryset = Product.objects.filter(is_active=True).prefetch_related()
     serializer_class = BasicProductSerializer
     permission_classes = [permissions.AllowAny]
-    lookup_field = "slug"
+    lookup_field = ("slug")
 
 
 class BasicCategoriesView(generics.ListAPIView):

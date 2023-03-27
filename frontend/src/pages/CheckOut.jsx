@@ -68,7 +68,7 @@ const CheckOut = () => {
                             gap: 3,
                             justifyContent: "center", marginY: 2,
                         }}>
-                            {addressQuery.data.length > 0 ? addressQuery.data?.map(item => <CustomAddressCard
+                            {addressQuery.data?.length > 0 ? addressQuery.data?.map(item => <CustomAddressCard
                                     addressSelect={addressSelect}
                                     key={item.id}
                                     setAddressSelect={setAddressSelect}

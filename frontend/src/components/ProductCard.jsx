@@ -50,7 +50,6 @@ const ProductCard = (data) => {
     }
 
 
-
     const inventory = data.data.inventory
     const media = filterMedia(inventory.media)
 
@@ -67,16 +66,17 @@ const ProductCard = (data) => {
                         image={media?.image}
                     />
                 </Link>
-                <Typography component={"span"} className={"product-card-discount"}>10%</Typography>
+                {/*<Typography component={"span"} className={"product-card-discount"}>10%</Typography>*/}
             </Box>
             <CardContent>
                 <Typography className={"product-card-title"} variant="h6" component={Link}
                             to={`/product/${data?.data.slug}`}>
                     {data?.data.name}
                 </Typography>
-                <Typography variant="body2" color="text.secondary" marginTop={2}>
-                    {data.data.description.length > 30 ? data.data.description.substring(0, 30) + " . . . " : data.data.description}
-                </Typography>
+                {/*<div dangerouslySetInnerHTML={{*/}
+                {/*    __html: data?.data.description.length > 30 ? data.data.description.substring(0, 30) + "..." :*/}
+                {/*        data.data.description*/}
+                {/*}} className={"ck-content"}/>*/}
             </CardContent>
         </Card>
     )

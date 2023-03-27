@@ -28,6 +28,8 @@ const ProductMain = ({data, setFormData, handleNext}) => {
         description: data?.description ? data?.description : "",
         category: data?.category ? data?.category?.name : "",
         is_active: data?.is_active ? data?.is_active : true,
+        is_special: data?.is_special ? data?.is_special : false,
+        is_recommend: data?.is_recommend ? data?.is_recommend : false,
     })
 
     const handleChange = (e) => {
@@ -131,6 +133,28 @@ const ProductMain = ({data, setFormData, handleNext}) => {
                                                  is_active: !form.is_active
                                              })}/>}
                             label="Product Visibility"/>
+                    </FormGroup>
+                </Grid>
+                <Grid item xs={12} md={2}>
+                    <FormGroup>
+                        <FormControlLabel
+                            control={<Switch name={"is_special"} color={"secondary"} checked={form.is_special}
+                                             onChange={() => setForm({
+                                                 ...form,
+                                                 is_special: !form.is_special
+                                             })}/>}
+                            label="Product special"/>
+                    </FormGroup>
+                </Grid>
+                <Grid item xs={12} md={2}>
+                    <FormGroup>
+                        <FormControlLabel
+                            control={<Switch name={"is_active"} color={"secondary"} checked={form.is_recommend}
+                                             onChange={() => setForm({
+                                                 ...form,
+                                                 is_recommend: !form.is_recommend
+                                             })}/>}
+                            label="Product recommended"/>
                     </FormGroup>
                 </Grid>
                 <Grid item xs={12} md={12}>

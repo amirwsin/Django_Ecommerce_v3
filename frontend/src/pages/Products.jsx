@@ -2,23 +2,26 @@ import {Container, Grid} from "@mui/material";
 import ProductsFilterBox from "../components/ProductsFilterBox";
 import ProductBox from "../components/ProductBox";
 import {useQuery} from "@tanstack/react-query";
-import {BasicProductApi, ProductByCategoryApi} from "../features/api/ProductsApi";
-import {useParams, useSearchParams} from "react-router-dom";
+import {ProductFilter} from "../features/api/ProductsApi";
+import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import SEO from "../SEO";
 
 
 const Products = () => {
-    let {category} = useParams()
-    let [searchParams, setSearchParams] = useSearchParams();
-    let [categoryField, setCategoryField] = useState(category)
+    const {category} = useParams()
+    const [categoryField, setCategoryField] = useState(category)
+    const [filters, setFilters] = useState({
+        price: [0, 0], category: category ? category : "",
+    })
 
     const ProductQuery = useQuery({
-        queryKey: ["products", "category"],
-        queryFn: category ? () => ProductByCategoryApi(category) : BasicProductApi
+        queryKey: ["products", filters],
+        queryFn: () => ProductFilter(filters)
     })
 
     useEffect(() => {
+        setFilters({...filters, category: category})
         ProductQuery.refetch()
         setCategoryField(category)
     }, [category])
@@ -32,7 +35,8 @@ const Products = () => {
                  author={"flower shop"} publish={"flower shop"}/>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={4} xl={2}>
-                    <ProductsFilterBox params={categoryField} setParam={setCategoryField}/>
+                    <ProductsFilterBox query={ProductQuery} filters={filters} setFilters={setFilters}
+                                       data={ProductQuery.data?.results}/>
                 </Grid>
                 <Grid item xs={12} md={8} xl={10}>
                     <ProductBox isLoading={ProductQuery.isLoading} data={ProductQuery.data}/>

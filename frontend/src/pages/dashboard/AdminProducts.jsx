@@ -13,7 +13,7 @@ import {DataGrid, GridToolbar} from "@mui/x-data-grid";
 import {
     Delete,
     DisabledByDefault,
-    Edit,
+    Edit, Recommend, StarRate,
     TaskAlt,
     Visibility
 } from "@mui/icons-material";
@@ -23,6 +23,7 @@ import {Link} from "react-router-dom";
 import React, {useState} from "react";
 import toast, {Toaster} from "react-hot-toast";
 import {ERROR_LIST} from "../../ResponseStatus";
+import {purple} from "@mui/material/colors";
 
 
 const mockData = [{
@@ -193,15 +194,26 @@ export const Detail = ({data, setSelectProduct}) => {
                 </Grid>
                 <Grid item xs={12} md={9} lg={10}>
                     <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-                        <Typography variant={"h2"} component={"h1"} fontWeight={400}>
+                        <Typography variant={"h3"} component={"h1"} fontWeight={400}>
                             {data.name}
                         </Typography>
-                        <Box>
+                        <Box display={"flex"}>
                             {data.is_active &&
                             <Tooltip arrow title={"This Product is Active And Customer Can Buy It"}>
                                 <IconButton color={"success"}><TaskAlt/></IconButton>
 
                             </Tooltip>}
+                            {data.is_special &&
+                            <Tooltip arrow title={"This Product Is Special For Some Reason"}>
+                                <IconButton color={"warning"}><StarRate/></IconButton>
+
+                            </Tooltip>}
+                            {data.is_recommend &&
+                            <Tooltip arrow title={"This Product Recommended By Shop"}>
+                                <IconButton sx={{color:purple[500]}}><Recommend/></IconButton>
+
+                            </Tooltip>}
+                            <Divider variant={"middle"} flexItem orientation={"vertical"}/>
                             <Tooltip arrow title={"Edit Product"}>
                                 <IconButton color={"info"} component={Link} to={`${data.id}/`}>
                                     <Edit fontSize={"medium"}/>
@@ -216,8 +228,8 @@ export const Detail = ({data, setSelectProduct}) => {
                     </Box>
                     <hr/>
                     <div dangerouslySetInnerHTML={{
-                        __html: data?.description ? data.description.substring(0, 250) + "..." :
-                            "Loading . . . "
+                        __html: data?.description?.length > 250 ? data?.description?.substring(0, 250) + "..." :
+                            data?.description
                     }}/>
                     <hr/>
                     <Box sx={{display: "flex", flexDirection: "row", flexWrap: "wrap", gap: 2}}>

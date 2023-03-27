@@ -22,7 +22,7 @@ const ProductDetails = () => {
     return (
         <Container sx={{marginY: 5, minHeight: "60vh"}} maxWidth={"xl"}>
             <SEO type={"text/html"} title={`Flower Shop | ${ProductQuery.data?.name}`}
-                 keywords={`flower , flower shop , buy online flower , ${ProductQuery.data?.name} , ${ProductQuery.data?.category}`}
+                 keywords={`flower , flower shop , buy online flower , ${ProductQuery.data?.name} , ${ProductQuery.data?.category.name}`}
                  description={ProductQuery.data?.description} name={"Flower Shop"}
                  author={"flower shop"} publish={"flower shop"}/>
             <Grid container spacing={2}>

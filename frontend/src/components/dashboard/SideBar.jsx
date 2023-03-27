@@ -48,16 +48,6 @@ const SideBar = () => {
                                 </Typography>
                             </li>
                         </Link>
-                        <Link to={"/admin/delivery"} className={"sidebar-link"}>
-                            <li className={"sidebar-wrapper-inner-list-item"} onClick={handleClick}>
-                                <Tooltip title={"Delivery"} arrow>
-                                    <LocalShipping />
-                                </Tooltip>
-                                <Typography variant={"h6"}>
-                                    Delivery
-                                </Typography>
-                            </li>
-                        </Link>
                         <Link to={"/admin/essentials"} className={"sidebar-link"}>
                             <li className={"sidebar-wrapper-inner-list-item"} onClick={handleClick}>
                                 <Tooltip title={"Essentials"} arrow>
@@ -77,6 +67,16 @@ const SideBar = () => {
                                 Settings
                             </Typography>
                         </li>
+                        <Link to={"/admin/delivery"} className={"sidebar-link"}>
+                            <li className={"sidebar-wrapper-inner-list-item"} onClick={handleClick}>
+                                <Tooltip title={"Delivery"} arrow>
+                                    <LocalShipping/>
+                                </Tooltip>
+                                <Typography variant={"h6"}>
+                                    Delivery
+                                </Typography>
+                            </li>
+                        </Link>
                         <li className={"sidebar-wrapper-inner-list-item"} onClick={handleClick}>
                             <Tooltip title={"Widgets"} arrow>
                                 <Widgets/>

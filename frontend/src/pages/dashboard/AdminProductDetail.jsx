@@ -10,7 +10,6 @@ import ProductMediaCard from "../../components/dashboard/ProductMediaCard";
 import ProductMediaCardAdd from "../../components/dashboard/ProductMediaCardAdd";
 import ProductInventory from "../../components/dashboard/ProductInventory";
 import ProductStock from "../../components/dashboard/ProductStock";
-import {Toaster} from "react-hot-toast";
 import React from "react";
 
 const AdminProductDetail = () => {

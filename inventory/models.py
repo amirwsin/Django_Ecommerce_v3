@@ -81,8 +81,8 @@ class Product(models.Model):
     )
     description = models.TextField(
         unique=False,
-        null=False,
-        blank=False,
+        null=True,
+        blank=True,
         verbose_name=_("product description"),
         help_text=_("format : required"),
     )
@@ -94,6 +94,22 @@ class Product(models.Model):
         default=True,
         verbose_name=_("product visibility"),
         help_text=_("format : true=product visible")
+    )
+    is_special = models.BooleanField(
+        unique=False,
+        null=False,
+        blank=False,
+        default=False,
+        verbose_name=_("special product"),
+        help_text=_("format : true=this product for some reason is special")
+    )
+    is_recommend = models.BooleanField(
+        unique=False,
+        null=False,
+        blank=False,
+        default=False,
+        verbose_name=_("you recommend"),
+        help_text=_("format : true=you recommend this product to customer")
     )
     create_at = models.DateTimeField(
         auto_now_add=True,

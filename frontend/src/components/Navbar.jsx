@@ -69,7 +69,7 @@ const Navbar = () => {
                             Home
                         </Link>
                         <Link to={"/products"} className={"navbar-link"}>
-                            specials
+                            Flowers
                         </Link>
                         <span className={"navbar-link category-trigger"} onClick={handleCategoryTriggerClick}>
                             Categories

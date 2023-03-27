@@ -11,13 +11,23 @@ export const CategoryItemSkeleton = () => {
     )
 }
 
-const CategoryItem = ({data}) => {
+const CategoryItem = ({data, props}) => {
     return (
-        <Box sx={{position: "relative", display: "grid", justifyContent: "center", alignItems: "center", gap: 2}}>
+        <Box sx={{
+            position: "relative",
+            display: "grid",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 2,
+            "&:hover": {
+                borderColor:"grey !important"
+            }
+        }} {...props}>
             <Link to={`/products/${data.slug}/`}>
                 <img src={data.image} alt={data.name} className={"category-item-image"}/>
             </Link>
-            <Typography component={Link} to={`/products/${data.slug}/`} className={"category-item-link"} align={"center"}>
+            <Typography component={Link} to={`/products/${data.slug}/`} className={"category-item-link"}
+                        align={"center"}>
                 {data.name}
             </Typography>
         </Box>
