@@ -14,21 +14,34 @@ const Home = () => {
 
     const productsQuery = useQuery({
         queryKey: ["products"],
-        queryFn: BasicProductApi
+        queryFn: BasicProductApi,
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        enabled: true
+
     })
     const productsIsSpecialQuery = useQuery({
         queryKey: ["products", "special"],
-        queryFn: ProductIsSpecialApi
+        queryFn: ProductIsSpecialApi,
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        enabled: true
     })
     const productsIsRecommendQuery = useQuery({
         queryKey: ["products", "recommend"],
-        queryFn: ProductIsRecommendApi
+        queryFn: ProductIsRecommendApi,
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        enabled: true
     })
 
 
     const categoryQuery = useQuery({
         queryKey: ["categories"],
-        queryFn: BasicCategoriesApi
+        queryFn: BasicCategoriesApi,
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        enabled: true
     })
 
     return (
@@ -44,18 +57,18 @@ const Home = () => {
                     <Typography variant={"h4"} component={"p"} fontFamily={"Caveat"}>flowers</Typography>
                     <Typography variant={"h5"} component={"p"} fontFamily={"Caveat"}>ours</Typography>
                     <Box sx={BoxStyle}>
-                        {!categoryQuery.isLoading ? categoryQuery.data.results.map(item => <CategoryItem
+                        {!categoryQuery.isLoading ? categoryQuery.data?.results?.map(item => <CategoryItem
                                 props={{style: {borderBottom: "1px solid lightgrey", padding: 3}}} key={item.id}
                                 data={item}/>) :
                             <CategoryItemSkeleton/>}
                     </Box>
                 </Box>
                 <Box component={"section"} sx={BoxStyleP} style={{backgroundColor: "white"}}>
-                    <Typography variant={"h2"} component={"h2"}  textAlign={"center"} fontWeight={600}
+                    <Typography variant={"h2"} component={"h2"} textAlign={"center"} fontWeight={600}
                                 fontFamily={"Caveat"}>special</Typography>
                     <hr/>
                     <Box className={"inline-slider"}>
-                        {!productsIsSpecialQuery.isLoading ? productsIsSpecialQuery.data.results.map(item =>
+                        {!productsIsSpecialQuery.isLoading ? productsIsSpecialQuery.data?.results?.map(item =>
                                 <ProductCard
                                     key={item.id} data={item}/>) :
                             <ProductCardSkeleton/>}
@@ -73,11 +86,11 @@ const Home = () => {
             </Box>
             <Container maxWidth={"xl"} sx={{paddingY: 5}}>
                 <Box component={"section"} sx={BoxStyleP} style={{backgroundColor: "white"}}>
-                    <Typography variant={"h2"} component={"h2"}  textAlign={"center"} fontWeight={600}
+                    <Typography variant={"h2"} component={"h2"} textAlign={"center"} fontWeight={600}
                                 fontFamily={"Caveat"}>recommended</Typography>
                     <hr/>
                     <Box className={"inline-slider"}>
-                        {!productsIsRecommendQuery.isLoading ? productsIsRecommendQuery.data.results.map(item =>
+                        {!productsIsRecommendQuery.isLoading ? productsIsRecommendQuery.data?.results?.map(item =>
                                 <ProductCard key={item.id} data={item}/>) :
                             <ProductCardSkeleton/>}
                     </Box>
@@ -86,9 +99,15 @@ const Home = () => {
                     <Typography variant={"h2"} component={"h2"} textAlign={"center"} fontWeight={600}
                                 fontFamily={"Caveat"}>latest</Typography>
                     <hr/>
-                    <Box sx={{display: "flex", flexDirection: "row", flexWrap: "wrap", gap: 2,justifyContent:"center"}}>
-                        {!productsQuery.isLoading ? productsQuery.data.results.map(item => <ProductCard key={item.id}
-                                                                                                        data={item}/>) :
+                    <Box sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        flexWrap: "wrap",
+                        gap: 2,
+                        justifyContent: "center"
+                    }}>
+                        {!productsQuery.isLoading ? productsQuery.data?.results?.map(item => <ProductCard key={item.id}
+                                                                                                          data={item}/>) :
                             <ProductCardSkeleton/>}
                     </Box>
                 </Box>

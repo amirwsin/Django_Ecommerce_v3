@@ -4,8 +4,9 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import {Box, IconButton, Skeleton} from "@mui/material";
-import {AddShoppingCart, Favorite} from "@mui/icons-material";
+import {AddShoppingCart, Favorite, FavoriteBorder} from "@mui/icons-material";
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 
 export const ProductCardSkeleton = () => {
@@ -13,7 +14,7 @@ export const ProductCardSkeleton = () => {
         <Card sx={{maxWidth: 250}} className={"product-card"}>
             <Box sx={{overflow: "hidden"}}>
                 <Skeleton variant={"rectangular"} width={250} height={160} animation="wave"/>
-                <Typography component={"span"} className={"product-card-discount"}>10%</Typography>
+                {/*<Typography component={"span"} className={"product-card-discount"}>10%</Typography>*/}
             </Box>
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
@@ -39,6 +40,10 @@ const ProductCard = (data) => {
 
     const defaultImage = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY87Gp2WH3PkTHQ7ZlBx_1QGp6rUMw0iJpiQ&usqp=CAU"
 
+    const {user} = useSelector(state => state.authReducer)
+
+    const readyData = user ? JSON.parse(user) : false
+
     const filterMedia = (item) => {
         let result;
         if (item) {
@@ -49,9 +54,19 @@ const ProductCard = (data) => {
         return result
     }
 
+    const handleWishList = () => {
+        let result
+        const wishList = readyData.wishList
+        result = wishList?.find(item => {
+            return item.product === data.data.id
+        })
+        return result
+    }
+
 
     const inventory = data.data.inventory
     const media = filterMedia(inventory.media)
+    const is_wished = handleWishList()
 
 
     return (
@@ -63,21 +78,30 @@ const ProductCard = (data) => {
                         component="img"
                         className={"product-card-image"}
                         alt={media != null ? media.alt_text : "image product"}
-                        image={media?.image}
+                        image={media?.image} loading={"lazy"}
                     />
                 </Link>
                 {/*<Typography component={"span"} className={"product-card-discount"}>10%</Typography>*/}
             </Box>
             <CardContent>
-                <Typography className={"product-card-title"} variant="h6" component={Link}
-                            to={`/product/${data?.data.slug}`}>
-                    {data?.data.name}
-                </Typography>
+                <Link to={`/product/${data?.data.slug}`} style={{textDecoration:"none"}}>
+                    <Typography className={"product-card-title"} variant="h6" component={"h2"}
+                    >
+                        {data?.data.name}
+                    </Typography>
+                </Link>
                 {/*<div dangerouslySetInnerHTML={{*/}
                 {/*    __html: data?.data.description.length > 30 ? data.data.description.substring(0, 30) + "..." :*/}
                 {/*        data.data.description*/}
                 {/*}} className={"ck-content"}/>*/}
             </CardContent>
+            <CardActions
+                sx={{alignSelf: "end", display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                <IconButton color={"error"}>
+                    {is_wished ? <Favorite/> : <FavoriteBorder/>}
+                </IconButton>
+                <Typography component={"span"} variant={"h6"}>${data?.data?.inventory?.sale_price}</Typography>
+            </CardActions>
         </Card>
     )
 }

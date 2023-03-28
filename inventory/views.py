@@ -9,10 +9,12 @@ from django_filters import rest_framework as filters
 class ProductFilter(filters.FilterSet):
     min_price = filters.NumberFilter(field_name="product__sale_price", lookup_expr='gte')
     max_price = filters.NumberFilter(field_name="product__sale_price", lookup_expr='lte')
+    category = filters.BaseInFilter(field_name="category__slug", lookup_expr='in')
+    brand = filters.BaseInFilter(field_name="product__brand__name", lookup_expr='in')
 
     class Meta:
         model = Product
-        fields = ['category__slug', 'is_recommend', 'is_special', ]
+        fields = ['is_recommend', 'is_special']
 
 
 class BasicProductView(generics.ListAPIView):
@@ -21,6 +23,8 @@ class BasicProductView(generics.ListAPIView):
     serializer_class = BasicProductSerializer
     filter_backends = [filters.DjangoFilterBackend]
     filterset_class = ProductFilter
+
+    # Product.objects.filter(category_)
 
 
 class BasicProductBySlugView(generics.RetrieveAPIView):

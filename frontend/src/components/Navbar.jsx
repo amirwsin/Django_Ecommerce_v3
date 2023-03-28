@@ -39,7 +39,10 @@ const Navbar = () => {
 
     const categoryQuery = useQuery({
         queryKey: ["categories"],
-        queryFn: BasicCategoriesApi
+        queryFn: BasicCategoriesApi,
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        enabled: true
     })
 
 
@@ -47,11 +50,11 @@ const Navbar = () => {
         <Box sx={{flexGrow: 1, zIndex: 2, height: "60px"}} component={"div"}>
             <AppBar position="sticky" sx={{backgroundColor: "background.main", boxShadow: "none"}}>
                 <Toolbar sx={{paddingX: {xs: 2, sm: 5, md: 10, lg: 5}, gap: 10, justifyContent: "space-between"}}>
-                    <IconButton onClick={handleSideBar} size={"large"} sx={{display: {xs: "block", md: "none"}}}>
-                        <MoreVert/>
-                    </IconButton>
                     <Box sx={{flexGrow: {xs: 0, md: 1}, display: "flex", gap: 2, alignItems: "center"}}>
-                        <Typography className={"logo-text"} component={Link} to={"/"}>
+                        <IconButton onClick={handleSideBar} size={"large"} sx={{display: {xs: "block", md: "none"}}}>
+                            <MoreVert/>
+                        </IconButton>
+                        <Typography className={"logo-text"} sx={{display:{xs:"none",sm:"block"}}} component={Link} to={"/"}>
                             Flower Shop
                         </Typography>
                         <small className={"logo-mini-text"}>
@@ -115,7 +118,7 @@ const Navbar = () => {
                 open={sideBar}
                 onClose={handleSideBar}
             >
-                <SideBarMenu/>
+                <SideBarMenu data={categoryQuery.data} isLoading={categoryQuery.isLoading}/>
             </Drawer>
         </Box>
     )

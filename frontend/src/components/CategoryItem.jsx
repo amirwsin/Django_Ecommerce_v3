@@ -24,7 +24,7 @@ const CategoryItem = ({data, props}) => {
             }
         }} {...props}>
             <Link to={`/products/${data.slug}/`}>
-                <img src={data.image} alt={data.name} className={"category-item-image"}/>
+                <img src={data.image} alt={data.name} loading={"lazy"} className={"category-item-image"}/>
             </Link>
             <Typography component={Link} to={`/products/${data.slug}/`} className={"category-item-link"}
                         align={"center"}>

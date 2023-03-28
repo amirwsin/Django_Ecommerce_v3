@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 const ProductDetail = ({data, setSelection, isLoading}) => {
 
     const {user, isAuthenticated} = useSelector(state => state.authReducer)
+    const {products} = useSelector(state => state.cartReducer)
     let productAttribute = []
     const [currentInventory, setCurrentInventory] = useState(data?.inventory && data?.inventory[0])
     const [variants, setVariants] = useState({})
@@ -72,17 +73,27 @@ const ProductDetail = ({data, setSelection, isLoading}) => {
     const handleAddToCart = () => {
         let preData = {}
         let variantCheckResult = checkVariants()
+        let result, key;
+        result = products.find((product, index) => {
+            key = index
+            return product?.product?.id === data.id
+        })
         if (variantCheckResult) {
-            preData = {"product": data, "variant": variants, "inventory": currentInventory, "qty": 1}
-            delete preData.product.inventory
-            dispatch(addToCart(preData))
-            if (isAuthenticated) {
-                const readyUser = JSON.parse(user)
-                dispatch(onlineAddToCart(readyUser.id, preData))
+            if (result.qty < result.inventory.stock.units) {
+                preData = {"product": data, "variant": variants, "inventory": currentInventory, "qty": 1}
+                delete preData.product.inventory
+                dispatch(addToCart(preData))
+                if (isAuthenticated) {
+                    const readyUser = JSON.parse(user)
+                    dispatch(onlineAddToCart(readyUser.id, preData))
+                }
+                toast.success('product added to your basket',);
+            } else {
+                toast.error(`sorry but you cant add more then ${result.inventory.stock.units} of this product`)
             }
-            toast.success('product added to your basket',);
         } else {
             toast('please select variants',);
+
         }
     }
 

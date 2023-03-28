@@ -23,6 +23,7 @@ class BasicAddressSerializer(serializers.ModelSerializer):
 
 class BasicUserSerializer(serializers.ModelSerializer):
     wallet = serializers.SerializerMethodField()
+    wishList = serializers.SerializerMethodField()
 
     class Meta:
         model = User
@@ -32,6 +33,10 @@ class BasicUserSerializer(serializers.ModelSerializer):
     def get_wallet(self, obj):
         wallet = Wallet.objects.get(user=obj)
         return BasicWalletSerializer(wallet, many=False, read_only=True, context=self.context).data
+
+    def get_wishList(self, obj):
+        wishes = WishList.objects.filter(user=obj)
+        return BasicWishListSerializer(wishes, many=True, read_only=True, context=self.context).data
 
 
 class CreateUserSerializer(serializers.ModelSerializer):

@@ -157,6 +157,7 @@ body {
 .sidebar-menu {
     position: relative;
     width: 100%;
+    padding: 1rem 0;
 }
 
 #myBtn {
@@ -213,11 +214,16 @@ body {
 }
 
 .product-card {
+    display: grid;
     position: relative;
-    background-color: white !important;
-    padding: 0.5rem;
-    border-radius: 0 1rem 1rem 0 !important;
+    background-color: #fafafa !important;
+    box-shadow: 0 0 2px grey !important;
     transition: 0.8s ease all;
+}
+
+.product-card:hover {
+    background-color: white !important;
+    box-shadow: 0px 4px 10px lightgray !important;
 }
 
 .product-card-title {
@@ -226,7 +232,6 @@ body {
 }
 
 .product-card-image {
-    border-radius: 0 1rem 1rem 0;
 }
 
 .product-card-discount {
@@ -505,7 +510,6 @@ body {
 }
 
 
-
 @media (prefers-color-scheme: dark) {
     :root {
         --box-shadow-color: lightgrey;
@@ -551,5 +555,8 @@ body {
 
     .form-wrapper {
         margin: 1.5rem 0.5rem;
+    }
+    .logo-mini-text{
+        display: none;
     }
 }
