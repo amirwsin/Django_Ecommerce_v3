@@ -4,6 +4,7 @@ from .serializers import BasicProductInventorySerializer, BasicCategoriesSeriali
     BasicProductSerializer
 from rest_framework import status, permissions, pagination, generics
 from django_filters import rest_framework as filters
+from rest_framework.filters import OrderingFilter
 
 
 class ProductFilter(filters.FilterSet):
@@ -21,10 +22,10 @@ class BasicProductView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
     queryset = Product.objects.filter(is_active=True).prefetch_related()
     serializer_class = BasicProductSerializer
-    filter_backends = [filters.DjangoFilterBackend]
+    filter_backends = [filters.DjangoFilterBackend, OrderingFilter]
     filterset_class = ProductFilter
-
-    # Product.objects.filter(category_)
+    ordering_fields = ['?', 'create_at', "-create_at", "name", ]
+    pagination.PageNumberPagination.page_size = 30
 
 
 class BasicProductBySlugView(generics.RetrieveAPIView):

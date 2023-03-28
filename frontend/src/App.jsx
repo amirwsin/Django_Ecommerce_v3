@@ -61,58 +61,64 @@ function App() {
         <HelmetProvider>
             <ColorModeContext.Provider value={colorMode}>
                 <ThemeProvider theme={theme}>
-                        <BrowserRouter>
-                            <Routes>
-                                <Route path={"/"} element={<MainLayout/>}>
-                                    <Route index path={"/"} element={
-                                        <Home/>
-                                    }/>
-                                    <Route path={"/login"} element={
-                                        <RestrictPage path={"/"} type={"isAnonymous"}>
-                                            <Login/>
-                                        </RestrictPage>
-                                    }/>
-                                    <Route path={"/register"} element={
-                                        <RestrictPage path={"/"} type={"isAnonymous"}>
-                                            <Register/>
-                                        </RestrictPage>
-                                    }/>
-                                    <Route path={"/user/dashboard"} element={
-                                        <RestrictPage path={"/login"} type={"isAuthenticated"}>
-                                            <PanelLayout><Dashboard/></PanelLayout>
-                                        </RestrictPage>
-                                    }/>
-                                    <Route path={"/user/dashboard/account"} element={
-                                        <RestrictPage path={"/login"} type={"isAuthenticated"}>
-                                            <PanelLayout><Account/></PanelLayout>
-                                        </RestrictPage>
-                                    }/>
-                                    <Route path={"/user/dashboard/address"} element={
-                                        <RestrictPage path={"/login"} type={"isAuthenticated"}>
-                                            <PanelLayout><Address/></PanelLayout>
-                                        </RestrictPage>
-                                    }/>
-                                    <Route path={"/products/:category?/"} element={
-                                        <Products/>
-                                    }/>
-                                    <Route path={"/product/:slug/"} element={
-                                        <ProductDetails/>}/>
-                                    <Route path={"/cart"} element={<ShoppingCart/>
-                                    }/>
-                                    <Route path={"/cart/checkout"} element={<CheckOut/>}/>
-                                    <Route path={"*"} element={<NotFound/>}/>
-                                </Route>
-                                <Route path={"/"} element={<AdminLayout/>}>
-                                    <Route path={"/admin/dashboard"} element={<RestrictPage path={"/login"} type={"isAdmin"}><AdminDashboard/></RestrictPage>}/>
-                                    <Route path={"/admin/users"} element={<RestrictPage path={"/login"} type={"isAdmin"}><AdminUsers/></RestrictPage>}/>
-                                    <Route path={"/admin/products"} element={<RestrictPage path={"/login"} type={"isAdmin"}><AdminProducts/></RestrictPage>}/>
-                                    <Route path={"/admin/products/:id/"} element={<RestrictPage path={"/login"} type={"isAdmin"}><AdminProductDetail/></RestrictPage>}/>
-                                    <Route path={"/admin/products/create/"} element={<RestrictPage path={"/login"} type={"isAdmin"}><AdminProductCreate/></RestrictPage>}/>
-                                    <Route path={"/admin/essentials/"} element={<RestrictPage path={"/login"} type={"isAdmin"}><AdminEssentials/></RestrictPage>}/>
-                                    <Route path={"/admin/delivery/"} element={<RestrictPage path={"/login"} type={"isAdmin"}><AdminDelivery/></RestrictPage>}/>
-                                </Route>
-                            </Routes>
-                        </BrowserRouter>
+                    <BrowserRouter>
+                        <Routes>
+                            <Route path={"/"} element={<MainLayout/>}>
+                                <Route index path={"/"} element={
+                                    <Home/>
+                                }/>
+                                <Route path={"/login"} element={
+                                    <RestrictPage path={"/"} type={"isAnonymous"}>
+                                        <Login/>
+                                    </RestrictPage>
+                                }/>
+                                <Route path={"/register"} element={
+                                    <RestrictPage path={"/"} type={"isAnonymous"}>
+                                        <Register/>
+                                    </RestrictPage>
+                                }/>
+                                <Route path={"/user/dashboard"} element={
+                                    <RestrictPage path={"/login"} type={"isAuthenticated"}>
+                                        <PanelLayout><Dashboard/></PanelLayout>
+                                    </RestrictPage>
+                                }/>
+                                <Route path={"/user/dashboard/account"} element={
+                                    <RestrictPage path={"/login"} type={"isAuthenticated"}>
+                                        <PanelLayout><Account/></PanelLayout>
+                                    </RestrictPage>
+                                }/>
+                                <Route path={"/user/dashboard/address"} element={
+                                    <RestrictPage path={"/login"} type={"isAuthenticated"}>
+                                        <PanelLayout><Address/></PanelLayout>
+                                    </RestrictPage>
+                                }/>
+                                <Route path={"/products/:category?/"} element={
+                                    <Products/>
+                                }/>
+                                <Route path={"/products/:web_id/:slug/"} element={
+                                    <ProductDetails/>}/>
+                                <Route path={"/cart"} element={<ShoppingCart/>
+                                }/>
+                                <Route path={"/cart/checkout"} element={<CheckOut/>}/>
+                                <Route path={"*"} element={<NotFound/>}/>
+                            </Route>
+                            <Route path={"/"} element={<AdminLayout/>}>
+                                <Route path={"/admin/dashboard"} element={<RestrictPage path={"/login"}
+                                                                                        type={"isAdmin"}><AdminDashboard/></RestrictPage>}/>
+                                <Route path={"/admin/users"} element={<RestrictPage path={"/login"}
+                                                                                    type={"isAdmin"}><AdminUsers/></RestrictPage>}/>
+                                <Route path={"/admin/products"} element={<RestrictPage path={"/login"} type={"isAdmin"}><AdminProducts/></RestrictPage>}/>
+                                <Route path={"/admin/products/:id/"} element={<RestrictPage path={"/login"}
+                                                                                            type={"isAdmin"}><AdminProductDetail/></RestrictPage>}/>
+                                <Route path={"/admin/products/create/"} element={<RestrictPage path={"/login"}
+                                                                                               type={"isAdmin"}><AdminProductCreate/></RestrictPage>}/>
+                                <Route path={"/admin/essentials/"} element={<RestrictPage path={"/login"}
+                                                                                          type={"isAdmin"}><AdminEssentials/></RestrictPage>}/>
+                                <Route path={"/admin/delivery/"} element={<RestrictPage path={"/login"}
+                                                                                        type={"isAdmin"}><AdminDelivery/></RestrictPage>}/>
+                            </Route>
+                        </Routes>
+                    </BrowserRouter>
                 </ThemeProvider>
             </ColorModeContext.Provider>
         </HelmetProvider>

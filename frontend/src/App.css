@@ -125,6 +125,7 @@ body {
     z-index: 3;
     padding: 3rem;
     box-shadow: 0 2px 8px var(--box-shadow-color);
+    margin-top: 2rem;
 }
 
 .category-item-link {
@@ -207,10 +208,10 @@ body {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 0.8rem;
+    gap: 2rem;
     width: 100%;
-    padding: 2rem;
-    justify-content: center;
+    padding: 1rem;
+    justify-content: start;
 }
 
 .product-card {
@@ -312,6 +313,7 @@ body {
 .product-filter-wrapper {
     display: grid;
     position: sticky;
+    top: 5rem;
     width: 100%;
     padding: 1rem;
     background-color: var(--background-main);
@@ -556,7 +558,8 @@ body {
     .form-wrapper {
         margin: 1.5rem 0.5rem;
     }
-    .logo-mini-text{
+
+    .logo-mini-text {
         display: none;
     }
 }

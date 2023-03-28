@@ -10,7 +10,7 @@ export const BasicProductApi = () => {
 }
 
 export const ProductByCategoryApi = (category) => {
-    return axiosInstance.get(`/api/inventory/products/?category__slug=${category}`,).then((res) => {
+    return axiosInstance.get(`/api/inventory/products/?category=${category}`,).then((res) => {
         return res.data
     }).catch((err) => {
         return err
@@ -18,7 +18,7 @@ export const ProductByCategoryApi = (category) => {
 }
 
 export const ProductIsSpecialApi = () => {
-    return axiosInstance.get(`/api/inventory/products/?is_special=true`,).then((res) => {
+    return axiosInstance.get(`/api/inventory/products/?is_special=true&ordering=?`,).then((res) => {
         return res.data
     }).catch((err) => {
         return err
@@ -26,7 +26,7 @@ export const ProductIsSpecialApi = () => {
     })
 }
 export const ProductIsRecommendApi = () => {
-    return axiosInstance.get(`/api/inventory/products/?is_recommend=true`,).then((res) => {
+    return axiosInstance.get(`/api/inventory/products/?is_recommend=true&ordering=?`,).then((res) => {
         return res.data
     }).catch((err) => {
         return err
@@ -67,6 +67,12 @@ export const ProductFilter = async (filters) => {
     }
     if (filters.is_recommend) {
         filter_string += `is_recommend=true&`
+    }
+    if (filters.ordering) {
+        filter_string += `ordering=${filters.ordering}&`
+    }
+    if (filters.page > 1) {
+        filter_string += `page=${filters.page}&`
     }
     return await axiosInstance.get(`/api/inventory/products/${filter_string}`,).then((res) => {
         return res.data

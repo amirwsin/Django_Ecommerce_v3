@@ -23,7 +23,7 @@ const SideBarMenu = ({data, isLoading}) => {
                     <ListItemText primary={"Home"}/>
                 </ListItemButton>
                 <ListItemButton component={Link} to={"/products"}>
-                    <ListItemText primary={"Flowers"}/>
+                    <ListItemText primary={"Discover"}/>
                 </ListItemButton>
                 <ListItemButton onClick={handleClick}>
                     <ListItemText primary={"Categories"}/>

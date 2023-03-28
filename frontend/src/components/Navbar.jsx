@@ -14,7 +14,7 @@ import {
     IconButton,
     Tooltip
 } from "@mui/material";
-import {useState} from "react";
+import {useRef, useState} from "react";
 import CategoryMenuList from "./CategoryMenuList";
 import SideBarMenu from "./SideBarMenu";
 import {useSelector} from "react-redux";
@@ -47,14 +47,15 @@ const Navbar = () => {
 
 
     return (
-        <Box sx={{flexGrow: 1, zIndex: 2, height: "60px"}} component={"div"}>
-            <AppBar position="sticky" sx={{backgroundColor: "background.main", boxShadow: "none"}}>
+        <Box sx={{flexGrow: 1, zIndex: 2, height: "60px", position: "sticky", top: 0}} component={"div"}>
+            <AppBar sx={{backgroundColor: "background.main", boxShadow: "none"}} >
                 <Toolbar sx={{paddingX: {xs: 2, sm: 5, md: 10, lg: 5}, gap: 10, justifyContent: "space-between"}}>
                     <Box sx={{flexGrow: {xs: 0, md: 1}, display: "flex", gap: 2, alignItems: "center"}}>
                         <IconButton onClick={handleSideBar} size={"large"} sx={{display: {xs: "block", md: "none"}}}>
                             <MoreVert/>
                         </IconButton>
-                        <Typography className={"logo-text"} sx={{display:{xs:"none",sm:"block"}}} component={Link} to={"/"}>
+                        <Typography className={"logo-text"} sx={{display: {xs: "none", sm: "block"}}} component={Link}
+                                    to={"/"}>
                             Flower Shop
                         </Typography>
                         <small className={"logo-mini-text"}>
@@ -67,15 +68,18 @@ const Navbar = () => {
                             online
                         </small>
                     </Box>
-                    <Box sx={{display: {xs: "none", sm: "none", md: "flex"}, gap: 3}} component={"nav"}>
+                    <Box sx={{display: {xs: "none", sm: "none", md: "flex"}, gap: 3, flexGrow: 2}} component={"nav"}>
                         <Link to={"/"} className={"navbar-link"}>
                             Home
                         </Link>
                         <Link to={"/products"} className={"navbar-link"}>
-                            Flowers
+                            Discover
                         </Link>
                         <span className={"navbar-link category-trigger"} onClick={handleCategoryTriggerClick}>
                             Categories
+                        </span>
+                        <span className={"navbar-link"}>
+                            About Us
                         </span>
                     </Box>
                     <Box sx={{display: "flex", flexGrow: 0, gap: 2}}>

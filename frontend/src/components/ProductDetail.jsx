@@ -1,4 +1,4 @@
-import {Box, Button, Chip, Divider, Skeleton, Typography} from "@mui/material";
+import {Box, Breadcrumbs, Button, Chip, Divider, Skeleton, Typography} from "@mui/material";
 import ProductAttribute from "./ProductAttribute";
 import {useEffect, useState} from "react";
 import {AddShoppingCart, Favorite} from "@mui/icons-material";
@@ -6,6 +6,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {addToCart, onlineAddToCart} from "../features/actions/cartActions";
 import "../ckeditor.css"
 import toast from "react-hot-toast";
+import {Link} from "react-router-dom";
+import * as React from "react";
 
 const ProductDetail = ({data, setSelection, isLoading}) => {
 
@@ -119,6 +121,20 @@ const ProductDetail = ({data, setSelection, isLoading}) => {
             padding: 2,
             boxShadow: "2px 2px 8px grey"
         }}>
+            <Breadcrumbs aria-label="breadcrumb">
+                <Link to={"/"} className={""}>
+                    Home
+                </Link>
+                <Link to={"/products"} className={""}>
+                    Products
+                </Link>
+                <Link to={`/products/${data?.category?.slug}/`} className={""}>
+                    {data?.category?.name}
+                </Link>
+                <span>
+                    {data?.name}
+                </span>
+            </Breadcrumbs>
             <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
                 <Typography variant={"h5"} component={"h1"} sx={{fontWeight: 500,}}>
                     {data?.name ? data?.name : <Skeleton variant={"rectangular"} animation={"wave"} width={"20rem"}/>}

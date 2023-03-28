@@ -72,7 +72,7 @@ const ProductCard = (data) => {
     return (
         <Card sx={{minWidth: 250, maxWidth: 250}} className={"product-card"}>
             <Box sx={{overflow: "hidden"}}>
-                <Link to={`/product/${data?.data.slug}`}>
+                <Link to={`/products/${data?.data.web_id}/${data?.data.slug}/`}>
                     <CardMedia
                         sx={{height: 160}}
                         component="img"
@@ -84,7 +84,7 @@ const ProductCard = (data) => {
                 {/*<Typography component={"span"} className={"product-card-discount"}>10%</Typography>*/}
             </Box>
             <CardContent>
-                <Link to={`/product/${data?.data.slug}`} style={{textDecoration:"none"}}>
+                <Link to={`/product/${data?.data.slug}`} style={{textDecoration: "none"}}>
                     <Typography className={"product-card-title"} variant="h6" component={"h2"}
                     >
                         {data?.data.name}
