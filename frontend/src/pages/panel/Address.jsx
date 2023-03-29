@@ -201,7 +201,6 @@ export const AddressCard = ({data, setShowForm, setEditData}) => {
     })
 
 
-    const {setAlertState} = useContext(AlertContext)
     const handleDefault = () => {
         addressMutation.mutate()
     }

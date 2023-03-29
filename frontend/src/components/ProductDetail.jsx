@@ -81,8 +81,20 @@ const ProductDetail = ({data, setSelection, isLoading}) => {
             return product?.product?.id === data.id
         })
         if (variantCheckResult) {
-            if (result.qty < result.inventory.stock.units) {
-                preData = {"product": data, "variant": variants, "inventory": currentInventory, "qty": 1}
+            preData = {"product": data, "variant": variants, "inventory": currentInventory, "qty": 1}
+            if (result) {
+                if (result?.qty < result?.inventory?.stock?.units) {
+                    delete preData.product.inventory
+                    dispatch(addToCart(preData))
+                    if (isAuthenticated) {
+                        const readyUser = JSON.parse(user)
+                        dispatch(onlineAddToCart(readyUser.id, preData))
+                    }
+                    toast.success('product added to your basket',);
+                } else {
+                    toast.error(`sorry but you cant add more of this product`,{id:"maximum-units"})
+                }
+            } else {
                 delete preData.product.inventory
                 dispatch(addToCart(preData))
                 if (isAuthenticated) {
@@ -90,13 +102,12 @@ const ProductDetail = ({data, setSelection, isLoading}) => {
                     dispatch(onlineAddToCart(readyUser.id, preData))
                 }
                 toast.success('product added to your basket',);
-            } else {
-                toast.error(`sorry but you cant add more then ${result.inventory.stock.units} of this product`)
             }
         } else {
             toast('please select variants',);
 
         }
+
     }
 
     useEffect(() => {

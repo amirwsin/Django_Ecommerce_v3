@@ -50,6 +50,44 @@ const Home = () => {
                  description={"buy the most special and extinguished flower bouquet in europe"} name={"Flower Shop"}
                  author={"flower shop"} publish={"flower shop"}/>
             <HeroSection/>
+            <Box sx={{display: "block", backgroundColor: "none", padding: 3}}>
+                <ul className={"special-list"}>
+                    <li>
+                        <Typography variant={"h4"} component={"h4"} fontWeight={500}>
+                            Payment
+                        </Typography>
+                        <Typography variant={"subtitle1"} component={"p"}>
+                            you can pay online by paypal or credit cards
+                        </Typography>
+                    </li>
+                    <li>
+                        <Typography variant={"h4"} component={"h4"} fontWeight={500}>
+                            Delivery
+                        </Typography>
+                        <Typography variant={"subtitle1"} component={"p"}>
+                            we delivery on address you select on order and unfortunately cause of type of our product
+                            its very sensitive of delivery spot and time,
+                        </Typography>
+                    </li>
+                    <li>
+                        <Typography variant={"h4"} component={"h4"} fontWeight={500}>
+                            Support
+                        </Typography>
+                        <Typography variant={"subtitle1"} component={"p"}>
+                            our expert 24/7 are ready to help you, and give you advises relative of your question
+                        </Typography>
+                    </li>
+                    <li>
+                        <Typography variant={"h4"} component={"h4"} fontWeight={500}>
+                            Refund
+                        </Typography>
+                        <Typography variant={"subtitle1"} component={"p"}>
+                            we sell flowers related products and cause of the type of business there is no refund,
+                            except if you cancel your order immediately and before your product is ready
+                        </Typography>
+                    </li>
+                </ul>
+            </Box>
             <Container maxWidth={"xl"} sx={{paddingY: 10}}>
                 <Box textAlign={"center"} component={"section"}>
                     <Typography variant={"h2"} component={"h2"} fontWeight={600}
@@ -63,10 +101,19 @@ const Home = () => {
                             <CategoryItemSkeleton/>}
                     </Box>
                 </Box>
-                <Box component={"section"} sx={BoxStyleP} style={{backgroundColor: "white"}}>
-                    <Typography variant={"h2"} component={"h2"} textAlign={"center"} fontWeight={600}
-                                fontFamily={"Caveat"}>special</Typography>
-                    <hr/>
+            </Container>
+
+            <Box component={"section"} sx={BoxStyle} style={{backgroundColor: grey[800]}}>
+                <SpecialSections color={`linear-gradient(${pink[50]}, ${pink[100]})`} title={"COLOR"}
+                                 description={"find the most unique & special colors you ever seen in your life"}/>
+                <SpecialSections color={`linear-gradient(${blue[50]}, ${blue[100]})`} title={"EVENT"}
+                                 description={"suitable for any event you need to attend, shock everyone with what you bring"}/>
+                <SpecialSections color={`linear-gradient(${yellow[50]}, ${yellow[100]})`} title={"VARIANT"}
+                                 description={"dont know of what type of flower you like ? we have every variant and you can chose what you like"}/>
+            </Box>
+            <Container maxWidth={"xl"} sx={{paddingY: 5}}>
+                <Box component={"section"} sx={BoxStyleP}>
+                    <Typography variant={"h2"} component={"h4"} sx={headerTextStyle}>SPECIAL</Typography><hr/>
                     <Box className={"inline-slider"}>
                         {!productsIsSpecialQuery.isLoading ? productsIsSpecialQuery.data?.results?.map(item =>
                                 <ProductCard
@@ -74,20 +121,8 @@ const Home = () => {
                             <ProductCardSkeleton/>}
                     </Box>
                 </Box>
-            </Container>
-
-            <Box component={"section"} sx={BoxStyle} style={{backgroundColor: grey[800]}}>
-                <SpecialSections color={pink[50]} title={"Colors"}
-                                 description={"find the most unique & special colors you ever seen in your life"}/>
-                <SpecialSections color={blue[50]} title={"Event"}
-                                 description={"suitable for any event you need to attend, shock everyone with what you bring"}/>
-                <SpecialSections color={yellow[50]} title={"Variant"}
-                                 description={"dont know of what type of flower you like ? we have every variant and you can chose what you like"}/>
-            </Box>
-            <Container maxWidth={"xl"} sx={{paddingY: 5}}>
-                <Box component={"section"} sx={BoxStyleP} style={{backgroundColor: "white"}}>
-                    <Typography variant={"h2"} component={"h2"} textAlign={"center"} fontWeight={600}
-                                fontFamily={"Caveat"}>recommended</Typography>
+                <Box component={"section"} sx={BoxStyleP}>
+                    <Typography variant={"h2"} component={"h4"} sx={headerTextStyle}>RECOMMEND</Typography>
                     <hr/>
                     <Box className={"inline-slider"}>
                         {!productsIsRecommendQuery.isLoading ? productsIsRecommendQuery.data?.results?.map(item =>
@@ -96,16 +131,9 @@ const Home = () => {
                     </Box>
                 </Box>
                 <Box component={"section"} sx={BoxStyleP}>
-                    <Typography variant={"h2"} component={"h2"} textAlign={"center"} fontWeight={600}
-                                fontFamily={"Caveat"}>latest</Typography>
+                    <Typography variant={"h2"} component={"h4"} sx={headerTextStyle}>LATEST PRODUCT</Typography>
                     <hr/>
-                    <Box sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        flexWrap: "wrap",
-                        gap: 2,
-                        justifyContent: "center"
-                    }}>
+                    <Box className={"inline-slider"}>
                         {!productsQuery.isLoading ? productsQuery.data?.results?.map(item => <ProductCard key={item.id}
                                                                                                           data={item}/>) :
                             <ProductCardSkeleton/>}
@@ -124,7 +152,7 @@ export const SpecialSections = ({title, description, color}) => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: color,
+            backgroundImage: color,
             padding: 1,
             borderRadius: "7px",
             minWidth: "300px",
@@ -132,7 +160,7 @@ export const SpecialSections = ({title, description, color}) => {
             maxWidth: "450px",
             height: "200px",
         }}>
-            <Typography variant={"h4"} fontWeight={600}>{title}</Typography>
+            <Typography variant={"h4"} fontWeight={600} letterSpacing={5}>{title}</Typography>
             <Typography variant={"caption"} color={"grey"} fontWeight={500}
                         sx={{minWidth: "250px", maxWidth: "400px", width: "100%", textAlign: "center"}}>
                 {description}
@@ -150,10 +178,16 @@ const BoxStyle = {
     gap: 5,
 }
 const BoxStyleP = {
-    backgroundColor: "transparent",
     padding: 1,
-    borderRadius: "7px",
-    marginY: 5
+    marginY: 5,
+
+}
+const headerTextStyle = {
+    textAlign: "center",
+    fontWeight: 200,
+    fontFamily: "robot",
+    letterSpacing: 4
+
 }
 
 

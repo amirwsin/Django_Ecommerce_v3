@@ -104,7 +104,7 @@ const Products = () => {
                     <Box className={"product-filter-wrapper"}>
                         <List aria-label={"filter-list"}>
                             <ListItemButton sx={ButtonStyle} onClick={() => setShowCategory(prevState => !prevState)}>
-                                <ListItemText primary="Categories" />
+                                <ListItemText primary="Categories"/>
                                 {showCategory ? <ExpandLess/> : <ExpandMore/>}
                             </ListItemButton>
                             <Collapse in={showCategory} timeout="auto" unmountOnExit>
@@ -144,7 +144,7 @@ const Products = () => {
                                 </Box>
                             </ListItem>
                             <ListItem>
-                                <FormGroup sx={{"& span":{fontWeight:600}}}>
+                                <FormGroup sx={{"& span": {fontWeight: 600}}}>
                                     <FormControlLabel
                                         control={<Switch name={"is_recommend"} color={"secondary"}
                                                          checked={filters.is_recommend}
@@ -156,7 +156,7 @@ const Products = () => {
                                 </FormGroup>
                             </ListItem>
                             <ListItem>
-                                <FormGroup sx={{"& span":{fontWeight:600}}}>
+                                <FormGroup sx={{"& span": {fontWeight: 600}}}>
                                     <FormControlLabel
                                         control={<Switch name={"is_special"} color={"secondary"}
                                                          checked={filters.is_special}
@@ -195,7 +195,7 @@ const Products = () => {
                             < /span>}
                         </Breadcrumbs>
                         <FormControl sx={{minWidth: "150px"}}>
-                            <InputLabel id="order-label" sx={{fontWeight:600}}>ORDER</InputLabel>
+                            <InputLabel id="order-label" sx={{fontWeight: 600}}>SORT</InputLabel>
                             <Select
                                 labelId="order-label"
                                 id="order-select"
@@ -207,6 +207,8 @@ const Products = () => {
                             >
                                 <MenuItem value={"create_at"}>ASC</MenuItem>
                                 <MenuItem value={"-create_at"}>DESC</MenuItem>
+                                <MenuItem value={"product__sale_price"}>LowPrice</MenuItem>
+                                <MenuItem value={"-product__sale_price"}>LargestPrice</MenuItem>
                                 <MenuItem value={"?"}>RANDOM</MenuItem>
                             </Select>
                         </FormControl>
@@ -243,8 +245,8 @@ const ButtonStyle = {
     "&:hover": {
         backgroundColor: "secondary.main",
     },
-    "& span":{
-        fontWeight:600,
+    "& span": {
+        fontWeight: 600,
     }
 }
 

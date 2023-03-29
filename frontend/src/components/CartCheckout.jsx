@@ -10,23 +10,7 @@ const CartCheckout = ({children}) => {
             borderRadius: "7px",
             backgroundColor: "background.main"
         }}>
-            <ul className={"checkout-list"}>
-                <li className={"checkout-list-item"}>
-                    <Typography variant={"h5"} fontWeight={600} component={"span"}>
-                        Quantity
-                    </Typography>
-                    <Typography variant={"h6"} fontWeight={400} component={"span"}>
-                        {qty}
-                    </Typography>
-                </li>
-                <li className={"checkout-list-item"}>
-                    <Typography variant={"h5"} fontWeight={600} component={"span"}>
-                        Price
-                    </Typography>
-                    <Typography variant={"h6"} fontWeight={400} component={"span"}>
-                        ${price}
-                    </Typography>
-                </li>
+            <ul className={"checkout-list"} style={{padding:0}}>
                 {children}
             </ul>
         </Box>

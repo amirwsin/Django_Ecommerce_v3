@@ -3,8 +3,8 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import {Box, IconButton, Skeleton} from "@mui/material";
-import {AddShoppingCart, Favorite, FavoriteBorder} from "@mui/icons-material";
+import {Box, IconButton, Skeleton, Tooltip} from "@mui/material";
+import {AddShoppingCart, Favorite, FavoriteBorder, Grade, Recommend} from "@mui/icons-material";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 
@@ -74,7 +74,7 @@ const ProductCard = (data) => {
             <Box sx={{overflow: "hidden"}}>
                 <Link to={`/products/${data?.data.web_id}/${data?.data.slug}/`}>
                     <CardMedia
-                        sx={{height: 160}}
+                        sx={{height: 180}}
                         component="img"
                         className={"product-card-image"}
                         alt={media != null ? media.alt_text : "image product"}
@@ -84,6 +84,20 @@ const ProductCard = (data) => {
                 {/*<Typography component={"span"} className={"product-card-discount"}>10%</Typography>*/}
             </Box>
             <CardContent>
+                <Box className={"product-card-extra"}>
+                    {data?.data?.is_special && <Tooltip slotProps={{
+                        tooltip: {sx: {backgroundColor: "warning.light"}},
+                        arrow: {sx: {color: "warning.light"}}
+                    }} placement={"left"} title={"SPECIAL"} arrow>
+                        <Grade color={"warning"}/>
+                    </Tooltip>
+                    }
+                    {data?.data?.is_recommend && <Tooltip
+                        slotProps={{tooltip: {sx: {backgroundColor: "info.light"}}, arrow: {sx: {color: "info.light"}}}}
+                        placement={"right"} title={"RECOMMEND"} arrow>
+                        <Recommend color={"info"}/>
+                    </Tooltip>}
+                </Box>
                 <Link to={`/product/${data?.data.slug}`} style={{textDecoration: "none"}}>
                     <Typography className={"product-card-title"} variant="h6" component={"h2"}
                     >

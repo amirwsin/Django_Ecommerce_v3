@@ -24,7 +24,7 @@ class BasicProductView(generics.ListAPIView):
     serializer_class = BasicProductSerializer
     filter_backends = [filters.DjangoFilterBackend, OrderingFilter]
     filterset_class = ProductFilter
-    ordering_fields = ['?', 'create_at', "-create_at", "name", ]
+    ordering_fields = ['?', 'create_at', "-create_at", "name", "product__sale_price","-product__sale_price"]
     pagination.PageNumberPagination.page_size = 30
 
 

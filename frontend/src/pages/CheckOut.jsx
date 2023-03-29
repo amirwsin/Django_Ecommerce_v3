@@ -32,9 +32,14 @@ const CheckOut = () => {
         queryFn: () => getDeliveryList(),
     })
     const FinalPrice = () => {
-        let productPrice = price
-        let deliveryPrice = deliverySelect.price
-        let final = productPrice + deliveryPrice
+        let productPrice = parseFloat(price)
+        let deliveryPrice = parseFloat(deliverySelect.price)
+        let final
+        if (deliveryPrice) {
+            final = productPrice + deliveryPrice
+        } else {
+            final = productPrice
+        }
         return final
     }
     const handleWeight = () => {
@@ -42,7 +47,7 @@ const CheckOut = () => {
         products.forEach(product => {
             weight += product.inventory.weight * product.qty
         })
-        return weight.toFixed(2) * 20
+        return weight.toFixed(2)
     }
 
     return (
@@ -95,10 +100,26 @@ const CheckOut = () => {
                     <CartCheckout>
                         <li className={"checkout-list-item"}>
                             <Typography variant={"h5"} fontWeight={600} component={"span"}>
+                                Quantity
+                            </Typography>
+                            <Typography variant={"h6"} fontWeight={400} component={"span"}>
+                                {qty}
+                            </Typography>
+                        </li>
+                        <li className={"checkout-list-item"}>
+                            <Typography variant={"h5"} fontWeight={600} component={"span"}>
                                 Weight
                             </Typography>
                             <Typography variant={"h6"} fontWeight={400} component={"span"}>
                                 {handleWeight()}kg
+                            </Typography>
+                        </li>
+                        <li className={"checkout-list-item"}>
+                            <Typography variant={"h5"} fontWeight={600} component={"span"}>
+                                Final Price
+                            </Typography>
+                            <Typography variant={"h6"} fontWeight={400} component={"span"}>
+                                ${FinalPrice()}
                             </Typography>
                         </li>
                         {deliverySelect.id && addressSelect ? <li>

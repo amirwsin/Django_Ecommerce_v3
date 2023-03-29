@@ -96,7 +96,7 @@ const CartProductsItem = ({data}) => {
                 </Grid>
                 <Grid item xs={12} lg={9} sx={{display: "grid", alignItems: "start",gap:2}}>
                     <Box sx={{display: "flex", justifyContent: "space-between"}}>
-                        <Typography variant={"h5"} component={Link} to={`/product/${data?.product?.slug}`} sx={{
+                        <Typography variant={"h5"} component={Link} to={`/products/${data?.product.web_id}/${data?.product?.slug}/`} sx={{
                             textDecoration: "none",
                             color: "black.main",
                             fontWeight: 600,

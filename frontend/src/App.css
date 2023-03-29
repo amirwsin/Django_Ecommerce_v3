@@ -86,9 +86,9 @@ body {
     position: relative;
     text-decoration: none;
     color: var(--background-dark);
-    font-weight: 500;
-    font-family: var(--font-family-default);
-    letter-spacing: -1px;
+    font-weight: 300;
+    font-family: "roboto";
+    letter-spacing: 3px;
     z-index: 2;
 }
 
@@ -98,7 +98,7 @@ body {
     bottom: -10px;
     left: 0;
     width: 100%;
-    height: 4px;
+    height: 2px;
     border-radius: 25px;
     background-color: var(--secondary);
     transform: scale(0);
@@ -175,7 +175,6 @@ body {
     background-image: url("assets/flower_boquet_5.webp");
     background-size: cover;
     background-repeat: no-repeat;
-    box-shadow: 4px 4px 6px var(--box-shadow-color);
     color: #272727;
     overflow: hidden;
 }
@@ -203,6 +202,59 @@ body {
     color: var(--background-dark);
 }
 
+.special-list {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    list-style: none;
+    width: 100%;
+    box-shadow: 2px 2px 6px var(--box-shadow-color);
+    padding: 1rem;
+    border-radius: 7px;
+    background-image: url("../src/assets/golden_flower_png.png"), url("../src/assets/golden_flower_png_2.png"),linear-gradient(var(--background-main),#efebe9);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: top left, right
+}
+
+.special-list li {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30rem;
+    height: 200px;
+    text-align: center;
+}
+
+.special-list li span, .special-list li h4 {
+    color: var(--text);
+}
+
+.special-list li:after {
+    content: " ";
+    position: absolute;
+    height: 100%;
+    width: 1px;
+    background-color: grey;
+}
+
+.special-list li:after {
+    right: -15px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.special-list li:last-child:after {
+    content: none;
+}
+
+
 .product-box {
     position: relative;
     display: flex;
@@ -224,7 +276,7 @@ body {
 
 .product-card:hover {
     background-color: white !important;
-    box-shadow: 0px 4px 10px lightgray !important;
+    box-shadow: 0 4px 10px lightgray !important;
 }
 
 .product-card-title {
@@ -247,6 +299,23 @@ body {
     background-color: var(--secondary);
     padding: 5px;
     z-index: 1;
+}
+
+.product-card-extra {
+    position: relative;
+    display: flex;
+    justify-content: start;
+    gap: 5px;
+    margin-bottom: 5px;
+    /*top:35px;*/
+    /*left: 5px;*/
+    /*transform: translateX(-50px);*/
+    /*transition: all ease-in-out 0.4s;*/
+}
+
+.product-card-toolTip-recommend {
+    background-color: royalblue;
+    color: white;
 }
 
 .footer {
@@ -504,11 +573,14 @@ body {
 .inline-slider {
     display: flex;
     margin: auto;
-    overflow-x: scroll;
+    overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
     padding: 1rem;
     gap: 1rem;
+}
+.inline-slider::-webkit-scrollbar{
+    height: 10px;
 }
 
 
