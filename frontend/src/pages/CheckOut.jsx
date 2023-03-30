@@ -1,19 +1,21 @@
-import {Box, Button, CardHeader, Chip, Container, Grid, Typography} from "@mui/material";
+import {Box, Button, Container, Grid, Typography} from "@mui/material";
 import CartCheckout from "../components/CartCheckout";
 import {Link} from "react-router-dom";
 import {ShoppingCartCheckout} from "@mui/icons-material";
 import {useQuery} from "@tanstack/react-query";
 import {GetUserAddressApi} from "../features/api/UserApi";
 import {useSelector} from "react-redux";
-import {useState} from "react";
+import React, {useState} from "react";
 import {getDeliveryList} from "../features/api/CheckOutApi";
+import Payment from "./Payment";
+
 
 const CheckOut = () => {
 
     const {user} = useSelector(state => state.authReducer)
     const {price, qty, products} = useSelector(state => state.cartReducer)
     const readyUser = JSON.parse(user)
-
+    const [showPayment, setShowPayment] = useState(false)
     const [addressSelect, setAddressSelect] = useState(null)
     const [deliverySelect, setDeliverySelect] = useState({})
 
@@ -25,12 +27,20 @@ const CheckOut = () => {
                 return item.is_default === true
             })
             setAddressSelect(defaultItem[0]?.id)
-        }
+        },
+        refetchOnWindowFocus: false,
+        refetchOnMount: true
     })
+
+
     const deliveryQuery = useQuery({
         queryKey: ["delivery"],
         queryFn: () => getDeliveryList(),
+        refetchOnWindowFocus: false,
+        refetchOnMount: true
     })
+
+
     const FinalPrice = () => {
         let productPrice = parseFloat(price)
         let deliveryPrice = parseFloat(deliverySelect.price)
@@ -50,51 +60,55 @@ const CheckOut = () => {
         return weight.toFixed(2)
     }
 
+
     return (
         <Container maxWidth={"xl"} sx={{marginY: 5, minHeight: "63vh"}}>
             <Grid container spacing={4}>
                 <Grid item xs={12} lg={8}>
-                    <Box sx={{
-                        position: "relative",
-                        width: "100%",
-                        display: "flex",
-                        flexDirection: "column",
-                        flexWrap: "nowrap",
-                        padding: 1,
-                        borderRadius: "7px",
-                        backgroundColor: "background.main",
-                        boxShadow: "0 0 4px var(--box-shadow-color)"
-                    }}>
-                        <CustomDivider text={"Address"}/>
+                    {showPayment ? <Payment price={FinalPrice()} delivery={deliverySelect} address={addressSelect}/> :
                         <Box sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            flexWrap: "wrap",
-                            gap: 3,
-                            justifyContent: "center", marginY: 2,
-                        }}>
-                            {addressQuery.data?.length > 0 ? addressQuery.data?.map(item => <CustomAddressCard
-                                    addressSelect={addressSelect}
-                                    key={item.id}
-                                    setAddressSelect={setAddressSelect}
-                                    data={item}/>) :
-                                <Typography component={Link} to={"/user/dashboard/address"}>click to add an
-                                    address</Typography>}
-                        </Box>
-                        <CustomDivider text={"Delivery Method"}/>
-                        <Box sx={{
+                            position: "relative",
+                            width: "100%",
                             display: "flex",
                             flexDirection: "column",
-                            flexWrap: "wrap",
-                            gap: 3,
-                            marginY: 2,
+                            flexWrap: "nowrap",
+                            padding: 1,
+                            borderRadius: "7px",
+                            backgroundColor: "background.main",
+                            boxShadow: "0 0 4px var(--box-shadow-color)"
                         }}>
-                            {deliveryQuery.data?.results?.map(item => <CustomDeliveryCard key={item.id} data={item}
-                                                                                          deliverySelect={deliverySelect}
-                                                                                          setDeliverySelect={setDeliverySelect}
-                                                                                          weight={handleWeight}/>)}
+                            <CustomDivider text={"Address"}/>
+                            <Box sx={{
+                                display: "flex",
+                                flexDirection: "row",
+                                flexWrap: "wrap",
+                                gap: 3,
+                                justifyContent: "center", marginY: 2,
+                            }}>
+                                {addressQuery.data?.length > 0 ? addressQuery.data?.map(item => <CustomAddressCard
+                                        addressSelect={addressSelect}
+                                        key={item.id}
+                                        setAddressSelect={setAddressSelect}
+                                        data={item}/>) :
+                                    <Typography component={Link} to={"/user/dashboard/address"}>click to add an
+                                        address</Typography>}
+                            </Box>
+                            <CustomDivider text={"Delivery Method"}/>
+                            <Box sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                flexWrap: "wrap",
+                                gap: 3,
+                                marginY: 2,
+                            }}>
+                                {deliveryQuery.data?.results?.map(item => <CustomDeliveryCard key={item.id} data={item}
+                                                                                              deliverySelect={deliverySelect}
+                                                                                              setDeliverySelect={setDeliverySelect}
+                                                                                              weight={handleWeight}/>)}
+                            </Box>
                         </Box>
-                    </Box>
+                    }
+
                 </Grid>
                 <Grid item xs={12} lg={4}>
                     <CartCheckout>
@@ -123,9 +137,12 @@ const CheckOut = () => {
                             </Typography>
                         </li>
                         {deliverySelect.id && addressSelect ? <li>
-                            <Button component={Link} to={"checkout"} color={"black"} variant={"contained"}
-                                    sx={{color: "background.main"}} fullWidth={true} endIcon={<ShoppingCartCheckout/>}>
-                                Payment
+                            <Button onClick={() => setShowPayment(prevState => !prevState)} color={"black"}
+                                    variant={"contained"}
+                                    sx={{color: "background.main"}} fullWidth={true}
+
+                                    endIcon={<ShoppingCartCheckout/>}>
+                                {showPayment ? "CANCEL" : "CHECKOUT"}
                             </Button>
                         </li> : <Button color={"black"} fullWidth={true}>Select Delivery Method & address to
                             continue</Button>}

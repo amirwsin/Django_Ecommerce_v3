@@ -2,7 +2,7 @@ import axios from "axios";
 import axiosBasicInstance from "./axiosBasic";
 import toast from "react-hot-toast";
 
-const baseUrl = 'http://127.0.0.1:8000';
+export const baseUrl = 'http://127.0.0.1:8000';
 const client_id = "djn3mVQrJMTH4ypYWxWIYsp2peRtNR1hYiIANifI"
 const client_secret = "lzv2CzvMrJlRf8CRudJTn6kFtU7k2DxTtEcbRBiQho9nNDpAg6aftvCX44EprHxbjRLn4pYX8kVLyuohvhLAdU6VjnBTFt0xtrT9yOWnFVmZThrTUqiJxqDAv9JF2mI3"
 

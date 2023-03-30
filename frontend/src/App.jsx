@@ -33,6 +33,8 @@ import AdminProductCreate from "./pages/dashboard/AdminProductCreate";
 import AdminEssentials from "./pages/dashboard/AdminEssentials"
 import NotFound from "./pages/NotFound";
 import AdminDelivery from "./pages/dashboard/AdminDelivery";
+import Payment from "./pages/Payment";
+import ConfirmPayment from "./pages/ConfirmPayment";
 
 let token, user;
 
@@ -99,7 +101,11 @@ function App() {
                                     <ProductDetails/>}/>
                                 <Route path={"/cart"} element={<ShoppingCart/>
                                 }/>
-                                <Route path={"/cart/checkout"} element={<CheckOut/>}/>
+                                <Route path={"/cart/checkout"} element={<RestrictPage path={"/login"}
+                                                                                      type={"isAuthenticated"}><CheckOut/></RestrictPage>}/>
+                                <Route path={"/cart/checkout/payment/"} element={<RestrictPage path={"/login"}
+                                                                                               type={"isAuthenticated"}><Payment/></RestrictPage>}/>
+                                <Route path={"/cart/checkout/payment/confirm/"} element={<ConfirmPayment/>} />
                                 <Route path={"*"} element={<NotFound/>}/>
                             </Route>
                             <Route path={"/"} element={<AdminLayout/>}>

@@ -7,6 +7,7 @@ from account.models import Address
 # Create your models here.
 
 STATUS_CHOICES = (
+    ('UNCONFIRMED','UnConfirmed'),
     ("PENDING", "Pending"),
     ("FAILED", "Failed"),
     ("PROCESSING", "Processing"),
@@ -37,6 +38,13 @@ class Cart(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    def get_price(self):
+        items = CartItem.objects.filter(cart_id=self.id)
+        price = 0
+        for x in items:
+            price += x.product.product.sale_price * x.qty
+        return price
 
 
 class CartItem(models.Model):
@@ -128,7 +136,7 @@ class Order(models.Model):
                                  on_delete=models.SET_NULL)
 
     status = models.CharField(max_length=255, blank=True, null=True, verbose_name=_("order status"),
-                              choices=STATUS_CHOICES, default="PENDING",
+                              choices=STATUS_CHOICES, default="UNCONFIRMED",
                               help_text=_(
                                   "format : Pending = Order received, no payment initiated , Failed = Payment failed or was declined (unpaid) , Processing =  Payment received (paid) and stock has been reduced; order is awaiting fulfillment , Completed = Order fulfilled and complete"))
 
@@ -180,6 +188,12 @@ class OrderPayment(models.Model):
     order = models.ForeignKey(Order, related_name="order_item_payment", on_delete=models.CASCADE,
                               verbose_name=_("order"),
                               blank=False, null=False, unique=False)
+    user = models.ForeignKey(User, blank=True, unique=False, null=True, related_name="user_history_payment",
+                             verbose_name=_("user order"),
+                             on_delete=models.CASCADE)
+    payment_intent = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    client_secret = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    currency = models.CharField(max_length=255, null=True, blank=True)
     amount = models.DecimalField(
         max_digits=7,
         decimal_places=2,
@@ -187,20 +201,6 @@ class OrderPayment(models.Model):
         null=False,
         blank=False,
         verbose_name=_("amount have to pay"),
-        help_text=_("format : maximum amount 99999.99"),
-        error_messages={
-            "name": {
-                "max_length": _("the amount must be between 0 and 99999.99"),
-            },
-        },
-    )
-    amount_payed = models.DecimalField(
-        max_digits=7,
-        decimal_places=2,
-        unique=False,
-        null=False,
-        blank=False,
-        verbose_name=_("amount payed"),
         help_text=_("format : maximum amount 99999.99"),
         error_messages={
             "name": {
@@ -229,4 +229,4 @@ class OrderPayment(models.Model):
     )
 
     def __str__(self):
-        return self.order
+        return f"{self.user} : {self.payment_intent}"

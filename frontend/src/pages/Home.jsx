@@ -13,7 +13,7 @@ import ProductCard, {ProductCardSkeleton} from "../components/ProductCard";
 const Home = () => {
 
     const productsQuery = useQuery({
-        queryKey: ["products"],
+        queryKey: ["products","latest"],
         queryFn: BasicProductApi,
         refetchOnMount: false,
         refetchOnWindowFocus: false,
