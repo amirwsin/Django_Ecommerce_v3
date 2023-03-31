@@ -48,7 +48,7 @@ function App() {
     useEffect(() => {
         token = localStorage.getItem("access_token")
         user = localStorage.getItem("user")
-        if (token && user) {
+        if (token && user && user !== "undefined") {
             const readyUser = JSON.parse(user)
             dispatch(loadUser(token))
             dispatch(loadCart(readyUser.id))

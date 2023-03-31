@@ -86,7 +86,7 @@ const Navbar = () => {
                         <Tooltip arrow title="Shopping Cart">
                             <IconButton component={Link} to={"/cart"} color={"background.main"}
                                         aria-label={"shopping cart"}>
-                                <Badge badgeContent={qty} color="secondary">
+                                <Badge badgeContent={qty} color="primary">
                                     <ShoppingCartOutlined/>
                                 </Badge>
                             </IconButton>
@@ -107,7 +107,7 @@ const Navbar = () => {
                                 }
                             </> :
                             <Button component={Link} to={"/login"} color="primary"
-                                    variant={"text"}>Login</Button>}
+                                    variant={"outlined"}>Sign In</Button>}
 
                     </Box>
                 </Toolbar>

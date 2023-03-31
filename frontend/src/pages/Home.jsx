@@ -103,7 +103,7 @@ const Home = () => {
                 </Box>
             </Container>
 
-            <Box component={"section"} sx={BoxStyle} style={{backgroundColor: grey[800]}}>
+            <Box component={"section"} sx={BoxStyle} style={{backgroundColor: "primary.main"}}>
                 <SpecialSections color={`linear-gradient(${pink[50]}, ${pink[100]})`} title={"COLOR"}
                                  description={"find the most unique & special colors you ever seen in your life"}/>
                 <SpecialSections color={`linear-gradient(${blue[50]}, ${blue[100]})`} title={"EVENT"}

@@ -13,7 +13,7 @@ const HeroSection = () => {
                 marginY: 20,
                 borderRadius: "7px",
                 padding: 1,
-                backgroundColor: "secondary.light",
+                backgroundColor: "secondary.main",
             }}>
                 <Telegram fontSize={"large"} className={"hero-section-icon"}/>
                 <Instagram fontSize={"large"} className={"hero-section-icon"}/>
@@ -36,13 +36,13 @@ const HeroSection = () => {
                     the most extinguish flower bouquet in europe
                 </Typography>
                 <Box sx={{flexGrow: 3, display: "flex", flexDirection: "column", gap: 5}}>
-                    <Typography variant={""} component={"p"} className={"hero-section-p"}>
+                    <Typography variant={"body1"} component={"p"} className={"hero-section-p"}>
                         buy the most special bouquet for special occasion or person of your life , the most extinguished
                         flowers you have ever seen in entire Europe and beyond that . go explore and find what you like
                         the most
                     </Typography>
                     <Box display={"inline-block"}>
-                        <Chip label={"Fresh"} variant={"filled"}
+                        <Chip label={"Fresh"}  variant={"filled"}
                               sx={chipStyle}/>
                         <Chip label={"Healthy"} variant={"filled"}
                               sx={chipStyle}/>
@@ -53,7 +53,7 @@ const HeroSection = () => {
 
                     </Box>
                 </Box>
-                <Button variant={"contained"} color={"black"} sx={{color: "secondary.main"}}>
+                <Button variant={"contained"} color={"secondary"} sx={{color:"text.main"}}>
                     Explore
                 </Button>
             </Box>
@@ -63,8 +63,6 @@ const HeroSection = () => {
 
 export const chipStyle = {
     borderRadius: "7px",
-    backgroundColor: "background.main",
-    color: "secondary.main",
     width: "45%",
     marginY: 1,
     marginX: 1,

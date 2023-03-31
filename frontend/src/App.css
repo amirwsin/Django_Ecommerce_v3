@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Satisfy&display=swap');
 
 :root {
-    --primary: #B8ADA7;
-    --primary-light: #b8ada7;
-    --primary-dark: #a69c96;
-    --secondary: #d0ab88;
-    --secondary-light: #d0ab88;
-    --secondary-dark: #bb9a7a;
-    --background-light: #E8EFEC;
+    --primary: #ba68c8;
+    --primary-light: #ce93d8;
+    --primary-dark: #ab47bc;
+    --secondary: #f8bbd0;
+    --secondary-light: #fce4ec;
+    --secondary-dark: #f48fb1;
+    --background-light: #fafcfe;
     --background-main: #FAFCFE;
-    --background-dark: #222e2d;
+    --background-dark: #191919;
     --box-shadow-color: grey;
     --text: #3a3b3e;
     --font-family-default: "Roboto", "Helvetica", "Arial", sans-serif;
@@ -33,7 +33,7 @@ body {
     margin: 0;
     box-sizing: inherit;
     min-height: 100%;
-    background-color: #efebe9;
+    background-color: var(--background-main);
     color: var(--text);
 }
 
@@ -58,13 +58,13 @@ body {
 .logo-text {
     font-size: 32px !important;
     font-family: 'Satisfy', cursive !important;
-    color: var(--primary);
+    color: var(--primary-dark);
     text-decoration: none;
 }
 
 .logo-mini-text {
     position: relative;
-    color: var(--secondary);
+    color: var(--primary-dark);
     margin: 0 0.7rem
 }
 
@@ -77,7 +77,7 @@ body {
     margin: auto;
     height: 2px;
     width: 10px;
-    background-color: var(--secondary);
+    background-color:var(--primary-dark);
 }
 
 .navbar-link {
@@ -86,7 +86,7 @@ body {
     position: relative;
     text-decoration: none;
     color: var(--background-dark);
-    font-weight: 300;
+    font-weight: 400;
     font-family: "roboto";
     letter-spacing: 3px;
     z-index: 2;
@@ -100,7 +100,7 @@ body {
     width: 100%;
     height: 2px;
     border-radius: 25px;
-    background-color: var(--secondary);
+    background-color: var(--primary-dark);
     transform: scale(0);
     transition: all 0.4s ease-in-out;
 }
@@ -172,7 +172,7 @@ body {
     display: flex;
     width: 100%;
     height: 95vh;
-    background-image: url("assets/flower_boquet_5.webp");
+    background-image: url("assets/flower-3175428.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     color: #272727;
@@ -188,7 +188,8 @@ body {
 }
 
 .hero-section-p {
-    font-weight: 400 !important;
+    font-weight: 500 !important;
+    letter-spacing: -1px;
     font-family: var(--font-family-default);
     color: var(--text);
 }

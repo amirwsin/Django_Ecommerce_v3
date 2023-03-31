@@ -42,7 +42,7 @@ const ProductCard = (data) => {
 
     const {user} = useSelector(state => state.authReducer)
 
-    const readyData = user ? JSON.parse(user) : false
+    const readyData = user !== "undefined"? JSON.parse(user) : false
 
     const filterMedia = (item) => {
         let result;
@@ -56,7 +56,7 @@ const ProductCard = (data) => {
 
     const handleWishList = () => {
         let result
-        const wishList = readyData.wishList
+        const wishList = readyData?.wishList
         result = wishList?.find(item => {
             return item.product === data.data.id
         })

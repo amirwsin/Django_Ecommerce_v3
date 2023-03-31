@@ -1,5 +1,6 @@
 import {createTheme} from '@mui/material/styles';
 import {createContext, useState, useMemo} from "react";
+import {purple, pink} from "@mui/material/colors";
 
 
 export const themeSettings = (mode) => {
@@ -10,15 +11,19 @@ export const themeSettings = (mode) => {
             ...(mode === 'light'
                 ? {
                     primary: {
-                        main: '#B8ADA7'
+                        light: purple[200],
+                        main: purple[300],
+                        dark: purple[400],
                     },
                     secondary: {
-                        main: '#d0ab88'
+                        light: pink[50],
+                        main: pink[100],
+                        dark: pink[200]
                     },
                     background: {
-                        light: '#E8EFEC',
+                        light: '#fafcfe',
                         main: '#FAFCFE',
-                        dark: '#222e2d',
+                        dark: '#191919',
                     },
                     text: {
                         main: '#3a3b3e',
@@ -47,6 +52,16 @@ export const themeSettings = (mode) => {
                     }
                 }),
         },
+        components: {
+            MuiButton: {
+                styleOverrides: {
+                    root: {
+                        borderRadius: "25px"
+                    }
+                }
+            },
+        }
+
     }
 }
 
