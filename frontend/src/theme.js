@@ -1,6 +1,6 @@
 import {createTheme} from '@mui/material/styles';
 import {createContext, useState, useMemo} from "react";
-import {purple, pink} from "@mui/material/colors";
+import {purple, green} from "@mui/material/colors";
 
 
 export const themeSettings = (mode) => {
@@ -14,11 +14,13 @@ export const themeSettings = (mode) => {
                         light: purple[200],
                         main: purple[300],
                         dark: purple[400],
+                        contrast:purple[600],
                     },
                     secondary: {
-                        light: pink[50],
-                        main: pink[100],
-                        dark: pink[200]
+                        light: green[50],
+                        main: green[100],
+                        dark: green[200],
+                        contrast:green[800],
                     },
                     background: {
                         light: '#fafcfe',

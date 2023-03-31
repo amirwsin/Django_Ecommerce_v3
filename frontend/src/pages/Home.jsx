@@ -13,7 +13,7 @@ import ProductCard, {ProductCardSkeleton} from "../components/ProductCard";
 const Home = () => {
 
     const productsQuery = useQuery({
-        queryKey: ["products","latest"],
+        queryKey: ["products", "latest"],
         queryFn: BasicProductApi,
         refetchOnMount: false,
         refetchOnWindowFocus: false,
@@ -45,7 +45,7 @@ const Home = () => {
     })
 
     return (
-        <Box component={"main"}>
+        <Box component={"main"} overflow={"hidden"}>
             <SEO type={"Landing Page"} title={"Flower Shop | Home"}
                  description={"buy the most special and extinguished flower bouquet in europe"} name={"Flower Shop"}
                  author={"flower shop"} publish={"flower shop"}/>
@@ -88,7 +88,7 @@ const Home = () => {
                     </li>
                 </ul>
             </Box>
-            <Container maxWidth={"xl"} sx={{paddingY: 10}}>
+            <Container maxWidth={"xl"} sx={{paddingY: 10, marginBottom: {xs:5,md:25}, marginTop: 10}}>
                 <Box textAlign={"center"} component={"section"}>
                     <Typography variant={"h2"} component={"h2"} fontWeight={600}
                                 fontFamily={"Caveat"}>Categories</Typography>
@@ -103,17 +103,20 @@ const Home = () => {
                 </Box>
             </Container>
 
-            <Box component={"section"} sx={BoxStyle} style={{backgroundColor: "primary.main"}}>
-                <SpecialSections color={`linear-gradient(${pink[50]}, ${pink[100]})`} title={"COLOR"}
+            <Box component={"section"} sx={BoxStyleSpecial}>
+                <SpecialSections title={"COLOR"}
                                  description={"find the most unique & special colors you ever seen in your life"}/>
-                <SpecialSections color={`linear-gradient(${blue[50]}, ${blue[100]})`} title={"EVENT"}
+                <SpecialSections title={"EVENT"}
                                  description={"suitable for any event you need to attend, shock everyone with what you bring"}/>
-                <SpecialSections color={`linear-gradient(${yellow[50]}, ${yellow[100]})`} title={"VARIANT"}
+                <SpecialSections title={"VARIANT"}
                                  description={"dont know of what type of flower you like ? we have every variant and you can chose what you like"}/>
+                <SpecialSections title={"COLOR"}
+                                 description={"find the most unique & special colors you ever seen in your life"}/>
             </Box>
             <Container maxWidth={"xl"} sx={{paddingY: 5}}>
                 <Box component={"section"} sx={BoxStyleP}>
-                    <Typography variant={"h2"} component={"h4"} sx={headerTextStyle}>SPECIAL</Typography><hr/>
+                    <Typography variant={"h2"} component={"h4"} sx={headerTextStyle}>SPECIAL</Typography>
+                    <hr/>
                     <Box className={"inline-slider"}>
                         {!productsIsSpecialQuery.isLoading ? productsIsSpecialQuery.data?.results?.map(item =>
                                 <ProductCard
@@ -152,17 +155,17 @@ export const SpecialSections = ({title, description, color}) => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            backgroundImage: color,
+            backgroundColor: "primary.contrast",
             padding: 1,
             borderRadius: "7px",
-            minWidth: "300px",
+            minWidth: "350px",
             width: "100%",
             maxWidth: "450px",
             height: "200px",
         }}>
-            <Typography variant={"h4"} fontWeight={600} letterSpacing={5}>{title}</Typography>
-            <Typography variant={"caption"} color={"grey"} fontWeight={500}
-                        sx={{minWidth: "250px", maxWidth: "400px", width: "100%", textAlign: "center"}}>
+            <Typography variant={"h4"} fontWeight={600} sx={{color:"background.main"}} letterSpacing={5}>{title}</Typography>
+            <Typography variant={"caption"} fontWeight={500}
+                        sx={{minWidth: "250px", maxWidth: "400px", width: "100%", textAlign: "center",color:"background.main"}}>
                 {description}
             </Typography>
         </Box>
@@ -170,12 +173,17 @@ export const SpecialSections = ({title, description, color}) => {
 }
 
 const BoxStyle = {
+    position: "relative",
     padding: 5,
     display: "flex",
     flexWrap: "wrap",
     flexDirection: "row",
     justifyContent: "center",
     gap: 5,
+}
+const BoxStyleSpecial = {
+    ...BoxStyle,
+    backgroundColor: "secondary.light",
 }
 const BoxStyleP = {
     padding: 1,

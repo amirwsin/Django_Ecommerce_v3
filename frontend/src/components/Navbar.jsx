@@ -48,7 +48,7 @@ const Navbar = () => {
 
     return (
         <Box sx={{flexGrow: 1, zIndex: 2, height: "60px", position: "sticky", top: 0}} component={"div"}>
-            <AppBar sx={{backgroundColor: "background.main"}} >
+            <AppBar sx={{backgroundImage: "linear-gradient(var(--secondary),var(--secondary-light))"}} >
                 <Toolbar sx={{paddingX: {xs: 2, sm: 5, md: 10, lg: 5}, gap: 10, justifyContent: "space-between"}}>
                     <Box sx={{flexGrow: {xs: 0, md: 1}, display: "flex", gap: 2, alignItems: "center"}}>
                         <IconButton onClick={handleSideBar} size={"large"} sx={{display: {xs: "block", md: "none"}}}>
