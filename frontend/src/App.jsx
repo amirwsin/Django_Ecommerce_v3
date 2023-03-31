@@ -35,6 +35,8 @@ import NotFound from "./pages/NotFound";
 import AdminDelivery from "./pages/dashboard/AdminDelivery";
 import Payment from "./pages/Payment";
 import ConfirmPayment from "./pages/ConfirmPayment";
+import Orders from "./pages/panel/Orders";
+import OrdersDetail from "./pages/panel/OrdersDetail";
 
 let token, user;
 
@@ -79,17 +81,27 @@ function App() {
                                         <Register/>
                                     </RestrictPage>
                                 }/>
-                                <Route path={"/user/dashboard"} element={
+                                <Route path={"/user/dashboard/"} element={
                                     <RestrictPage path={"/login"} type={"isAuthenticated"}>
                                         <PanelLayout><Dashboard/></PanelLayout>
                                     </RestrictPage>
                                 }/>
-                                <Route path={"/user/dashboard/account"} element={
+                                <Route path={"/user/dashboard/account/"} element={
                                     <RestrictPage path={"/login"} type={"isAuthenticated"}>
                                         <PanelLayout><Account/></PanelLayout>
                                     </RestrictPage>
                                 }/>
-                                <Route path={"/user/dashboard/address"} element={
+                                <Route path={"/user/dashboard/orders/"} element={
+                                    <RestrictPage path={"/login"} type={"isAuthenticated"}>
+                                        <PanelLayout><Orders/></PanelLayout>
+                                    </RestrictPage>
+                                }/>
+                                <Route path={"/user/dashboard/orders/:id/"} element={
+                                    <RestrictPage path={"/login"} type={"isAuthenticated"}>
+                                        <PanelLayout><OrdersDetail/></PanelLayout>
+                                    </RestrictPage>
+                                }/>
+                                <Route path={"/user/dashboard/address/"} element={
                                     <RestrictPage path={"/login"} type={"isAuthenticated"}>
                                         <PanelLayout><Address/></PanelLayout>
                                     </RestrictPage>
@@ -105,7 +117,7 @@ function App() {
                                                                                       type={"isAuthenticated"}><CheckOut/></RestrictPage>}/>
                                 <Route path={"/cart/checkout/payment/"} element={<RestrictPage path={"/login"}
                                                                                                type={"isAuthenticated"}><Payment/></RestrictPage>}/>
-                                <Route path={"/cart/checkout/payment/confirm/"} element={<ConfirmPayment/>} />
+                                <Route path={"/cart/checkout/payment/confirm/"} element={<ConfirmPayment/>}/>
                                 <Route path={"*"} element={<NotFound/>}/>
                             </Route>
                             <Route path={"/"} element={<AdminLayout/>}>

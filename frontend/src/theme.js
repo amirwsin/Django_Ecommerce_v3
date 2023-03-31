@@ -18,6 +18,7 @@ export const themeSettings = (mode) => {
                     background: {
                         light: '#E8EFEC',
                         main: '#FAFCFE',
+                        dark: '#222e2d',
                     },
                     text: {
                         main: '#3a3b3e',
@@ -36,6 +37,7 @@ export const themeSettings = (mode) => {
                     background: {
                         light: '#1b1b1b',
                         main: '#272727',
+                        dark: '#fdfdfd',
                     },
                     text: {
                         main: '#fdfdfd',

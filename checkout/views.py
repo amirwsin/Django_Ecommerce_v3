@@ -5,14 +5,22 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Cart, CartItem, Delivery, Order, OrderItem, OrderPayment
 from django.contrib.auth.models import User
-from .serializers import BasicCartSerializer, BasicDeliverySerializer
+from .serializers import BasicCartSerializer, BasicDeliverySerializer, BasicOrderSerializer
 from inventory.models import ProductAttributeValue
 import stripe
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from account.models import Address
+from django_filters import rest_framework as filters
+
 
 # Create your views here.
+
+
+class OrderFilter(filters.FilterSet):
+    class Meta:
+        model = Order
+        fields = ['user']
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -51,7 +59,6 @@ class StripePaymentView(views.APIView):
                                                             "client_secret": intent['client_secret'],
                                                             "currency": intent["currency"],
                                                             "amount": price,
-                                                            "amount_payed": 0,
                                                             "gateway": "stripe"})
             return Response({'clientSecret': intent['client_secret']}, status=status.HTTP_200_OK)
         except Exception as e:
@@ -82,13 +89,14 @@ def StripeWebHook(request):
         payment = OrderPayment.objects.get(order_id=order.id)
         payment.status = "COMPLETED"
         payment.save()
-        CartItem.objects.filter(cart__user_id=order.id).delete()
+        CartItem.objects.filter(cart__user_id=order.user.id).delete()
     elif event['type'] == 'payment_method.attached':
         payment_method = event['data']['object']  # contains a stripe.PaymentMethod
         # Then define and call a method to handle the successful attachment of a PaymentMethod.
         # handle_payment_method_attached(payment_method)
     elif event['type'] == "charge.succeeded":
-        print(2)
+        pass
+    elif event['type'] == "payment_intent.created":
         pass
     else:
         # Unexpected event type
@@ -97,34 +105,18 @@ def StripeWebHook(request):
     return HttpResponse(status=200)
 
 
-# class StripeWebHook(views.APIView):
-#     permission_classes = [permissions.AllowAny]
-#
-#     def post(self, request, *args, **kwargs):
-#         event = None
-#         payload = request.data
-#         sig_header = request.headers['STRIPE_SIGNATURE']
-#
-#         try:
-#             event = stripe.Webhook.construct_event(
-#                 payload, sig_header, endpoint_secret
-#             )
-#         except ValueError as e:
-#             # Invalid payload
-#             raise e
-#         except stripe.error.SignatureVerificationError as e:
-#             # Invalid signature
-#             raise e
-#
-#         # Handle the event
-#         if event['type'] == 'payment_intent.succeeded':
-#             payment_intent = event['data']['object']
-#             print(payment_intent)
-#         # ... handle other event types
-#         else:
-#             print('Unhandled event type {}'.format(event['type']))
-#
-#         return Response(status=status.HTTP_200_OK)
+class OrderListView(generics.ListAPIView):
+    queryset = Order.objects.order_by("-id").exclude(status="UNCONFIRMED")
+    serializer_class = BasicOrderSerializer
+    permission_classes = [permissions.AllowAny]
+    filter_backends = [filters.DjangoFilterBackend]
+    filterset_class = OrderFilter
+
+
+class OrderDetailView(generics.RetrieveAPIView):
+    queryset = Order.objects.order_by("-id").exclude(status="UNCONFIRMED")
+    serializer_class = BasicOrderSerializer
+    permission_classes = [permissions.AllowAny]
 
 
 class DeliveryListView(generics.ListAPIView):

@@ -40,19 +40,19 @@ const PanelLayout = ({children}) => {
                                 </ListItemIcon>
                                 <ListItemText primary={"Dashboard"}/>
                             </ListItemButton>
-                            <ListItemButton component={Link} to={"/user/dashboard/account"}>
+                            <ListItemButton component={Link} to={"/user/dashboard/account/"}>
                                 <ListItemIcon>
                                     <AccountBox/>
                                 </ListItemIcon>
                                 <ListItemText primary={"Account"}/>
                             </ListItemButton>
-                            <ListItemButton>
+                            <ListItemButton component={Link} to={"/user/dashboard/orders/"}>
                                 <ListItemIcon>
                                     <ShoppingBasket/>
                                 </ListItemIcon>
                                 <ListItemText primary={"Orders"}/>
                             </ListItemButton>
-                            <ListItemButton component={Link} to={"/user/dashboard/address"}>
+                            <ListItemButton component={Link} to={"/user/dashboard/address/"}>
                                 <ListItemIcon>
                                     <Signpost/>
                                 </ListItemIcon>

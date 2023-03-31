@@ -51,7 +51,6 @@ const Payment = ({price, address, delivery}) => {
         }}>
             <Typography variant={"h3"} component={"p"} fontWeight={"600"} textAlign={"center"}
                         marginY={2}>PAYMENT</Typography>
-            <CircularProgress/>
             {!clientSecretQuery.isLoading && clientSecret &&
             <Elements options={options} stripe={stripePromise}>
                 <CheckoutForm/>
