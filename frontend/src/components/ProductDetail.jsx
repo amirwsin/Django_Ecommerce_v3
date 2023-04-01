@@ -192,7 +192,7 @@ const ProductDetail = ({data, setSelection, isLoading}) => {
                 }
             </Box>
             <Divider variant={"fullWidth"}/>
-            <Button color={"black"} sx={{color: "white"}} variant={"contained"} onClick={handleAddToCart}
+            <Button color={"primary"} variant={"contained"} onClick={handleAddToCart}
                     endIcon={<AddShoppingCart/>}>Add
                 To Cart</Button>
             <Button color={"error"} variant={"outlined"} endIcon={<Favorite/>}>Add To Favorite</Button>

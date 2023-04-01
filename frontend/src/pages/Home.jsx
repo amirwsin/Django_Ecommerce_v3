@@ -1,13 +1,13 @@
 import HeroSection from "../components/HeroSection";
-import {Box, Container, Typography} from "@mui/material";
+import {Box, Container, Grid, Typography} from "@mui/material";
 import {useQuery} from "@tanstack/react-query";
 import {BasicProductApi, ProductIsRecommendApi, ProductIsSpecialApi} from "../features/api/ProductsApi";
 import SEO from "../SEO";
 import {BasicCategoriesApi} from "../features/api/CategoriesApi";
 import CategoryItem, {CategoryItemSkeleton} from "../components/CategoryItem";
 import * as React from "react";
-import {blue, grey, pink, purple, red, yellow} from "@mui/material/colors";
 import ProductCard, {ProductCardSkeleton} from "../components/ProductCard";
+import LandingImage from "../assets/landing-image.jpg"
 
 
 const Home = () => {
@@ -50,7 +50,7 @@ const Home = () => {
                  description={"buy the most special and extinguished flower bouquet in europe"} name={"Flower Shop"}
                  author={"flower shop"} publish={"flower shop"}/>
             <HeroSection/>
-            <Box sx={{display: "block", backgroundColor: "none", padding: 3}}>
+            <Box sx={{display: "block", position: "relative", backgroundColor: "none", padding: 3, top: {xs:0,md:"-5rem"}}}>
                 <ul className={"special-list"}>
                     <li>
                         <Typography variant={"h4"} component={"h4"} fontWeight={500}>
@@ -88,7 +88,49 @@ const Home = () => {
                     </li>
                 </ul>
             </Box>
-            <Container maxWidth={"xl"} sx={{paddingY: 10, marginBottom: {xs:5,md:25}, marginTop: 10}}>
+            <Container maxWidth={"lg"} sx={{marginY: 10}}>
+                <Grid container spacing={0} sx={{
+                    backgroundImage: "linear-gradient(-45deg,var(--secondary),var(--secondary-light))",
+                    boxShadow: "2px 2px 6px grey , -50px -50px 0 lightgrey ",
+                    borderRadius: "2rem"
+                }}>
+                    <Grid item xs={12} md margin={0} padding={0}>
+                        <img src={LandingImage} alt={"image"} className={"landing-image"}/>
+                    </Grid>
+                    <Grid item xs={12} md>
+                        <Box sx={{
+                            position: "relative",
+                            display: "flex",
+                            flexDirection: "column",
+                            height: "100%",
+                            width: "100%",
+                            padding: 6,
+                            gap: 2,
+                        }}>
+                            <Typography variant={"h2"} component={"p"} fontWeight={700} fontFamily={"Caveat"}>Who We are
+                                ?</Typography>
+                            <Typography variant={"body1"} fontWeight={500} component={"p"}>we are a family company in
+                                east london and
+                                have a history of 123 year old were our ancestor place our root here and opened a tiny
+                                flower shop, and after so many generation we are now a big cross country company in
+                                flower industry.
+                                <br/><br/>
+                                now in 2023 we are ONLINE and our dear customer can use our services everywhere they
+                                are, our customer now can ORDER our product from any country in europe and we deliver on
+                                spot.
+                                <br/><br/>
+                                we insist on FRESH and HEALTHY flowers cause when you see something LIVE it will make
+                                you happy and give you life, and of course flowers are full of life
+                                <br/><br/>
+                                our flowers grow in our farms and organic and every day our spot shops receive fresh
+                                flowers on so many variant & colors, you can chose you want your order be WRAPPED or its
+                                for EVENT, special like weddings.
+                            </Typography>
+                        </Box>
+                    </Grid>
+                </Grid>
+            </Container>
+            <Container maxWidth={"xl"} sx={{paddingY: 10, marginBottom: {xs: 5, md: 5}, marginTop: 10}}>
                 <Box textAlign={"center"} component={"section"}>
                     <Typography variant={"h2"} component={"h2"} fontWeight={600}
                                 fontFamily={"Caveat"}>Categories</Typography>
@@ -101,8 +143,17 @@ const Home = () => {
                             <CategoryItemSkeleton/>}
                     </Box>
                 </Box>
+                <Box component={"section"} sx={BoxStyleP}>
+                    <Typography variant={"h2"} component={"h4"} sx={headerTextStyle}>SPECIAL</Typography>
+                    <hr/>
+                    <Box className={"inline-slider"}>
+                        {!productsIsSpecialQuery.isLoading ? productsIsSpecialQuery.data?.results?.map(item =>
+                                <ProductCard
+                                    key={item.id} data={item}/>) :
+                            <ProductCardSkeleton/>}
+                    </Box>
+                </Box>
             </Container>
-
             <Box component={"section"} sx={BoxStyleSpecial}>
                 <SpecialSections title={"COLOR"}
                                  description={"find the most unique & special colors you ever seen in your life"}/>
@@ -114,16 +165,6 @@ const Home = () => {
                                  description={"find the most unique & special colors you ever seen in your life"}/>
             </Box>
             <Container maxWidth={"xl"} sx={{paddingY: 5}}>
-                <Box component={"section"} sx={BoxStyleP}>
-                    <Typography variant={"h2"} component={"h4"} sx={headerTextStyle}>SPECIAL</Typography>
-                    <hr/>
-                    <Box className={"inline-slider"}>
-                        {!productsIsSpecialQuery.isLoading ? productsIsSpecialQuery.data?.results?.map(item =>
-                                <ProductCard
-                                    key={item.id} data={item}/>) :
-                            <ProductCardSkeleton/>}
-                    </Box>
-                </Box>
                 <Box component={"section"} sx={BoxStyleP}>
                     <Typography variant={"h2"} component={"h4"} sx={headerTextStyle}>RECOMMEND</Typography>
                     <hr/>
@@ -155,7 +196,7 @@ export const SpecialSections = ({title, description, color}) => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "primary.contrast",
+            backgroundColor: "secondary.contrast",
             padding: 1,
             borderRadius: "7px",
             minWidth: "350px",
@@ -163,9 +204,16 @@ export const SpecialSections = ({title, description, color}) => {
             maxWidth: "450px",
             height: "200px",
         }}>
-            <Typography variant={"h4"} fontWeight={600} sx={{color:"background.main"}} letterSpacing={5}>{title}</Typography>
+            <Typography variant={"h4"} fontWeight={600} sx={{color: "background.main"}}
+                        letterSpacing={5}>{title}</Typography>
             <Typography variant={"caption"} fontWeight={500}
-                        sx={{minWidth: "250px", maxWidth: "400px", width: "100%", textAlign: "center",color:"background.main"}}>
+                        sx={{
+                            minWidth: "250px",
+                            maxWidth: "400px",
+                            width: "100%",
+                            textAlign: "center",
+                            color: "background.main"
+                        }}>
                 {description}
             </Typography>
         </Box>
@@ -183,7 +231,10 @@ const BoxStyle = {
 }
 const BoxStyleSpecial = {
     ...BoxStyle,
-    backgroundColor: "secondary.light",
+    background: 'linear-gradient(rgba(206, 147, 216, 0.2),rgba(186, 104, 200, 0.4)) ,url(/src/assets/banner.jpeg)',
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+
 }
 const BoxStyleP = {
     padding: 1,

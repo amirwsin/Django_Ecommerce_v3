@@ -14,7 +14,7 @@ export const themeSettings = (mode) => {
                         light: purple[200],
                         main: purple[300],
                         dark: purple[400],
-                        contrast:purple[600],
+                        contrast:purple[50],
                     },
                     secondary: {
                         light: green[50],

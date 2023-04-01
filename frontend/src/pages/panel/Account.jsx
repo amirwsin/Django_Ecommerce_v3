@@ -38,7 +38,7 @@ const Account = () => {
     }
     return (
         <Box className={"panel-box"} display={"grid"}>
-            <Button variant={"text"} color={"info"} sx={{marginY: 2, justifySelf: "end"}} endIcon={<Edit/>}
+            <Button variant={"outlined"} color={"info"} sx={{marginY: 2, justifySelf: "end"}} endIcon={<Edit/>}
                     onClick={handleEdit}>
                 edit
             </Button>

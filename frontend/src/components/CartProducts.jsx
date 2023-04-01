@@ -127,7 +127,7 @@ const CartProductsItem = ({data}) => {
                         )}
                     </Box>
                     <Box sx={{display: "flex", justifyContent: "space-between"}}>
-                        <ButtonGroup variant="contained" aria-label="cart action buttons">
+                        <ButtonGroup variant="contained" sx={{boxShadow:"none"}} aria-label="cart action buttons">
                             <Button onClick={handleIncrement}
                                     disabled={data?.inventory?.stock?.units === data.qty ? true : false}>+</Button>
                             <Button variant={"outlined"}>{data?.qty}</Button>

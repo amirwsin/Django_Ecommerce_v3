@@ -146,7 +146,7 @@ const Products = () => {
                             <ListItem>
                                 <FormGroup sx={{"& span": {fontWeight: 600}}}>
                                     <FormControlLabel
-                                        control={<Switch name={"is_recommend"} color={"secondary"}
+                                        control={<Switch name={"is_recommend"} color={"primary"}
                                                          checked={filters.is_recommend}
                                                          onChange={() => setFilters({
                                                              ...filters,
@@ -158,7 +158,7 @@ const Products = () => {
                             <ListItem>
                                 <FormGroup sx={{"& span": {fontWeight: 600}}}>
                                     <FormControlLabel
-                                        control={<Switch name={"is_special"} color={"secondary"}
+                                        control={<Switch name={"is_special"} color={"primary"}
                                                          checked={filters.is_special}
                                                          onChange={() => setFilters({
                                                              ...filters,
@@ -168,7 +168,7 @@ const Products = () => {
                                 </FormGroup>
                             </ListItem>
                         </List>
-                        <Button variant={"contained"} color={"black"} sx={{color: "background.main"}}
+                        <Button variant={"contained"} color={"primary"}
                                 onClick={handleFilter}>Filter</Button>
                     </Box>
                 </Grid>

@@ -10,17 +10,17 @@ const Dashboard = () => {
         <Box className={"panel-box"}>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} md={4}>
-                    <StatusCard text={"You Have 13 Completed Order"} bgColor={"primary.light"} color={"primary.dark"}
+                    <StatusCard text={"You Have 13 Completed Order"} bgColor={"primary.contrast"} color={"primary.dark"}
                                 title={"Completed Orders"}
                                 icon={<AssignmentTurnedInOutlined sx={{justifySelf: "center", fontSize: "4rem"}}/>}/>
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
-                    <StatusCard text={"You Have 1 Pending Order"} bgColor={"secondary.light"} color={"secondary.dark"}
+                    <StatusCard text={"You Have 1 Pending Order"} bgColor={"secondary.light"} color={"secondary.contrast"}
                                 title={"Pending Orders"}
                                 icon={<PendingActionsOutlined sx={{justifySelf: "center", fontSize: "4rem"}}/>}/>
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
-                    <StatusCard text={"You Have 2 Completed Order"} bgColor={"lightgrey"} color={"grey"}
+                    <StatusCard text={"You Have 2 Completed Order"} bgColor={"lightgrey"} color={"black"}
                                 title={"Canceled Orders"}
                                 icon={<AssignmentLateOutlined sx={{justifySelf: "center", fontSize: "4rem"}}/>}/>
                 </Grid>

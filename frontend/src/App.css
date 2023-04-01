@@ -4,7 +4,7 @@
     --primary-light: #ce93d8;
     --primary: #ba68c8;
     --primary-dark: #ab47bc;
-    --primary-contrast: #8e24aa;
+    --primary-contrast: #f3e5f5;
     --secondary-light: #e8f5e9;
     --secondary: #c8e6c9;
     --secondary-dark: #a5d6a7;
@@ -12,7 +12,7 @@
     --background-light: #fafcfe;
     --background-main: #FAFCFE;
     --background-dark: #191919;
-    --box-shadow-color: grey;
+    --box-shadow-color: lightgray;
     --text: #3a3b3e;
     --font-family-default: "Roboto", "Helvetica", "Arial", sans-serif;
     --mix-background-color: var(--background-light), var(--background-main), var(--primary);
@@ -79,7 +79,7 @@ body {
     margin: auto;
     height: 2px;
     width: 10px;
-    color: var(--secondary-contrast);
+    background-color: var(--secondary-contrast);
 }
 
 .navbar-link {
@@ -218,7 +218,7 @@ body {
     box-shadow: 2px 2px 6px var(--box-shadow-color);
     padding: 1rem;
     border-radius: 7px;
-    background-image: url("../src/assets/golden_flower_png.png"), url("../src/assets/golden_flower_png_2.png"), linear-gradient(var(--background-main), #efebe9);
+    background-image:linear-gradient(var(--background-light), var(--primary-contrast));
     background-size: contain;
     background-repeat: no-repeat;
     background-position: top left, right
@@ -258,6 +258,15 @@ body {
     content: none;
 }
 
+.landing-image{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 2rem 0 0 2rem ;
+
+}
 
 .product-box {
     position: relative;
@@ -273,14 +282,12 @@ body {
 .product-card {
     display: grid;
     position: relative;
-    background-color: #fafafa !important;
     box-shadow: 0 0 2px grey !important;
     transition: 0.8s ease all;
 }
 
 .product-card:hover {
-    background-color: white !important;
-    box-shadow: 0 4px 10px lightgray !important;
+    box-shadow: 0 2px 10px lightgray !important;
 }
 
 .product-card-title {
@@ -289,6 +296,7 @@ body {
 }
 
 .product-card-image {
+
 }
 
 .product-card-discount {
@@ -633,6 +641,12 @@ body {
 
     .special-list {
         background-image: linear-gradient(var(--background-main), #efebe9);
+    }
+    .special-list li:after{
+        height: 1px;
+        width: 100%;
+        top: 100%;
+        left: -1rem;
     }
 
     .form-wrapper {

@@ -39,7 +39,7 @@ const Orders = () => {
                 <Table sx={{
                     minWidth: 650,
                     "& .MuiTableRow-head": {
-                        backgroundColor: "background.dark",
+                        backgroundColor: "primary.dark",
                     },
                     "& .MuiTableRow-head .MuiTableCell-root": {
                         color: "background.main"
