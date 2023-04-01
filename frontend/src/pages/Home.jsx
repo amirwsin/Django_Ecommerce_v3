@@ -199,9 +199,9 @@ export const SpecialSections = ({title, description, color}) => {
             backgroundColor: "secondary.contrast",
             padding: 1,
             borderRadius: "7px",
-            minWidth: "350px",
+            minWidth: "20rem",
             width: "100%",
-            maxWidth: "450px",
+            maxWidth: "25rem",
             height: "200px",
         }}>
             <Typography variant={"h4"} fontWeight={600} sx={{color: "background.main"}}

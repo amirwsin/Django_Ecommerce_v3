@@ -128,6 +128,7 @@
     display: block;
     background-color: var(--background-main);
     padding: 0.5rem;
+    box-shadow: 0 0 8px var(--box-shadow-color);
 }
 
 .card-product-image {

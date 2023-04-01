@@ -52,7 +52,7 @@ const Orders = () => {
                 }} aria-label="orders list">
                     <TableHead>
                         <TableRow>
-                            <TableCell>#</TableCell>
+                            <TableCell>NO</TableCell>
                             <TableCell align="center">Amount</TableCell>
                             <TableCell align="center">status</TableCell>
                             <TableCell align="center">Payment Status</TableCell>
@@ -64,7 +64,7 @@ const Orders = () => {
                         {!ordersQuery.isLoading && ordersQuery.data?.results?.map((item, key) =>
                             <TableRow onClick={() => handleClick(item.id)} key={item.id}
                                       sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                                <TableCell component="th" scope="row">{key + 1}</TableCell>
+                                <TableCell component="th" scope="row">#{item.id}</TableCell>
                                 <TableCell align="center">${item.payment.amount}</TableCell>
                                 <TableCell align="center">
                                     {item.status === "PENDING" &&
